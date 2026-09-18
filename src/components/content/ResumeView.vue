@@ -34,7 +34,7 @@ function download() {
     <div class="resume-frame">
       <div class="resume-frame__bar">
         <AppIcon name="file-pdf" :size="14" />
-        <span class="mono">resume.pdf</span>
+        <span class="mono" translate="no">resume.pdf</span>
       </div>
       <object
         class="resume-frame__viewer"
@@ -44,7 +44,7 @@ function download() {
       >
         <p class="resume-frame__fallback">
           Your browser cannot preview PDFs.
-          <a :href="resumePath" target="_blank" rel="noopener noreferrer">
+          <a :href="resumePath" target="_blank" rel="noopener noreferrer" translate="no">
             Open resume.pdf
           </a>
         </p>

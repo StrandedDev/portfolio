@@ -13,7 +13,7 @@ const router = useRouter()
       <h1 class="view__title">File not found</h1>
     </header>
     <p class="view__lede">
-      No file at <code class="not-found__path">{{ route.path }}</code>. It may
+      No file at <code class="not-found__path" translate="no">{{ route.path }}</code>. It may
       have been moved or deleted.
     </p>
     <AppButton variant="primary" icon="home" @click="router.push('/about')">
@@ -22,8 +22,8 @@ const router = useRouter()
 
     <p class="not-found__hint">
       <AppIcon name="lightbulb" :size="14" />
-      Try <code>about.json</code>, <code>projects</code>, or
-      <code>contact.md</code>.
+      Try <code translate="no">about.json</code>, <code translate="no">projects</code>, or
+      <code translate="no">contact.md</code>.
     </p>
   </article>
 </template>

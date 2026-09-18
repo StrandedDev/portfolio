@@ -12,10 +12,10 @@ defineEmits(['open-resume', 'toggle-theme'])
 <template>
   <footer class="status-bar">
     <div class="status-bar__group">
-      <button type="button" class="status-bar__item" @click="$emit('open-resume')">
+      <span class="status-bar__item status-bar__item--static">
         <AppIcon name="git-branch" :size="14" />
         <span>{{ branch }}</span>
-      </button>
+      </span>
     </div>
     <div class="status-bar__group">
       <button type="button" class="status-bar__item" @click="$emit('open-resume')">
@@ -64,5 +64,11 @@ defineEmits(['open-resume', 'toggle-theme'])
 
 .status-bar__item:hover {
   background: rgba(255, 255, 255, 0.18);
+}
+
+.status-bar__item--static,
+.status-bar__item--static:hover {
+  background: transparent;
+  cursor: default;
 }
 </style>

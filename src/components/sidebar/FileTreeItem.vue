@@ -41,7 +41,7 @@ defineEmits(['open', 'toggle'])
       :class="node.kind === 'folder' && expanded ? 'codicon-folder-opened' : `codicon-${node.icon || 'file'}`"
       aria-hidden="true"
     ></i>
-    <span class="tree-item__label">{{ node.label }}</span>
+    <span class="tree-item__label" translate="no">{{ node.label }}</span>
   </div>
 </template>
 
@@ -108,6 +108,7 @@ defineEmits(['open', 'toggle'])
 }
 
 .tree-item__label {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -8,9 +8,6 @@ defineProps({
   <header class="title-bar">
     <div class="title-bar__left">
       <span class="title-bar__mark" aria-hidden="true"></span>
-      <span class="title-bar__menu" aria-hidden="true">File</span>
-      <span class="title-bar__menu" aria-hidden="true">Edit</span>
-      <span class="title-bar__menu" aria-hidden="true">View</span>
     </div>
     <p class="title-bar__title">{{ title }}</p>
     <div class="title-bar__controls" aria-hidden="true">
@@ -46,16 +43,6 @@ defineProps({
   background: linear-gradient(135deg, var(--color-accent), var(--syntax-boolean));
   border-radius: var(--radius-sm);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.title-bar__menu {
-  color: var(--color-fg-muted);
-  cursor: default;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.title-bar__menu:hover {
-  color: var(--color-fg);
 }
 
 .title-bar__title {

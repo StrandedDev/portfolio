@@ -122,6 +122,38 @@ persists for the session.
 
 Gate 3: all four sidebar entries and all project links resolve and render.
 
+### Phase 3.5 — UI audit fixes (blocking Phase 4)
+
+- [x] T-3.5.1 Fix the tab close transition. `.tab-leave-active` keeps the
+  closing tab in flow and `overflow-x: auto` clips its `translateY(6px)`, so
+  the tab slides over the breadcrumb row and the remaining tabs jump instead
+  of moving. Add `position: relative` to `.editor-tabs__track`,
+  `position: absolute` to `.tab-leave-active`, and a `.tab-move` transition.
+- [x] T-3.5.2 Give `EditorTabs` real tab keyboard support (Left/Right/Home/End
+  with a roving `tabindex`, `Delete` to close) and scroll the active tab into
+  view when it opens off-screen.
+- [x] T-3.5.3 Fix `StatusBar.vue` branch button: it emits `open-resume`, so
+  clicking the branch name downloads the resume.
+- [x] T-3.5.4 Stop downloading the resume on every route or tab open; make the
+  download an explicit action from the Resume view and status bar only.
+- [x] T-3.5.5 Fix sidebar truncation: `.tree-item__label` is a flex child
+  without `min-width: 0`, so `text-overflow: ellipsis` never triggers and long
+  file names overflow the panel.
+- [x] T-3.5.6 Remove the duplicate `<h1>` on the About view (hidden heading in
+  `AboutView.vue` plus the visible one in `AboutReader.vue`).
+- [x] T-3.5.7 Add a skip link to `#main` and give the target
+  `scroll-margin-top`.
+- [x] T-3.5.8 Keep the focus ring visible on the blue status bar and accent
+  buttons; the default `--color-focus` ring disappears against those surfaces.
+- [x] T-3.5.9 Add `<meta name="theme-color">` and preload the Fira Code font.
+- [x] T-3.5.10 Mark code, file names, and the email with `translate="no"`; add
+  `touch-action: manipulation` and an intentional tap highlight.
+- [x] T-3.5.11 Apply `text-wrap: balance`/`pretty` to headings, and decide the
+  fate of the non-functional File/Edit/View title-bar menus.
+
+Gate 3.5: closing a tab animates without overlap or jump; keyboard-only tab
+navigation works; no label overflows or duplicate headings.
+
 ### Phase 4 — Command palette
 
 - [ ] T-4.1 Define the command registry in `src/lib/commands.js` (id, label,
@@ -175,7 +207,9 @@ Gate 7: the primary success criterion passes on desktop and mobile.
 
 - Phase 2 depends on Phase 1 (shell, data, tokens).
 - Phase 3 depends on Phase 1; it can partly run parallel to Phase 2.
-- Phase 4 depends on Phases 1 and 3 (needs routes and actions).
+- Phase 3.5 depends on Phase 3 (audits the rendered surfaces).
+- Phase 4 depends on Phases 1, 3, and 3.5 (needs routes, actions, and a stable
+  tab/layout layer).
 - Phase 5 depends on Phases 1 through 4 (all surfaces must exist first).
 - Phase 6 depends on all prior phases.
 - Phase 7 is last and blocks release.

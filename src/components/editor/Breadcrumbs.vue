@@ -11,7 +11,11 @@ defineProps({
         <span v-if="index > 0" class="breadcrumbs__sep" aria-hidden="true">
           <i class="codicon codicon-chevron-right"></i>
         </span>
-        <span class="breadcrumbs__item">{{ segment }}</span>
+        <span
+          class="breadcrumbs__item"
+          translate="no"
+          :aria-current="index === path.length - 1 ? 'page' : undefined"
+        >{{ segment }}</span>
       </li>
     </ol>
   </nav>
@@ -22,6 +26,7 @@ defineProps({
   flex: none;
   height: 26px;
   padding: 0 var(--space-3);
+  overflow: hidden;
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   font-size: var(--text-xs);
@@ -31,6 +36,7 @@ defineProps({
   display: flex;
   align-items: center;
   height: 100%;
+  white-space: nowrap;
 }
 
 .breadcrumbs li {

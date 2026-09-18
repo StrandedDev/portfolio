@@ -64,7 +64,6 @@ function downloadResume() {
 function openNode(id) {
   const node = findNodeById(id)
   if (!node?.route) return
-  if (node.id === 'resume') downloadResume()
   router.push(node.route)
 }
 
@@ -96,12 +95,20 @@ function toggleTheme() {
 </script>
 
 <template>
-  <div class="editor-shell">
+  <div
+    class="editor-shell"
+    :class="{ 'editor-shell--sidebar-collapsed': !workspace.sidebarOpen }"
+  >
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="editor-shell__titlebar">
       <TitleBar :title="title" />
     </div>
     <div class="editor-shell__activity">
-      <ActivityBar :active="activeSection" @select="onActivitySelect" />
+      <ActivityBar
+        :active="activeSection"
+        :sidebar-open="workspace.sidebarOpen"
+        @select="onActivitySelect"
+      />
     </div>
     <div class="editor-shell__sidebar">
       <Sidebar :nodes="fileTree" :active-id="activeId" @open="openNode" />
@@ -129,6 +136,7 @@ function toggleTheme() {
 
 <style scoped>
 .editor-shell {
+  position: relative;
   display: grid;
   height: 100%;
   grid-template-areas:
@@ -169,6 +177,33 @@ function toggleTheme() {
 
 .editor-shell__status {
   grid-area: status;
+}
+
+.editor-shell--sidebar-collapsed {
+  grid-template-columns: var(--activitybar-width) 0 minmax(0, 1fr);
+}
+
+.editor-shell--sidebar-collapsed .editor-shell__sidebar {
+  display: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 10;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-accent-fg);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transform: translateY(-200%);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .editor-shell__activity > :deep(*),

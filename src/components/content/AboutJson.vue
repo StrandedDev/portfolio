@@ -15,9 +15,9 @@ const tokens = computed(() => tokenizeJson(props.data))
       <span class="about-json__dot"></span>
       <span class="about-json__dot"></span>
       <span class="about-json__dot"></span>
-      <span class="about-json__name">profile.json</span>
+      <span class="about-json__name" translate="no">profile.json</span>
     </div>
-    <pre class="about-json__code mono"><code><template v-for="(token, index) in tokens" :key="index"><span v-if="token.type !== 'plain'" class="tok" :class="`tok--${token.type}`">{{ token.text }}</span><template v-else>{{ token.text }}</template></template></code></pre>
+    <pre class="about-json__code mono"><code translate="no"><template v-for="(token, index) in tokens" :key="index"><span v-if="token.type !== 'plain'" class="tok" :class="`tok--${token.type}`">{{ token.text }}</span><template v-else>{{ token.text }}</template></template></code></pre>
   </div>
 </template>
 

@@ -20,7 +20,6 @@ function onToggle(value) {
 <template>
   <article class="view about">
     <div class="view__header">
-      <h1 class="visually-hidden">About {{ profile.name }}</h1>
       <Toggle
         :model-value="jsonMode"
         :labels="['Reader', 'JSON']"

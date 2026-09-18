@@ -1,6 +1,19 @@
 import projects from '@/data/projects.json'
 
-export const fileTree = [
+function sortFoldersFirst(nodes) {
+  return [...nodes]
+    .map((node) =>
+      node.children
+        ? { ...node, children: sortFoldersFirst(node.children) }
+        : node,
+    )
+    .sort((a, b) => {
+      if (a.kind === b.kind) return 0
+      return a.kind === 'folder' ? -1 : 1
+    })
+}
+
+export const fileTree = sortFoldersFirst([
   {
     id: 'about',
     label: 'about.json',
@@ -36,7 +49,7 @@ export const fileTree = [
     icon: 'markdown',
     route: '/contact',
   },
-]
+])
 
 export function flattenTree(nodes = fileTree) {
   return nodes.reduce((all, node) => {

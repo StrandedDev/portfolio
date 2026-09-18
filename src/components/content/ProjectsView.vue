@@ -33,7 +33,7 @@ const projects = getProjects()
         <p class="project-card__summary">{{ project.summary }}</p>
 
         <ul class="project-card__stack">
-          <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
+          <li v-for="tech in project.stack" :key="tech" translate="no">{{ tech }}</li>
         </ul>
 
         <dl class="project-card__meta">

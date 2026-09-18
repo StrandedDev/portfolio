@@ -3,6 +3,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 
 defineProps({
   active: { type: String, default: '' },
+  sidebarOpen: { type: Boolean, default: true },
 })
 
 defineEmits(['select'])
@@ -23,8 +24,13 @@ const sections = [
         <button
           type="button"
           class="activity-bar__item"
-          :class="{ 'activity-bar__item--active': active === section.id }"
+          :class="{
+            'activity-bar__item--active':
+              active === section.id ||
+              (section.id === 'explorer' && sidebarOpen),
+          }"
           :aria-current="active === section.id ? 'page' : undefined"
+          :aria-pressed="section.id === 'explorer' ? sidebarOpen : undefined"
           :title="section.label"
           @click="$emit('select', section.id)"
         >
@@ -58,7 +64,9 @@ const sections = [
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 52px;
+  padding: 0;
   color: var(--color-fg-subtle);
   transition:
     color var(--duration-fast) var(--ease-out),

@@ -18,7 +18,11 @@ defineEmits(['copy'])
     <section class="contact-card" aria-labelledby="contact-email">
       <h2 id="contact-email" class="contact-card__label">Email</h2>
       <div class="contact-card__row">
-        <a class="contact-card__email mono" :href="`mailto:${profile.email}`">
+        <a
+          class="contact-card__email mono"
+          :href="`mailto:${profile.email}`"
+          translate="no"
+        >
           <AppIcon name="mail" :size="16" />
           {{ profile.email }}
         </a>

@@ -5,7 +5,7 @@ const state = reactive({
   activeRoute: '/about',
   openTabs: [],
   heroMode: 'reader',
-  sidebarOpen: false,
+  sidebarOpen: true,
   paletteOpen: false,
 })
 

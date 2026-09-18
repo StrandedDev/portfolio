@@ -22,7 +22,7 @@ const project = computed(() => getProjectById(props.id))
     </nav>
 
     <header class="detail-header">
-      <p class="detail-eyebrow">
+      <p class="detail-eyebrow" translate="no">
         <AppIcon name="folder" :size="13" />
         {{ project.id }}.md
       </p>
@@ -37,7 +37,7 @@ const project = computed(() => getProjectById(props.id))
         <dt>Stack</dt>
         <dd>
           <ul class="detail-stack">
-            <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
+            <li v-for="tech in project.stack" :key="tech" translate="no">{{ tech }}</li>
           </ul>
         </dd>
       </div>
@@ -69,7 +69,7 @@ const project = computed(() => getProjectById(props.id))
       <h1 class="view__title">Project not found</h1>
     </header>
     <p class="view__lede">
-      No case study named <code>{{ id }}</code>.
+      No case study named <code translate="no">{{ id }}</code>.
     </p>
     <AppButton variant="secondary" icon="arrow-left" @click="$router.push('/projects')">
       Back to projects
