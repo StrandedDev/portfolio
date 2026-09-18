@@ -50,6 +50,13 @@ export const commands = [
     run: () => router.push('/projects'),
   },
   {
+    id: 'go.education',
+    label: 'Go to Education',
+    keywords: ['education', 'university', 'degree', 'school'],
+    icon: 'markdown',
+    run: () => router.push('/education'),
+  },
+  {
     id: 'go.resume',
     label: 'Go to Resume',
     keywords: ['resume', 'cv'],

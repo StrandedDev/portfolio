@@ -1,4 +1,8 @@
 import projects from '@/data/projects.json'
+import devProjects from '@/data/projects.dev.json'
+
+const projectsData =
+  import.meta.env.DEV && devProjects.projects.length ? devProjects : projects
 
 function sortFoldersFirst(nodes) {
   return [...nodes]
@@ -27,7 +31,7 @@ export const fileTree = sortFoldersFirst([
     kind: 'folder',
     icon: 'folder',
     route: '/projects',
-    children: projects.projects.map((project) => ({
+    children: projectsData.projects.map((project) => ({
       id: `project-${project.id}`,
       label: `${project.id}.md`,
       kind: 'file',
@@ -49,6 +53,13 @@ export const fileTree = sortFoldersFirst([
     icon: 'markdown',
     route: '/contact',
   },
+  {
+    id: 'education',
+    label: 'education.md',
+    kind: 'file',
+    icon: 'markdown',
+    route: '/education',
+  },
 ])
 
 export function flattenTree(nodes = fileTree) {
@@ -69,11 +80,11 @@ export function findNodeByRoute(route) {
 }
 
 export function getProjectById(id) {
-  return projects.projects.find((project) => project.id === id) ?? null
+  return projectsData.projects.find((project) => project.id === id) ?? null
 }
 
 export function getProjects() {
-  return projects.projects
+  return projectsData.projects
 }
 
 export function breadcrumbsForRoute(route) {
@@ -86,6 +97,7 @@ export function breadcrumbsForRoute(route) {
   if (segments[0] === 'about') return ['about.json']
   if (segments[0] === 'resume') return ['resume.pdf']
   if (segments[0] === 'contact') return ['contact.md']
+  if (segments[0] === 'education') return ['education.md']
   if (segments[0] === 'projects') return ['projects']
   return segments
 }

@@ -1,8 +1,9 @@
 # Design and Architecture — Developer Portfolio
 
-Status: Draft
-Date: 2026-09-18
-Related docs: `PRD.md`, `PLANNING.md`
+Status: Active
+Date: 2026-09-19
+Version: 2.0
+Related docs: `PRD.md`, `PLANNING.md`, `AGENTS.md`
 
 This document defines the architecture, structure, data model, component
 contracts, and conventions. It is the source of truth for how the code is
@@ -12,8 +13,9 @@ organized. If code and this document disagree, one of them must be updated.
 
 1. **Reader first.** The plain, scannable surface is the default. The editor
    costume never blocks the primary task.
-2. **One real interaction.** The command palette is the only "real" feature.
-   Resist adding more.
+2. **Convert, don't impress.** Every surface serves the recruiter's 30-second
+   task. The command palette is the signature interaction; the hero entrance and
+   the terminal support it without competing for attention.
 3. **Data over code.** Copy and projects live in data files. Components render
    data; they do not own content.
 4. **One responsibility per component.** If a component renders and fetches and
@@ -34,6 +36,8 @@ src/
   data/
     profile.json              profile content
     projects.json             project content
+    projects.dev.json         demo-only placeholders (DEV builds only)
+    education.json            education content
   stores/
     workspace.js              reactive app state
   lib/
@@ -51,6 +55,7 @@ src/
       TitleBar.vue
       ActivityBar.vue
       StatusBar.vue
+      MobileActionBar.vue
     sidebar/
       Sidebar.vue
       FileTree.vue
@@ -59,6 +64,7 @@ src/
       EditorArea.vue
       EditorTabs.vue
       Breadcrumbs.vue
+      TerminalPanel.vue
     content/
       AboutView.vue
       AboutReader.vue
@@ -67,6 +73,7 @@ src/
       ProjectDetail.vue
       ResumeView.vue
       ContactView.vue
+      EducationView.vue
       NotFoundView.vue
     ui/
       CommandPalette.vue
@@ -75,6 +82,7 @@ src/
       AppButton.vue
       AppIcon.vue
       CopyButton.vue
+      Toast.vue
   assets/
     styles/
       tokens.css              design tokens
@@ -143,8 +151,28 @@ Rules:
         { "label": "Live", "url": "https://example.com" },
         { "label": "Code", "url": "https://github.com/username/repo" }
       ],
-      "featured": true
+      "featured": true,
+      "image": "/projects/project-slug.png"
     }
+  ]
+}
+```
+
+`projects.dev.json` mirrors this shape and is loaded only when
+`import.meta.env.DEV` is true and it is non-empty. It never renders in
+production builds; production always uses `projects.json`.
+
+### 4.3 `education.json`
+
+```json
+{
+  "institution": "University Name",
+  "degree": "BSc Computer Science",
+  "graduation": "Expected 2027",
+  "location": "City, Country",
+  "coursework": ["Data Structures", "Web Development"],
+  "achievements": [
+    { "label": "Hackathon", "value": "2nd place, 2025" }
   ]
 }
 ```
@@ -161,6 +189,7 @@ one-to-one onto routes.
 | `projects/:id` | `/projects/:id` | `ProjectDetail` |
 | `resume.pdf` | `/resume` | `ResumeView` (also triggers download) |
 | `contact.md` | `/contact` | `ContactView` |
+| `education.md` | `/education` | `EducationView` |
 | unknown | `/:pathMatch(.*)*` | `NotFoundView` |
 
 Rules:
@@ -176,14 +205,22 @@ A single reactive store in `src/stores/workspace.js`:
 - `activeRoute` — current route path, mirrored from the router.
 - `openTabs` — list of visited file ids, in order.
 - `heroMode` — `"reader"` or `"json"`; default `"reader"`.
+- `heroEntered` — whether the hero entrance has played this session.
 - `sidebarOpen` — boolean, used by the mobile drawer.
+- `sidebarCollapsed` — boolean, desktop collapse state; default `false`.
+- `terminalOpen` — boolean, presentational terminal visibility; default `false`.
 - `paletteOpen` — boolean.
+- `notice` — transient status message string, empty when none.
 
 Actions: `openFile(id)`, `closeTab(id)`, `setHeroMode(mode)`,
-`toggleSidebar()`, `openPalette()`, `closePalette()`.
+`markHeroEntered()`, `toggleSidebar()`, `toggleSidebarCollapsed()`,
+`toggleTerminal()`, `openPalette()`, `closePalette()`, `showNotice(text)`,
+`clearNotice()`.
 
 The store holds UI state only. Content comes from data files; derived views
-(for example, project lookup by id) are computed in `lib`, not stored.
+(for example, project lookup by id) are computed in `lib`, not stored. The
+color theme is a root `data-theme` attribute owned by the shell and persisted
+to `localStorage`; it is not store state.
 
 ## 7. Component contracts
 
@@ -191,9 +228,13 @@ The store holds UI state only. Content comes from data files; derived views
 
 - `EditorShell` — no props. Composes the regions and provides layout context.
 - `TitleBar` — props: `title: string`. Emits: none.
-- `ActivityBar` — props: `active: string`. Emits: `select(sectionId)`.
-- `StatusBar` — props: `branch: string`, `resumePath: string`. Emits:
-  `open-resume`, `toggle-theme`.
+- `ActivityBar` — props: `active: string`, `sidebarOpen: boolean`. Emits:
+  `select(sectionId)`. Renders as the vertical strip on desktop and as the
+  bottom bar on mobile.
+- `StatusBar` — props: `branch: string`, `file: string`,
+  `resumePath: string`. Emits: `open-resume`, `toggle-theme`.
+- `MobileActionBar` — no props. Emits: `open-resume`, `open-contact`. Visible
+  only on mobile; keeps the two primary actions one tap away.
 
 ### Sidebar
 
@@ -214,6 +255,8 @@ The store holds UI state only. Content comes from data files; derived views
 - `EditorTabs` — props: `tabs: FileNode[]`, `activeId: string`. Emits:
   `open(id)`, `close(id)`.
 - `Breadcrumbs` — props: `path: string[]`. Emits: none.
+- `TerminalPanel` — props: `open: boolean`, `lines: string[]`. Emits: `close`.
+  Presentational only; it renders canned output and never executes commands.
 
 ### Content
 
@@ -226,6 +269,7 @@ The store holds UI state only. Content comes from data files; derived views
 - `ProjectDetail` — props: `project: Project`. Emits: `open-link(url)`.
 - `ResumeView` — props: `resumePath: string`. Emits: `download`.
 - `ContactView` — props: `profile: Profile`. Emits: `copy(text)`.
+- `EducationView` — props: `education: Education`. Emits: none.
 - `NotFoundView` — props: `path: string`. Emits: `go-home`.
 
 ### UI primitives
@@ -233,8 +277,8 @@ The store holds UI state only. Content comes from data files; derived views
 - `CommandPalette` — props: `open: boolean`, `commands: Command[]`. Emits:
   `close`, `run(commandId)`.
 - `Command` shape: `{ id: string, label: string, keywords?: string[], run: () => void }`.
-- `Drawer` — props: `open: boolean`, `side: "left" | "right"`. Emits:
-  `close`. Slot for content.
+- `Drawer` — props: `open: boolean`, `side: "left" | "right"`,
+  `label?: string`. Emits: `close`. Slot for content.
 - `Toggle` — props: `modelValue: boolean`, `labels: [string, string]`. Emits:
   `update:modelValue`.
 - `AppButton` — props: `variant: "primary" | "secondary"`, `href?: string`.
@@ -242,6 +286,8 @@ The store holds UI state only. Content comes from data files; derived views
 - `AppIcon` — props: `name: string`, `size?: number`. Renders an inline SVG
   from `src/lib/icons.js`; no icon font is loaded. Emits: none.
 - `CopyButton` — props: `text: string`, `label?: string`. Emits: `copied`.
+- `Toast` — props: `message: string`. Emits: none. Renders a transient
+  `role="status"` notice.
 
 ## 8. Design tokens
 
@@ -254,7 +300,7 @@ Defined in `src/assets/styles/tokens.css` as CSS custom properties.
   line height tuned for editor density.
 - **Spacing:** a 4px-based scale (`--space-1` through `--space-8`).
 - **Editor metrics:** title bar height, activity bar width, sidebar width,
-  status bar height, tab height.
+  status bar height, tab height, mobile bottom bar height, terminal height.
 - **Radii and shadows:** minimal; the editor aesthetic favors flat surfaces.
 - **Motion:** short durations with an ease-out curve; disabled under
   `prefers-reduced-motion`.
@@ -266,22 +312,32 @@ component hardcodes a color.
 
 - Registry lives in `src/lib/commands.js`; each command is pure data plus a
   `run` callback that uses the store or router.
-- Commands: `go.about`, `go.projects`, `go.resume`, `go.contact`,
-  `action.download-resume`, `action.copy-email`, `view.toggle-json`.
+- Commands: `go.about`, `go.projects`, `go.education`, `go.resume`,
+  `go.contact`, `action.download-resume`, `action.copy-email`,
+  `action.toggle-theme`, `view.toggle-json`, `view.toggle-sidebar`,
+  `view.toggle-terminal`.
 - The palette filters by label and keywords, case-insensitively.
 - Keyboard: `ArrowUp`/`ArrowDown` to move, `Enter` to run, `Escape` to close.
 - Opening the palette traps focus; closing restores focus to the trigger.
-- The palette is the single source of the "one real interaction" requirement.
+- The palette is the signature interaction and the mobile secondary entry point.
 
 ## 10. Responsive strategy
 
 - Desktop (>= 1024px): full grid — activity bar, sidebar, editor, status bar.
+  The sidebar collapses and expands; there is no drag-to-resize.
 - Tablet (768px–1023px): sidebar narrower; tabs and breadcrumbs may collapse.
-- Mobile (< 768px): activity bar becomes a top bar; sidebar becomes a
-  `Drawer`; editor area scrolls normally; tabs collapse to a single label.
+- Mobile (< 768px): the activity bar becomes a **bottom bar** and is the single
+  primary navigation. The file tree moves behind that bar as a `Drawer`. The
+  editor area scrolls normally with reader content. A persistent
+  `MobileActionBar` keeps Resume and Contact one tap away. The command palette
+  is reachable from a persistent search affordance and is the only secondary
+  entry point.
 
 Rules:
 
+- One primary navigation model on mobile: the bottom activity bar. The palette
+  is an accelerator, never a competing nav. The file tree drawer is an
+  extension of the bottom bar, not a second navigation model.
 - No fixed heights that prevent vertical scrolling on mobile.
 - No horizontal scrolling at any width.
 - Tap targets at least 44px on touch.
@@ -291,12 +347,18 @@ Rules:
 - One `<h1>` per view; heading order is logical.
 - Landmarks: `header`, `nav` for the file tree, `main` for the editor area,
   `contentinfo` for the status bar.
+- The mobile bottom bar is a labelled `nav` landmark. The palette trigger is a
+  button, not a nav item.
 - The file tree uses `role="tree"` with `treeitem` children and roving
   tabindex.
 - The command palette uses `role="dialog"` with `aria-modal` and a labelled
   listbox.
 - The JSON hero is `aria-hidden`; its readable equivalent is always rendered in
   the DOM.
+- The hero entrance is decorative. The readable hero is in the DOM from first
+  paint, and the animation is disabled under `prefers-reduced-motion`.
+- The terminal is a labelled region rendering static text. It is not a live
+  region and accepts no input.
 - Focus is always visible; no outline removal without a replacement.
 - Contrast meets WCAG AA in both themes.
 
@@ -316,9 +378,11 @@ Rules:
 - **Component:** view components rendered with fixture data; assert text and
   actions, not implementation details.
 - **Manual:** the 30-second usability test is the acceptance test and is run at
-  Phase 7 in `PLANNING.md`.
+  Phase 8 in `PLANNING.md`. Mobile identity is checked in the same pass.
 - **Automated checks:** Lighthouse for performance and accessibility at
-  Phase 6.
+  Phase 7.
+- **Content integrity:** no placeholder text ships; every published project is
+  defensible in an interview.
 
 ## 14. Conventions
 

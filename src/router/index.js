@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import profile from '@/data/profile.json'
+import education from '@/data/education.json'
 import { findNodeByRoute } from '@/lib/files'
 import { openFile, setActiveRoute } from '@/stores/workspace'
 
@@ -31,6 +32,12 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: () => import('@/components/content/ContactView.vue'),
+  },
+  {
+    path: '/education',
+    name: 'education',
+    component: () => import('@/components/content/EducationView.vue'),
+    props: { education },
   },
   {
     path: '/:pathMatch(.*)*',

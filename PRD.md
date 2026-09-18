@@ -1,25 +1,53 @@
-# Product Requirements Document — Developer Portfolio
+# Product Requirements Document — Developer Portfolio (v2)
 
-Status: Draft
-Date: 2026-09-18
+Status: Active
+Date: 2026-09-19
+Version: 2.0
 Owner: Developer
-Related docs: `PLANNING.md`, `DESIGN.md`
+Related docs: `PLANNING.md`, `DESIGN.md`, `AGENTS.md`
+Supersedes: v1 PRD (2026-09-18)
 
 ## 1. Overview
 
-A personal developer portfolio presented as a VS Code–style editor. The site has
-two audiences with opposite needs:
+A personal developer portfolio presented as a VS Code–style editor. The site
+still serves two audiences with opposite needs:
 
 - **Recruiters / hiring managers** — must understand who the developer is and
-  reach the resume and contact details in under 30 seconds.
+  reach the resume and contact details in under 30 seconds, on the device they
+  happen to be holding.
 - **Developers / peers** — should find the experience playful and interactive,
   with a command palette and an editor aesthetic that rewards exploration.
 
-The design resolves this tension with a **dual-layer** approach: a plain,
-scannable "reader" surface is the default, and the editor gimmick is layered on
-top as an optional interaction.
+v1 proved the shell. v2 makes it convert. The dual-layer approach is unchanged:
+a plain, scannable reader surface is the default, and the editor costume is
+layered on top as an optional interaction.
 
-## 2. Problem Statement
+## 2. What v2 changes
+
+v1 was structurally complete but failed on three counts: it was empty, it did
+not grab attention, and mobile abandoned the editor identity. v2 addresses each
+directly.
+
+- **Purpose.** v2 exists to convert a recruiter into an interview. Every
+  tradeoff resolves toward that outcome. Aesthetic serves conversion, never the
+  reverse.
+- **Positioning.** The candidate is a university student and a **front-end
+  developer with AI-accelerated workflows**. Front-end depth is the claim;
+  agentic AI is a supporting skill line, not a headline.
+- **First impression.** The hero entrance is the primary attention lever: the
+  profile JSON resolves into the readable hero. It must complete in under one
+  second and never delay or reflow content.
+- **Mobile identity.** Mobile keeps the metaphor through a bottom activity bar
+  as the primary navigation, with the command palette as a secondary entry
+  point and plain reader content inside. Mobile is no longer a degraded copy of
+  the desktop shell.
+- **Content honesty.** Only projects the candidate can defend unaided in an
+  interview are published. The site ships early and grows, but empty sections
+  use honest in-progress states rather than filler.
+- **Scope additions.** Collapsible panels and a presentational terminal view
+  move from non-goals into scope. See section 5 for the exact boundary.
+
+## 3. Problem statement
 
 Most developer portfolios are either:
 
@@ -28,9 +56,10 @@ Most developer portfolios are either:
   developers but hostile to a non-technical recruiter scanning on a phone.
 
 The portfolio must signal "this person is a developer" without sacrificing the
-recruiter's ability to complete the primary task.
+recruiter's ability to complete the primary task — and without collapsing into
+a generic page the moment the viewport narrows.
 
-## 3. Goals and Success Criteria
+## 4. Goals and success criteria
 
 ### Primary success criterion
 
@@ -42,74 +71,108 @@ deferred.
 
 ### Secondary goals
 
+- Mobile preserves the editor identity rather than reading as a generic site.
 - Present projects clearly enough that a reviewer can understand scope, stack,
-  and outcome for each.
+  and outcome, and that the candidate can defend each one in an interview.
 - Demonstrate front-end competence through the shell's execution quality.
 - Keep content maintainable through local data files.
 
 ### Non-goals (explicitly out of scope)
 
-- Real editor emulation (draggable panels, resizable splits, settings,
-  keybindings).
-- A working terminal or shell emulator.
+- A real, working shell or command execution. The terminal view is
+  presentational only.
+- Drag-to-resize splits. Panels may collapse and expand, but not resize freely.
+- Editable files, live playgrounds, or embedded runtimes.
+- Additional themes beyond the light/dark pair.
+- A writing or blog section.
 - Authentication, accounts, or any backend.
 - A CMS or admin interface.
-- Live coding, playgrounds, or embedded runtimes.
 
-## 4. Target Users
+## 5. Scope boundary
+
+The v1 non-goals list is amended as follows. This table is the contract.
+
+| Capability | v1 | v2 |
+| --- | --- | --- |
+| Collapsible panels | Out | **In** (collapse/expand only) |
+| Terminal view | Out | **In** (presentational only) |
+| Drag-to-resize splits | Out | Out |
+| Editable files / playground | Out | Out |
+| Extra themes | Out | Out |
+| Writing / blog | Out | Out |
+| Backend / auth / CMS | Out | Out |
+
+Anything not marked "In" is a non-goal. Adding a row requires updating this
+document and `DESIGN.md` in the same change.
+
+## 6. Target users
 
 ### Primary: Recruiter / hiring manager
 
 - Non-technical or semi-technical.
 - Often on mobile, often time-constrained.
-- Wants: name, role, summary, resume, contact, and a fast read on projects.
+- Wants: name, role, summary, resume, contact, and a fast read on projects and
+  education.
 
 ### Secondary: Developer / peer
 
 - Technical, curious, evaluates craft.
 - Wants: interaction, structure, and evidence of engineering taste.
 
-## 5. User Stories
+### Tertiary: The candidate as interviewee
+
+- Needs every published claim to be defensible line-by-line.
+- Needs the site itself to serve as a flagship project they can explain.
+
+## 7. User stories
 
 - As a recruiter, I want to see who this person is immediately, so I can decide
   whether to keep reading.
 - As a recruiter, I want a resume download and contact details within one click
   of landing, so I can act fast.
-- As a recruiter, I want project summaries I can scan, so I can judge fit.
-- As a recruiter on mobile, I want the site to work without pinch-zooming or
-  horizontal scrolling.
+- As a recruiter on mobile, I want the same speed and the same identity as on
+  desktop, without pinch-zooming or horizontal scrolling.
+- As a recruiter, I want project and education summaries I can scan, so I can
+  judge fit.
 - As a developer, I want to explore the site through an editor-like interface,
   so the experience feels native to me.
 - As a developer, I want a command palette to jump around, so navigation feels
   efficient.
+- As the candidate, I want to publish only what I can defend, so the portfolio
+  never becomes a liability in an interview.
+- As the candidate, I want to point at this site as a project, so it doubles as
+  evidence of front-end skill.
 - As the developer (owner), I want content in local data files, so updates do
   not require touching components.
 
-## 6. Functional Requirements
+## 8. Functional requirements
 
 ### FR-1 Editor shell
 
 - The site renders a VS Code–style layout: title bar, activity bar, sidebar
   file tree, editor area, status bar.
-- The shell is presentational ("look-alike"). No panel dragging or resizing.
+- The shell is presentational ("look-alike").
+- The sidebar and supporting panels are collapsible and expandable (see FR-10).
+  No drag-to-resize.
 
 ### FR-2 Sidebar file tree
 
-- The sidebar lists exactly four entries:
-  - `about.json`
-  - `projects/` (folder)
-  - `resume.pdf`
-  - `contact.md`
+- The sidebar lists the sections: `about.json`, `projects/` (folder),
+  `resume.pdf`, `contact.md`, and `education.md`.
 - Selecting an entry opens its content in the editor area.
 - The active entry is visually highlighted.
 
 ### FR-3 Hero (about)
 
 - Default view is a **plain, scannable intro**: name, role, one-line summary,
-  two to three quick facts, a Resume button, and a Contact button.
+  quick facts, a Resume button, and a Contact button.
 - A toggle (for example a `{ }` control or an "about.json" tab) switches the
   hero to a literal, syntax-highlighted JSON rendering of the profile.
 - The plain view is the default on first load and on mobile.
+- **Entrance:** on first load, the profile JSON resolves into the readable hero
+  as the attention hook. It completes in under one second, never blocks text,
+  produces no layout shift, and collapses to an instant reveal under
+  `prefers-reduced-motion`.
 
 ### FR-4 Projects
 
@@ -117,12 +180,13 @@ deferred.
 - Each project shows: name, short description, stack, the developer's role, a
   link, and optionally an outcome or metric.
 - Selecting a project opens its detail view.
+- Only defensible projects are published (see FR-12).
 
 ### FR-5 Resume
 
-- Selecting `resume.pdf` downloads the PDF.
-- A visible Resume button is also present in the hero and, where appropriate,
-  in the status bar.
+- Selecting `resume.pdf` opens the resume view and offers a real PDF download.
+- A visible Resume button is also present in the hero, on mobile in the
+  persistent action bar, and where appropriate in the status bar.
 
 ### FR-6 Contact
 
@@ -133,9 +197,11 @@ deferred.
 
 - Keyboard shortcut `Ctrl+K` (Windows/Linux) and `Cmd+K` (macOS) opens a
   command palette overlay.
-- Commands: navigate to each section, open the resume (triggers download),
-  copy email, and toggle the JSON view.
+- Commands: navigate to each section, open the resume, copy email, toggle the
+  color theme, toggle the JSON view, collapse/expand the sidebar, and open the
+  terminal view.
 - The palette is keyboard navigable and dismissible with `Escape`.
+- On mobile, the palette is reachable from a persistent search affordance.
 
 ### FR-8 Deep linking
 
@@ -144,11 +210,52 @@ deferred.
 
 ### FR-9 Responsive behavior
 
-- Desktop: full three-pane editor layout.
-- Mobile: the sidebar collapses into a drawer; the editor area becomes a
-  normal scrollable page; no horizontal scrolling.
+- **Desktop:** full three-pane editor layout.
+- **Mobile:** the activity bar becomes a persistent bottom bar and is the
+  primary navigation. The command palette is available as a secondary entry
+  point. The editor area is a normal scroll region with reader content. A
+  persistent bottom action keeps Resume and Contact one tap away.
+- No horizontal scrolling at any width.
 
-## 7. Non-Functional Requirements
+### FR-10 Collapsible panels
+
+- The sidebar can be collapsed and expanded on desktop.
+- Collapse state is reflected in the layout and in the command palette.
+- No drag-to-resize behavior is implemented.
+
+### FR-11 Terminal view
+
+- A presentational terminal view is available as a panel or tab.
+- It renders canned output only. It does not execute commands.
+- It must be clearly non-interactive, or, if it accepts input, must not imply a
+  real shell.
+
+### FR-12 Education and proof
+
+- An `education.md` section presents university, degree, expected graduation,
+  and relevant coursework.
+- Achievements, certifications, hackathons, or open-source contributions are
+  presented where available.
+- A GitHub link is present in the hero and contact views.
+
+### FR-13 Content integrity
+
+- No placeholder or invented content ships to production.
+- Sections without real content render an honest in-progress state instead of
+  filler.
+
+## 9. Content requirements
+
+- `profile.json`: real name, role, summary, location, quick facts, email,
+  social links, resume path.
+- `projects.json`: ordered list of projects. A project is publishable only if
+  the candidate can explain its architecture and key decisions unaided.
+- `education.json` (or equivalent): university, degree, expected graduation,
+  coursework.
+- `resume.pdf`: a real, downloadable resume as a static asset.
+- Project imagery or logos if available.
+
+## 10. Non-functional requirements
 
 ### Accessibility
 
@@ -158,7 +265,8 @@ deferred.
   (`aria-hidden`); a readable equivalent is always available.
 - All interactive controls are keyboard reachable and have accessible names.
 - Color contrast meets WCAG AA for text.
-- Motion respects `prefers-reduced-motion`.
+- Motion respects `prefers-reduced-motion`; the hero entrance is instant in that
+  mode.
 
 ### Performance
 
@@ -166,6 +274,7 @@ deferred.
   bundle size.
 - Target: usable first render on a mid-range phone on a slow connection.
 - Lazy-load non-critical views and any heavy highlighting code.
+- The hero entrance must not regress Cumulative Layout Shift.
 
 ### SEO and sharing
 
@@ -184,39 +293,47 @@ deferred.
 - Components are single-responsibility and documented by contract in
   `DESIGN.md`.
 
-## 8. Content Requirements
-
-- `profile.json`: name, role, summary, quick facts, email, social links, resume
-  path.
-- `projects.json`: ordered list of projects with the fields defined in
-  `DESIGN.md`.
-- `resume.pdf`: stored as a static asset and downloadable.
-- Project imagery or logos if available.
-
-## 9. Metrics
+## 11. Metrics
 
 - Primary: the 30-second usability test passes, unaided, on desktop and mobile.
+- Secondary: mobile preserves the editor identity in an unaided first
+  impression.
 - Secondary: at least one interview or reply attributable to the portfolio
   within an agreed window after it is shared.
 
-## 10. Risks and Mitigations
+## 12. Risks and mitigations
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
-| Editor costume reads as style over substance | Credibility | One genuine interaction (command palette); strong project content |
-| JSON hero slows the recruiter | Primary metric fails | Plain view is the default; JSON is opt-in |
+| Site ships empty while content is pending | Primary metric fails | Honest in-progress states; publish only defensible projects; keep the site's own case study as the flagship |
+| "Vibecoded" projects collapse under interview probing | Credibility | Ship only what the candidate can defend unaided; one write-up per project |
+| Hero entrance delays or reflows the recruiter | Primary metric fails | Under 1s, no layout shift, never blocks text, instant under reduced motion |
+| Mobile hybrid sprawls into three competing nav models | Usability | Bottom activity bar is the single primary nav; palette is secondary only |
+| Collapsible panels and terminal creep toward full editor emulation | Scope and performance | Enforce the scope boundary in section 5; terminal is presentational only |
+| Editor costume reads as style over substance | Credibility | One genuine interaction (command palette); strong project and education content |
 | VS Code look appears inauthentic | Credibility | Use real Codicons and a true monospace font; match spacing and colors |
-| Syntax highlighting bloats bundle | Performance | Use a minimal highlighter or a small custom JSON renderer |
-| Mobile layout degrades | Reach | Drawer pattern; test on real devices |
 
-## 11. Milestones
+## 13. Milestones
 
-1. Shell and navigation skeleton.
-2. Hero with reader/JSON toggle.
-3. Projects, resume, and contact views.
-4. Command palette.
-5. Responsive and mobile drawer.
-6. Accessibility, SEO, and performance pass.
-7. Usability test and refinement.
+1. Reconcile docs (`DESIGN.md`, `PLANNING.md`, `AGENTS.md`) with this scope.
+2. Content pipeline: real profile, education, resume, and one to two defensible
+   projects.
+3. Mobile redesign: bottom activity bar, palette entry point, persistent action
+   bar, reader content.
+4. Hero JSON entrance.
+5. Collapsible panels.
+6. Terminal view.
+7. Accessibility, SEO, and performance pass.
+8. Usability test and refinement.
 
 Detailed tasks and ordering live in `PLANNING.md`.
+
+## 14. Definition of done
+
+- All functional requirements above are implemented or explicitly deferred.
+- The 30-second test passes, unaided, on desktop and mobile.
+- Mobile retains the editor identity in an unaided first impression.
+- Every published project is defensible in an interview.
+- Accessibility, SEO, and performance checks pass.
+- Content is editable through data files only.
+- No capability outside the section 5 boundary has crept in.

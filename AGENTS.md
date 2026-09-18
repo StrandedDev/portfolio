@@ -22,7 +22,10 @@ before making structural changes.
 
 Layers, innermost to outermost. Dependencies point inward only.
 
-1. `src/data` — plain JSON content (`profile.json`, `projects.json`). No imports.
+1. `src/data` — plain JSON content (`profile.json`, `projects.json`,
+   `education.json`). No imports. `projects.dev.json` holds demo-only
+   placeholders loaded under `import.meta.env.DEV` only; production renders
+   `projects.json` and its honest in-progress state.
 2. `src/lib` — pure, Vue-free functions (`files.js`, `commands.js`, `highlight.js`).
 3. `src/stores`, `src/composables` — reactive state and reusable logic. May import
    lib/data; never components.
@@ -34,8 +37,10 @@ Key modules:
   routes, and paths. Sidebar, tabs, and breadcrumbs derive from it. Never
   hardcode a route in a component.
 - `src/stores/workspace.js` — UI state only (`activeRoute`, `openTabs`,
-  `heroMode`, `sidebarOpen`, `paletteOpen`, `notice`). Content comes from data
-  files; derived values are computed in `lib`.
+  `heroMode`, `heroEntered`, `sidebarOpen`, `sidebarCollapsed`, `terminalOpen`,
+  `paletteOpen`, `notice`). Content comes from data files; derived values are
+  computed in `lib`. The color theme is a root `data-theme` attribute persisted
+  to `localStorage`, not store state.
 - `src/router/index.js` — routes are lazy-loaded; `afterEach` syncs the store
   and document title.
 
@@ -56,11 +61,17 @@ Import alias `@` resolves to `src` (configured in `vite.config.js` and
 
 ## Constraints
 
-- Do not add editor-emulation features beyond the shell (no resizable panels,
-  terminals, auth, or backend). See the non-goals in `PRD.md`.
+- Stay inside the scope boundary in `PRD.md` section 5. Collapsible panels and a
+  presentational terminal are allowed. Drag-to-resize splits, editable files,
+  extra themes, a blog, auth, and any backend are not.
+- The terminal never executes commands; it renders canned output only.
+- Mobile uses the bottom activity bar as the single primary navigation; the
+  command palette is a secondary entry point. Do not add a competing nav model.
 - Preserve accessibility: one `<h1>` per view, semantic landmarks, visible
   focus, `prefers-reduced-motion`, `aria-hidden` JSON hero.
 - No horizontal scroll at any width; touch targets >= 44px; test mobile.
+- No placeholder content in production; empty sections use honest in-progress
+  states.
 
 ## Commits
 

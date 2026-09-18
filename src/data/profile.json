@@ -1,17 +1,17 @@
 {
-  "name": "Alex Rivera",
-  "role": "Software Engineer",
-  "summary": "I build fast, accessible web interfaces with a focus on developer experience and clean architecture.",
-  "location": "Lisbon, Portugal",
+  "name": "Md. Mostaqim Hasib",
+  "role": "Junior Software Engineer, Frontend Developer",
+  "summary": "Software projects & developer tools.",
+  "location": "Rangpur, Bangladesh",
   "facts": [
-    { "label": "Focus", "value": "Front-end & tooling" },
-    { "label": "Experience", "value": "5 years" },
-    { "label": "Stack", "value": "Vue, TypeScript, Node" }
+    { "label": "Focus", "value": "Frontend" },
+    { "label": "Experience", "value": "1 year" },
+    { "label": "Stack", "value": "Vue, Nuxt, Python, SQLite3" }
   ],
-  "email": "alex.rivera@example.com",
+  "email": "mostaqimhasib77@gmail.com",
   "resumePath": "/resume.pdf",
   "links": [
-    { "label": "GitHub", "url": "https://github.com/username" },
-    { "label": "LinkedIn", "url": "https://linkedin.com/in/username" }
+    { "label": "GitHub", "url": "https://github.com/StrandedDev" },
+    { "label": "Codeforces", "url": "https://codeforces.com/profile/stranded_dev" }
   ]
 }

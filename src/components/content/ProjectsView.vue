@@ -17,7 +17,7 @@ const projects = getProjects()
       result.
     </p>
 
-    <ul class="project-list">
+    <ul v-if="projects.length" class="project-list">
       <li v-for="project in projects" :key="project.id" class="project-card">
         <div class="project-card__top">
           <h2 class="project-card__name">
@@ -70,12 +70,45 @@ const projects = getProjects()
         </div>
       </li>
     </ul>
+
+    <section v-else class="empty-state" aria-labelledby="projects-empty-title">
+      <AppIcon name="lightbulb" :size="20" />
+      <h2 id="projects-empty-title" class="empty-state__title">
+        Case studies in progress
+      </h2>
+      <p class="empty-state__text">
+        Selected projects and write-ups are being prepared. Check back soon.
+      </p>
+    </section>
   </article>
 </template>
 
 <style scoped>
 .view__count {
   color: var(--color-fg-subtle);
+  font-size: var(--text-sm);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-6);
+  color: var(--color-fg-muted);
+  background: var(--color-bg-elevated);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state__title {
+  color: var(--color-fg);
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+
+.empty-state__text {
+  max-width: 48ch;
   font-size: var(--text-sm);
 }
 
