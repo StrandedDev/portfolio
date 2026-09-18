@@ -1,4 +1,6 @@
 <script setup>
+import AppIcon from '@/components/ui/AppIcon.vue'
+
 defineProps({
   path: { type: Array, required: true },
 })
@@ -9,7 +11,7 @@ defineProps({
     <ol>
       <li v-for="(segment, index) in path" :key="`${segment}-${index}`">
         <span v-if="index > 0" class="breadcrumbs__sep" aria-hidden="true">
-          <i class="codicon codicon-chevron-right"></i>
+          <AppIcon name="chevron-right" :size="14" />
         </span>
         <span
           class="breadcrumbs__item"
@@ -57,12 +59,10 @@ defineProps({
   color: var(--color-fg-subtle);
 }
 
-.breadcrumbs__sep .codicon {
+.breadcrumbs__sep .app-icon {
   position: relative;
   top: 1px;
   display: block;
-  font-size: 14px;
-  line-height: 1;
 }
 
 .breadcrumbs__item {

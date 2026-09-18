@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, defineAsyncComponent, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import profile from '@/data/profile.json'
 import {
@@ -24,9 +24,12 @@ import Sidebar from '@/components/sidebar/Sidebar.vue'
 import EditorTabs from '@/components/editor/EditorTabs.vue'
 import Breadcrumbs from '@/components/editor/Breadcrumbs.vue'
 import EditorArea from '@/components/editor/EditorArea.vue'
-import CommandPalette from '@/components/ui/CommandPalette.vue'
 import Drawer from '@/components/ui/Drawer.vue'
 import Toast from '@/components/ui/Toast.vue'
+
+const CommandPalette = defineAsyncComponent(
+  () => import('@/components/ui/CommandPalette.vue'),
+)
 
 const route = useRoute()
 const router = useRouter()
@@ -45,16 +48,23 @@ watch(
 
 const drawerOpen = computed(() => isMobile.value && workspace.sidebarOpen)
 
-const theme = ref('dark')
-
-onMounted(() => {
+function readInitialTheme() {
   const stored = localStorage.getItem('portfolio-theme')
-  if (stored === 'light' || stored === 'dark') {
-    theme.value = stored
-  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-    theme.value = 'light'
-  }
-})
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark'
+}
+
+const theme = ref(readInitialTheme())
+const paletteMounted = ref(false)
+
+watch(
+  () => workspace.paletteOpen,
+  (open) => {
+    if (open) paletteMounted.value = true
+  },
+)
 
 watchEffect(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
@@ -181,6 +191,7 @@ function runCommand(id) {
       <Sidebar :nodes="fileTree" :active-id="activeId" @open="openNode" />
     </Drawer>
     <CommandPalette
+      v-if="paletteMounted"
       :open="workspace.paletteOpen"
       :commands="commands"
       @close="closePalette"
@@ -250,7 +261,7 @@ function runCommand(id) {
   z-index: 10;
   padding: var(--space-2) var(--space-3);
   color: var(--color-accent-fg);
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-weight: 500;

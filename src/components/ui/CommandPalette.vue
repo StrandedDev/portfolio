@@ -98,6 +98,7 @@ function onKeydown(event) {
             autocapitalize="off"
             spellcheck="false"
             role="combobox"
+            aria-label="Search commands"
             :aria-expanded="filtered.length > 0"
             aria-controls="palette-list"
             aria-autocomplete="list"

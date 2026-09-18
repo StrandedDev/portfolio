@@ -3,6 +3,7 @@ import AppButton from '@/components/ui/AppButton.vue'
 
 defineProps({
   profile: { type: Object, required: true },
+  interactive: { type: Boolean, default: true },
 })
 
 defineEmits(['open-resume', 'open-contact'])
@@ -19,10 +20,20 @@ defineEmits(['open-resume', 'open-contact'])
     <p class="hero__summary">{{ profile.summary }}</p>
 
     <div class="hero__actions">
-      <AppButton variant="primary" icon="cloud-download" @click="$emit('open-resume')">
+      <AppButton
+        variant="primary"
+        icon="cloud-download"
+        :tabindex="interactive ? undefined : -1"
+        @click="$emit('open-resume')"
+      >
         Resume
       </AppButton>
-      <AppButton variant="secondary" icon="mail" @click="$emit('open-contact')">
+      <AppButton
+        variant="secondary"
+        icon="mail"
+        :tabindex="interactive ? undefined : -1"
+        @click="$emit('open-contact')"
+      >
         Contact
       </AppButton>
     </div>
@@ -36,7 +47,12 @@ defineEmits(['open-resume', 'open-contact'])
 
     <ul class="hero__links">
       <li v-for="link in profile.links" :key="link.label">
-        <a :href="link.url" target="_blank" rel="noopener noreferrer">
+        <a
+          :href="link.url"
+          :tabindex="interactive ? undefined : -1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {{ link.label }}
         </a>
       </li>
@@ -64,11 +80,20 @@ defineEmits(['open-resume', 'open-contact'])
 }
 
 .hero__pulse {
+  position: relative;
   width: 7px;
   height: 7px;
   background: var(--syntax-number);
   border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(181, 206, 168, 0.6);
+}
+
+.hero__pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--syntax-number);
+  border-radius: 50%;
+  opacity: 0.55;
   animation: pulse 2.4s var(--ease-out) infinite;
 }
 
@@ -149,13 +174,16 @@ defineEmits(['open-resume', 'open-contact'])
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(181, 206, 168, 0.55);
+    transform: scale(1);
+    opacity: 0.55;
   }
   70% {
-    box-shadow: 0 0 0 8px rgba(181, 206, 168, 0);
+    transform: scale(3.3);
+    opacity: 0;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(181, 206, 168, 0);
+    transform: scale(3.3);
+    opacity: 0;
   }
 }
 

@@ -52,6 +52,11 @@ router.afterEach((to) => {
   setActiveRoute(to.path)
   const node = findNodeByRoute(to.path)
   if (node) openFile(node.id)
+  if (typeof document !== 'undefined') {
+    document.title = node
+      ? `${node.label} — ${profile.name}`
+      : `${profile.name} — ${profile.role}`
+  }
 })
 
 export default router

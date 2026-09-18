@@ -1,4 +1,6 @@
 <script setup>
+import AppIcon from '@/components/ui/AppIcon.vue'
+
 defineProps({
   node: { type: Object, required: true },
   depth: { type: Number, default: 0 },
@@ -29,18 +31,18 @@ defineEmits(['open', 'toggle'])
       :aria-label="expanded ? 'Collapse folder' : 'Expand folder'"
       @click.stop="$emit('toggle', node.id)"
     >
-      <i
-        class="codicon tree-item__chevron"
-        :class="expanded ? 'codicon-chevron-down' : 'codicon-chevron-right'"
-        aria-hidden="true"
-      ></i>
+      <AppIcon
+        class="tree-item__chevron"
+        :name="expanded ? 'chevron-down' : 'chevron-right'"
+        :size="16"
+      />
     </button>
     <span v-else class="tree-item__twistie"></span>
-    <i
-      class="codicon tree-item__icon"
-      :class="node.kind === 'folder' && expanded ? 'codicon-folder-opened' : `codicon-${node.icon || 'file'}`"
-      aria-hidden="true"
-    ></i>
+    <AppIcon
+      class="tree-item__icon"
+      :name="node.kind === 'folder' && expanded ? 'folder-opened' : node.icon || 'file'"
+      :size="15"
+    />
     <span class="tree-item__label" translate="no">{{ node.label }}</span>
   </div>
 </template>
@@ -100,7 +102,6 @@ defineEmits(['open', 'toggle'])
 
 .tree-item__icon {
   flex: none;
-  font-size: 15px;
 }
 
 .tree-item--active .tree-item__icon {

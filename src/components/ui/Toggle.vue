@@ -49,7 +49,7 @@ function select(index) {
   bottom: 3px;
   left: 3px;
   width: calc(50% - 3px);
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   border-radius: var(--radius-pill);
   box-shadow: 0 2px 8px rgba(55, 148, 255, 0.3);
   transition: transform var(--duration-base) var(--ease-spring);

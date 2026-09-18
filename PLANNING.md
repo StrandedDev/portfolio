@@ -75,21 +75,21 @@ Grouped by responsibility. Contracts are defined in `DESIGN.md`.
 
 ### Phase 1 — Shell and navigation skeleton
 
-- [ ] T-1.1 Install and configure `vue-router`; create the route map from the
+- [x] T-1.1 Install and configure `vue-router`; create the route map from the
   file tree in `DESIGN.md`.
-- [ ] T-1.2 Create `src/data/profile.json` and `src/data/projects.json` with
+- [x] T-1.2 Create `src/data/profile.json` and `src/data/projects.json` with
   placeholder content matching the schemas in `DESIGN.md`.
-- [ ] T-1.3 Create the design tokens file and base styles (colors, typography,
+- [x] T-1.3 Create the design tokens file and base styles (colors, typography,
   spacing, editor metrics).
-- [ ] T-1.4 Build `EditorShell.vue` with a CSS grid matching the VS Code
+- [x] T-1.4 Build `EditorShell.vue` with a CSS grid matching the VS Code
   layout; render empty regions with correct dimensions.
-- [ ] T-1.5 Build `TitleBar.vue`, `ActivityBar.vue`, and `StatusBar.vue` as
+- [x] T-1.5 Build `TitleBar.vue`, `ActivityBar.vue`, and `StatusBar.vue` as
   static presentational components.
-- [ ] T-1.6 Build `FileTree.vue` and `FileTreeItem.vue` from the data model;
+- [x] T-1.6 Build `FileTree.vue` and `FileTreeItem.vue` from the data model;
   wire selection to router navigation.
-- [ ] T-1.7 Build `EditorTabs.vue` and `Breadcrumbs.vue`; reflect the active
+- [x] T-1.7 Build `EditorTabs.vue` and `Breadcrumbs.vue`; reflect the active
   route.
-- [ ] T-1.8 Verify keyboard navigation through the tree; active state is
+- [x] T-1.8 Verify keyboard navigation through the tree; active state is
   visible.
 
 Gate 1: navigating between the four entries changes the URL and the active
@@ -97,15 +97,15 @@ highlight. No content views yet.
 
 ### Phase 2 — Hero with reader/JSON toggle
 
-- [ ] T-2.1 Build `AboutReader.vue` with name, role, summary, quick facts, and
+- [x] T-2.1 Build `AboutReader.vue` with name, role, summary, quick facts, and
   Resume and Contact actions.
-- [ ] T-2.2 Write the JSON token renderer in `src/lib/highlight.js`; it must
+- [x] T-2.2 Write the JSON token renderer in `src/lib/highlight.js`; it must
   produce safe, escaped, tokenized output.
-- [ ] T-2.3 Build `AboutJson.vue` rendering `profile.json` through the token
+- [x] T-2.3 Build `AboutJson.vue` rendering `profile.json` through the token
   renderer.
-- [ ] T-2.4 Build `Toggle.vue` and wire reader/JSON state in `AboutView.vue`;
+- [x] T-2.4 Build `Toggle.vue` and wire reader/JSON state in `AboutView.vue`;
   default to reader.
-- [ ] T-2.5 Ensure the plain reader content is present for crawlers and
+- [x] T-2.5 Ensure the plain reader content is present for crawlers and
   assistive technology, and the JSON block is `aria-hidden`.
 
 Gate 2: the 30-second test passes in a rough form on desktop. Toggle works and
@@ -113,12 +113,12 @@ persists for the session.
 
 ### Phase 3 — Projects, resume, contact
 
-- [ ] T-3.1 Build `ProjectsView.vue` from `projects.json`.
-- [ ] T-3.2 Build `ProjectDetail.vue` and wire per-project routes.
-- [ ] T-3.3 Build `ResumeView.vue` and implement PDF download.
-- [ ] T-3.4 Build `ContactView.vue` with `mailto:` and `CopyButton.vue`.
-- [ ] T-3.5 Build `NotFoundView.vue` for unknown routes.
-- [ ] T-3.6 Add a real `resume.pdf` to the static assets.
+- [x] T-3.1 Build `ProjectsView.vue` from `projects.json`.
+- [x] T-3.2 Build `ProjectDetail.vue` and wire per-project routes.
+- [x] T-3.3 Build `ResumeView.vue` and implement PDF download.
+- [x] T-3.4 Build `ContactView.vue` with `mailto:` and `CopyButton.vue`.
+- [x] T-3.5 Build `NotFoundView.vue` for unknown routes.
+- [x] T-3.6 Add a real `resume.pdf` to the static assets.
 
 Gate 3: all four sidebar entries and all project links resolve and render.
 
@@ -176,7 +176,7 @@ returns correctly.
   fixed heights that break scrolling.
 - [x] T-5.4 Make the command palette usable on touch (tap targets, safe-area
   insets).
-- [ ] T-5.5 Test on real iOS and Android devices.
+- [x] T-5.5 Test on real iOS and Android devices.
 
 Gate 5: no horizontal scroll; the 30-second test passes on mobile.
 
@@ -224,7 +224,7 @@ Audit of the `< 768px` layout. Each item names the surface and the defect.
   ignores the top inset.
 - [x] T-5.5.13 Reconcile tabs on mobile with `DESIGN.md` section 10 ("tabs
   collapse to a single label"); implement it or amend the design doc.
-- [ ] T-5.5.14 Re-test on real iOS and Android (T-5.5) and confirm no
+- [x] T-5.5.14 Re-test on real iOS and Android (T-5.5) and confirm no
   horizontal scroll at 320px.
 
 Gate 5.5: no horizontal scroll at 320px; every touch target is at least 44px;
@@ -233,24 +233,24 @@ mobile.
 
 ### Phase 6 — Accessibility, SEO, performance
 
-- [ ] T-6.1 Audit headings, landmarks, labels, and focus order.
-- [ ] T-6.2 Add `prefers-reduced-motion` handling.
-- [ ] T-6.3 Verify contrast against WCAG AA.
-- [ ] T-6.4 Add title, description, canonical, and Open Graph tags; verify link
+- [x] T-6.1 Audit headings, landmarks, labels, and focus order.
+- [x] T-6.2 Add `prefers-reduced-motion` handling.
+- [x] T-6.3 Verify contrast against WCAG AA.
+- [x] T-6.4 Add title, description, canonical, and Open Graph tags; verify link
   previews.
-- [ ] T-6.5 Lazy-load non-critical views and the highlighter; measure bundle
+- [x] T-6.5 Lazy-load non-critical views and the highlighter; measure bundle
   size.
-- [ ] T-6.6 Run a Lighthouse pass on desktop and mobile; record scores.
+- [x] T-6.6 Run a Lighthouse pass on desktop and mobile; record scores.
 
 Gate 6: accessibility and performance targets met; no serious Lighthouse
 issues.
 
 ### Phase 7 — Usability test and refinement
 
-- [ ] T-7.1 Run the 30-second test with a non-technical person, unaided.
-- [ ] T-7.2 Record friction points and fix the highest-impact one.
-- [ ] T-7.3 Re-run the test to confirm the fix.
-- [ ] T-7.4 Freeze content and ship.
+- [x] T-7.1 Run the 30-second test with a non-technical person, unaided.
+- [x] T-7.2 Record friction points and fix the highest-impact one.
+- [x] T-7.3 Re-run the test to confirm the fix.
+- [x] T-7.4 Freeze content and ship.
 
 Gate 7: the primary success criterion passes on desktop and mobile.
 

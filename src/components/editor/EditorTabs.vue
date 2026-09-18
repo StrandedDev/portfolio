@@ -108,7 +108,7 @@ watch(
           @click="$emit('open', tab.id)"
           @focus="onTabFocus(tab.id)"
         >
-          <i class="codicon editor-tab__icon" :class="`codicon-${tab.icon || 'file'}`" aria-hidden="true"></i>
+          <AppIcon class="editor-tab__icon" :name="tab.icon || 'file'" :size="14" />
           <span translate="no">{{ tab.label }}</span>
         </button>
         <button
@@ -118,7 +118,7 @@ watch(
           :aria-label="`Close ${tab.label}`"
           @click.stop="$emit('close', tab.id)"
         >
-          <i class="codicon codicon-close" aria-hidden="true"></i>
+          <AppIcon name="close" :size="14" />
         </button>
       </div>
     </TransitionGroup>
@@ -200,7 +200,7 @@ watch(
 }
 
 .editor-tab__icon {
-  font-size: 14px;
+  flex: none;
 }
 
 .editor-tab__close {

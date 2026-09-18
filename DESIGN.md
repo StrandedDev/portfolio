@@ -40,6 +40,7 @@ src/
     highlight.js              JSON token renderer
     commands.js               command registry
     files.js                  file tree data + route helpers
+    icons.js                  inline SVG icon paths (derived from Codicons)
   composables/
     useCommandPalette.js      open/close + shortcut
     useMediaQuery.js          responsive queries
@@ -238,7 +239,8 @@ The store holds UI state only. Content comes from data files; derived views
   `update:modelValue`.
 - `AppButton` — props: `variant: "primary" | "secondary"`, `href?: string`.
   Emits: `click`.
-- `AppIcon` — props: `name: string`, `size?: number`. Emits: none.
+- `AppIcon` — props: `name: string`, `size?: number`. Renders an inline SVG
+  from `src/lib/icons.js`; no icon font is loaded. Emits: none.
 - `CopyButton` — props: `text: string`, `label?: string`. Emits: `copied`.
 
 ## 8. Design tokens

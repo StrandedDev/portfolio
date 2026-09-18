@@ -1,11 +1,12 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import profile from '@/data/profile.json'
 import { setHeroMode, useWorkspace } from '@/stores/workspace'
-import AboutJson from './AboutJson.vue'
 import AboutReader from './AboutReader.vue'
 import Toggle from '@/components/ui/Toggle.vue'
+
+const AboutJson = defineAsyncComponent(() => import('./AboutJson.vue'))
 
 const router = useRouter()
 const workspace = useWorkspace()
@@ -31,6 +32,7 @@ function onToggle(value) {
     <div :class="{ 'visually-hidden': jsonMode }">
       <AboutReader
         :profile="profile"
+        :interactive="!jsonMode"
         @open-resume="router.push('/resume')"
         @open-contact="router.push('/contact')"
       />

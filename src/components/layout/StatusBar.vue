@@ -100,7 +100,6 @@ defineEmits(['open-resume', 'toggle-theme'])
     min-width: 0;
     padding-left: var(--space-2);
     letter-spacing: 0.01em;
-    opacity: 0.92;
   }
 
   .status-bar__file > span:last-child {

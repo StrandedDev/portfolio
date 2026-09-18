@@ -7,6 +7,7 @@ defineProps({
   icon: { type: String, default: '' },
   type: { type: String, default: 'button' },
   target: { type: String, default: '' },
+  tabindex: { type: [String, Number], default: undefined },
 })
 
 defineEmits(['click'])
@@ -19,6 +20,7 @@ defineEmits(['click'])
     :class="`app-button--${variant}`"
     :href="href"
     :target="target || undefined"
+    :tabindex="tabindex"
     :rel="target === '_blank' ? 'noopener noreferrer' : undefined"
     @click="$emit('click', $event)"
   >
@@ -30,6 +32,7 @@ defineEmits(['click'])
     class="app-button"
     :class="`app-button--${variant}`"
     :type="type"
+    :tabindex="tabindex"
     @click="$emit('click', $event)"
   >
     <AppIcon v-if="icon" :name="icon" :size="15" />
@@ -69,13 +72,13 @@ defineEmits(['click'])
 }
 
 .app-button--primary {
-  background: var(--color-accent);
+  background: var(--color-accent-solid);
   color: var(--color-accent-fg);
   box-shadow: 0 6px 16px rgba(55, 148, 255, 0.24);
 }
 
 .app-button--primary:hover {
-  background: var(--color-accent-strong);
+  background: var(--color-accent-solid-strong);
   color: var(--color-accent-fg);
 }
 
