@@ -40,7 +40,6 @@ Lock these before writing feature code.
 
 New or changed relative to `DESIGN.md` section 7.
 
-- `MobileActionBar.vue` — persistent Resume and Contact bar on mobile.
 - `TerminalPanel.vue` — presentational terminal rendering canned output.
 - `EducationView.vue` — education and achievements.
 - `ActivityBar.vue` — doubles as the mobile bottom bar.
@@ -78,12 +77,13 @@ the resume downloads.
 
 ### Phase 3 — Mobile redesign
 
-- [ ] T-3.1 Make the bottom activity bar the single primary navigation.
-- [ ] T-3.2 Add a persistent search affordance that opens the command palette.
-- [ ] T-3.3 Add `MobileActionBar` with Resume and Contact.
-- [ ] T-3.4 Render reader content in the editor area; keep the bottom activity
+- [x] T-3.1 Make the bottom activity bar the single primary navigation.
+- [x] T-3.2 Add a persistent search affordance that opens the command palette.
+- [x] T-3.3 Keep Resume and the contact action in the hero; no separate mobile
+  action bar.
+- [x] T-3.4 Render reader content in the editor area; keep the bottom activity
   bar as the primary navigation and retire the v1 drawer-as-primary-nav model.
-- [ ] T-3.5 Verify no horizontal scroll at 320px and 44px touch targets.
+- [x] T-3.5 Verify no horizontal scroll at 320px and 44px touch targets.
 
 Gate 3: mobile keeps the editor identity in an unaided first impression; the
 30-second test passes on mobile; no horizontal scroll at 320px.

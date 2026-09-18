@@ -34,7 +34,6 @@ function onToggle(value) {
         :profile="profile"
         :interactive="!jsonMode"
         @open-resume="router.push('/resume')"
-        @open-contact="router.push('/contact')"
       />
     </div>
 

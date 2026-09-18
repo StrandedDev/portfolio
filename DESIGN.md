@@ -55,7 +55,6 @@ src/
       TitleBar.vue
       ActivityBar.vue
       StatusBar.vue
-      MobileActionBar.vue
     sidebar/
       Sidebar.vue
       FileTree.vue
@@ -230,11 +229,10 @@ to `localStorage`; it is not store state.
 - `TitleBar` — props: `title: string`. Emits: none.
 - `ActivityBar` — props: `active: string`, `sidebarOpen: boolean`. Emits:
   `select(sectionId)`. Renders as the vertical strip on desktop and as the
-  bottom bar on mobile.
+  bottom bar on mobile. On mobile it shows Explorer, About, Projects, and
+  Education; Resume and the contact action live in the hero.
 - `StatusBar` — props: `branch: string`, `file: string`,
   `resumePath: string`. Emits: `open-resume`, `toggle-theme`.
-- `MobileActionBar` — no props. Emits: `open-resume`, `open-contact`. Visible
-  only on mobile; keeps the two primary actions one tap away.
 
 ### Sidebar
 
@@ -261,8 +259,8 @@ to `localStorage`; it is not store state.
 ### Content
 
 - `AboutView` — no props. Reads the store and profile data.
-- `AboutReader` — props: `profile: Profile`. Emits: `open-resume`,
-  `open-contact`.
+- `AboutReader` — props: `profile: Profile`. Emits: `open-resume`. The contact
+  action is a prefilled `mailto:` link built from the profile.
 - `AboutJson` — props: `data: object`. Renders tokenized JSON; container is
   `aria-hidden`.
 - `ProjectsView` — props: `projects: Project[]`. Emits: `open(id)`.
@@ -328,10 +326,11 @@ component hardcodes a color.
 - Tablet (768px–1023px): sidebar narrower; tabs and breadcrumbs may collapse.
 - Mobile (< 768px): the activity bar becomes a **bottom bar** and is the single
   primary navigation. The file tree moves behind that bar as a `Drawer`. The
-  editor area scrolls normally with reader content. A persistent
-  `MobileActionBar` keeps Resume and Contact one tap away. The command palette
-  is reachable from a persistent search affordance and is the only secondary
-  entry point.
+  title bar stays visible as a compact search affordance that opens the command
+  palette. The editor area scrolls normally with reader content; the hero keeps
+  Resume and a contact call to action one tap away. The status bar is
+  desktop-only. The command palette is reachable from the persistent search
+  affordance and is the only secondary entry point.
 
 Rules:
 

@@ -1,12 +1,19 @@
 <script setup>
+import { computed } from 'vue'
 import AppButton from '@/components/ui/AppButton.vue'
 
-defineProps({
+const props = defineProps({
   profile: { type: Object, required: true },
   interactive: { type: Boolean, default: true },
 })
 
-defineEmits(['open-resume', 'open-contact'])
+defineEmits(['open-resume'])
+
+const mailto = computed(() => {
+  const subject = `Hiring enquiry — ${props.profile.name}`
+  const body = `Hi ${props.profile.name},\n\nI came across your portfolio and would like to talk about a role.\n\n`
+  return `mailto:${props.profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+})
 </script>
 
 <template>
@@ -21,7 +28,7 @@ defineEmits(['open-resume', 'open-contact'])
 
     <div class="hero__actions">
       <AppButton
-        variant="primary"
+        variant="secondary"
         icon="cloud-download"
         :tabindex="interactive ? undefined : -1"
         @click="$emit('open-resume')"
@@ -29,12 +36,12 @@ defineEmits(['open-resume', 'open-contact'])
         Resume
       </AppButton>
       <AppButton
-        variant="secondary"
+        variant="primary"
         icon="mail"
+        :href="mailto"
         :tabindex="interactive ? undefined : -1"
-        @click="$emit('open-contact')"
       >
-        Contact
+        Hire me
       </AppButton>
     </div>
 
@@ -190,6 +197,16 @@ defineEmits(['open-resume', 'open-contact'])
 @media (max-width: 767px) {
   .hero__name {
     font-size: 36px;
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .hero__actions :deep(.app-button) {
+    width: 100%;
   }
 
   .hero__facts {

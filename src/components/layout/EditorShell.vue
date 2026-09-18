@@ -148,7 +148,7 @@ function runCommand(id) {
     }"
   >
     <a class="skip-link" href="#main">Skip to content</a>
-    <div v-if="!isMobile" class="editor-shell__titlebar">
+    <div class="editor-shell__titlebar">
       <TitleBar :title="title" @open-palette="openPalette" />
     </div>
     <div class="editor-shell__activity">
@@ -172,7 +172,7 @@ function runCommand(id) {
       <Breadcrumbs v-if="!isMobile" :path="breadcrumbs" />
       <EditorArea />
     </div>
-    <div class="editor-shell__status">
+    <div v-if="!isMobile" class="editor-shell__status">
       <StatusBar
         branch="main"
         :file="activeNode?.label ?? 'portfolio'"
@@ -285,9 +285,9 @@ function runCommand(id) {
   padding-right: env(safe-area-inset-right);
   padding-left: env(safe-area-inset-left);
   grid-template-areas:
-    'activity'
+    'title'
     'editor'
-    'status';
+    'activity';
   grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-columns: minmax(0, 1fr);
 }

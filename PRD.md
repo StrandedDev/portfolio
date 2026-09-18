@@ -185,8 +185,8 @@ document and `DESIGN.md` in the same change.
 ### FR-5 Resume
 
 - Selecting `resume.pdf` opens the resume view and offers a real PDF download.
-- A visible Resume button is also present in the hero, on mobile in the
-  persistent action bar, and where appropriate in the status bar.
+- A visible Resume button is also present in the hero and where appropriate in
+  the status bar.
 
 ### FR-6 Contact
 
@@ -213,8 +213,8 @@ document and `DESIGN.md` in the same change.
 - **Desktop:** full three-pane editor layout.
 - **Mobile:** the activity bar becomes a persistent bottom bar and is the
   primary navigation. The command palette is available as a secondary entry
-  point. The editor area is a normal scroll region with reader content. A
-  persistent bottom action keeps Resume and Contact one tap away.
+  point. The editor area is a normal scroll region with reader content. The hero
+  keeps Resume and a contact call to action one tap away.
 - No horizontal scrolling at any width.
 
 ### FR-10 Collapsible panels
@@ -318,8 +318,8 @@ document and `DESIGN.md` in the same change.
 1. Reconcile docs (`DESIGN.md`, `PLANNING.md`, `AGENTS.md`) with this scope.
 2. Content pipeline: real profile, education, resume, and one to two defensible
    projects.
-3. Mobile redesign: bottom activity bar, palette entry point, persistent action
-   bar, reader content.
+3. Mobile redesign: bottom activity bar, palette entry point, hero actions,
+   reader content.
 4. Hero JSON entrance.
 5. Collapsible panels.
 6. Terminal view.

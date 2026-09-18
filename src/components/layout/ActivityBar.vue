@@ -12,15 +12,20 @@ const sections = [
   { id: 'explorer', icon: 'files', label: 'Explorer' },
   { id: 'about', icon: 'account', label: 'About' },
   { id: 'projects', icon: 'folder', label: 'Projects' },
-  { id: 'resume', icon: 'file-pdf', label: 'Resume' },
-  { id: 'contact', icon: 'mail', label: 'Contact' },
+  { id: 'education', icon: 'markdown', label: 'Education' },
+  { id: 'resume', icon: 'file-pdf', label: 'Resume', desktopOnly: true },
+  { id: 'contact', icon: 'mail', label: 'Contact', desktopOnly: true },
 ]
 </script>
 
 <template>
   <nav class="activity-bar" aria-label="Sections">
     <ul class="activity-bar__list">
-      <li v-for="section in sections" :key="section.id">
+      <li
+        v-for="section in sections"
+        :key="section.id"
+        :class="{ 'activity-bar__desktop-only': section.desktopOnly }"
+      >
         <button
           type="button"
           class="activity-bar__item"
@@ -114,8 +119,10 @@ const sections = [
   .activity-bar {
     flex-direction: row;
     height: auto;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--color-activity);
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
   }
 
   .activity-bar__list {
@@ -129,7 +136,7 @@ const sections = [
     min-width: 0;
   }
 
-  .activity-bar__list > li:first-child {
+  .activity-bar__list > li.activity-bar__desktop-only {
     display: none;
   }
 
