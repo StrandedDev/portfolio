@@ -1,0 +1,76 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 867 >>
+stream
+BT
+/F2 24 Tf
+1 0 0 1 72 760 Tm
+(Alex Rivera) Tj
+/F1 13 Tf
+1 0 0 1 72 728 Tm
+(Software Engineer) Tj
+/F1 11 Tf
+1 0 0 1 72 707 Tm
+(Lisbon, Portugal  |  alex.rivera@example.com) Tj
+/F1 11 Tf
+1 0 0 1 72 688 Tm
+(github.com/username  |  linkedin.com/in/username) Tj
+/F2 14 Tf
+1 0 0 1 72 669 Tm
+(Summary) Tj
+/F1 11 Tf
+1 0 0 1 72 647 Tm
+(I build fast, accessible web interfaces with a focus on) Tj
+/F1 11 Tf
+1 0 0 1 72 628 Tm
+(developer experience and clean architecture.) Tj
+/F2 14 Tf
+1 0 0 1 72 609 Tm
+(Experience) Tj
+/F1 11 Tf
+1 0 0 1 72 587 Tm
+(Lead Front-end Engineer  |  Atlas  |  2022 - Present) Tj
+/F1 11 Tf
+1 0 0 1 72 568 Tm
+(Owned architecture and rendering performance for a) Tj
+/F1 11 Tf
+1 0 0 1 72 549 Tm
+(real-time logistics dashboard.) Tj
+/F2 14 Tf
+1 0 0 1 72 530 Tm
+(Skills) Tj
+/F1 11 Tf
+1 0 0 1 72 508 Tm
+(Vue, TypeScript, Node, D3, Web Workers, Vitest) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000001169 00000 n 
+0000001239 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1314
+%%EOF

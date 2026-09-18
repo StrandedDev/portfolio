@@ -39,7 +39,8 @@ defineEmits(['open'])
   flex: none;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-3);
+  height: var(--tab-height);
+  padding: 0 var(--space-3);
   border-bottom: 1px solid var(--color-border);
 }
 

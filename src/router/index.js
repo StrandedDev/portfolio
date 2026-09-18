@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import profile from '@/data/profile.json'
 import { findNodeByRoute } from '@/lib/files'
 import { openFile, setActiveRoute } from '@/stores/workspace'
 
@@ -24,6 +25,7 @@ const routes = [
     path: '/resume',
     name: 'resume',
     component: () => import('@/components/content/ResumeView.vue'),
+    props: { resumePath: profile.resumePath },
   },
   {
     path: '/contact',

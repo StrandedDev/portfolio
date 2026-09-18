@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import profile from '@/data/profile.json'
 import {
   breadcrumbsForRoute,
   fileTree,
@@ -51,9 +52,20 @@ const activeSection = computed(() => {
   return activeNode.value?.id ?? ''
 })
 
+function downloadResume() {
+  const link = document.createElement('a')
+  link.href = profile.resumePath
+  link.download = profile.resumePath.split('/').pop() || 'resume.pdf'
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+}
+
 function openNode(id) {
   const node = findNodeById(id)
-  if (node?.route) router.push(node.route)
+  if (!node?.route) return
+  if (node.id === 'resume') downloadResume()
+  router.push(node.route)
 }
 
 function onActivitySelect(id) {
@@ -74,6 +86,7 @@ function onCloseTab(id) {
 }
 
 function openResume() {
+  downloadResume()
   router.push('/resume')
 }
 
@@ -106,7 +119,7 @@ function toggleTheme() {
     <div class="editor-shell__status">
       <StatusBar
         branch="main"
-        resume-path="/resume.pdf"
+        :resume-path="profile.resumePath"
         @open-resume="openResume"
         @toggle-theme="toggleTheme"
       />

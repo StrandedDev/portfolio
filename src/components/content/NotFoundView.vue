@@ -1,7 +1,10 @@
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import AppButton from '@/components/ui/AppButton.vue'
+import AppIcon from '@/components/ui/AppIcon.vue'
 
 const route = useRoute()
+const router = useRouter()
 </script>
 
 <template>
@@ -10,7 +13,32 @@ const route = useRoute()
       <h1 class="view__title">File not found</h1>
     </header>
     <p class="view__lede">
-      No file at <code>{{ route.path }}</code>.
+      No file at <code class="not-found__path">{{ route.path }}</code>. It may
+      have been moved or deleted.
+    </p>
+    <AppButton variant="primary" icon="home" @click="router.push('/about')">
+      Go to about.json
+    </AppButton>
+
+    <p class="not-found__hint">
+      <AppIcon name="lightbulb" :size="14" />
+      Try <code>about.json</code>, <code>projects</code>, or
+      <code>contact.md</code>.
     </p>
   </article>
 </template>
+
+<style scoped>
+.not-found__path {
+  color: var(--syntax-string);
+}
+
+.not-found__hint {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-5);
+  color: var(--color-fg-subtle);
+  font-size: var(--text-sm);
+}
+</style>
