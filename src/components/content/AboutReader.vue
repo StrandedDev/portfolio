@@ -158,4 +158,47 @@ defineEmits(['open-resume', 'open-contact'])
     box-shadow: 0 0 0 0 rgba(181, 206, 168, 0);
   }
 }
+
+@media (max-width: 767px) {
+  .hero__name {
+    font-size: 36px;
+  }
+
+  .hero__facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: var(--space-6);
+    overflow: hidden;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .hero__fact {
+    display: flex;
+    gap: var(--space-4);
+    align-items: baseline;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    transform: none;
+  }
+
+  .hero__fact:last-child {
+    border-bottom: none;
+  }
+
+  .hero__fact:hover {
+    border-color: transparent;
+    transform: none;
+  }
+
+  .hero__fact dd {
+    margin: 0;
+    text-align: right;
+  }
+}
 </style>

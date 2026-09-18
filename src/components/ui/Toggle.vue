@@ -74,4 +74,10 @@ function select(index) {
 .toggle__option--active {
   color: var(--color-accent-fg);
 }
+
+@media (pointer: coarse) {
+  .toggle__option {
+    min-height: 44px;
+  }
+}
 </style>

@@ -169,16 +169,67 @@ returns correctly.
 
 ### Phase 5 — Responsive and mobile drawer
 
-- [ ] T-5.1 Add breakpoints and a mobile layout mode.
-- [ ] T-5.2 Build `Drawer.vue`; collapse the sidebar behind the activity bar
+- [x] T-5.1 Add breakpoints and a mobile layout mode.
+- [x] T-5.2 Build `Drawer.vue`; collapse the sidebar behind the activity bar
   toggle on small screens.
-- [ ] T-5.3 Make the editor area a normal scroll region on mobile; remove any
+- [x] T-5.3 Make the editor area a normal scroll region on mobile; remove any
   fixed heights that break scrolling.
-- [ ] T-5.4 Make the command palette usable on touch (tap targets, safe-area
+- [x] T-5.4 Make the command palette usable on touch (tap targets, safe-area
   insets).
 - [ ] T-5.5 Test on real iOS and Android devices.
 
 Gate 5: no horizontal scroll; the 30-second test passes on mobile.
+
+### Phase 5.5 — Mobile UI audit fixes (blocking Phase 6)
+
+Audit of the `< 768px` layout. Each item names the surface and the defect.
+
+- [x] T-5.5.1 Restore visible focus. `base.css` sets `outline: none !important`
+  and `box-shadow: none !important` on every `:focus`/`:focus-visible` with no
+  replacement, so no control shows focus (a regression of T-3.5.8). Remove the
+  global reset and add a `:focus-visible` ring that stays visible on the blue
+  status bar and accent buttons.
+- [x] T-5.5.2 Bring every touch target to at least 44px under
+  `(pointer: coarse)`: `AppButton` (38px), `CopyButton` (32px), `Toggle`
+  options (~29px), the title-bar command (26px), the tab close (20x20), the
+  status-bar theme toggle (~38px), contact links (38px), and the 40px tabs.
+- [x] T-5.5.3 Fix the mobile title bar. At `<=720px` the command-palette label
+  is `display: none`, so the button is named only "Ctrl K" and still shows a
+  keyboard shortcut on touch. Add `aria-label`, hide the kbd hint under
+  `(pointer: coarse)`, and enlarge the target.
+- [x] T-5.5.4 Remove the duplicated `@media (max-width: 767px)` block in
+  `StatusBar.vue` (lines 76-88).
+- [x] T-5.5.5 Fix the toast offset. `Toast.vue` positions from
+  `--statusbar-height` (28px on mobile) while the coarse-pointer status bar is
+  about 44px, so the toast sits against the bar. Derive the offset from the
+  real bar height.
+- [x] T-5.5.6 Harden overlays. Add `overscroll-behavior: contain` to `Drawer`
+  and `CommandPalette`; the drawer handles only `Escape` and lets Tab escape
+  the modal; drop `outline: none` on the drawer panel.
+- [x] T-5.5.7 Command palette polish: placeholder `...` to `…`, the input
+  needs a visible focus style, and `aria-expanded="true"` is hardcoded.
+- [x] T-5.5.8 Reduce `.view` padding on mobile. `editor.css` keeps 32px side
+  padding at all widths, leaving about 256px of content on a 320px screen.
+- [x] T-5.5.9 Make the resume preview mobile-safe. The `<object>` PDF is blank
+  on iOS and Android and `min-height: 420px` exceeds short landscape viewports;
+  prefer open/download with a capped preview.
+- [x] T-5.5.10 Fix 320px overflow: the `minmax(220px, 1fr)` meta grids in
+  `ProjectDetail` and `ProjectsView` exceed the about 216px card width. Use
+  `minmax(min(220px, 100%), 1fr)`.
+- [x] T-5.5.11 Handle long content: the contact email and the resume and
+  projects header rows lack wrapping, so long values overflow or wrap awkwardly.
+  Add `overflow-wrap` and let the headers wrap.
+- [x] T-5.5.12 Complete safe-area coverage: the mobile shell, activity bar, and
+  tabs ignore `env(safe-area-inset-left/right)` in landscape; the skip link
+  ignores the top inset.
+- [x] T-5.5.13 Reconcile tabs on mobile with `DESIGN.md` section 10 ("tabs
+  collapse to a single label"); implement it or amend the design doc.
+- [ ] T-5.5.14 Re-test on real iOS and Android (T-5.5) and confirm no
+  horizontal scroll at 320px.
+
+Gate 5.5: no horizontal scroll at 320px; every touch target is at least 44px;
+focus is visible; overlays do not bleed scroll; the 30-second test passes on
+mobile.
 
 ### Phase 6 — Accessibility, SEO, performance
 
@@ -211,7 +262,8 @@ Gate 7: the primary success criterion passes on desktop and mobile.
 - Phase 4 depends on Phases 1, 3, and 3.5 (needs routes, actions, and a stable
   tab/layout layer).
 - Phase 5 depends on Phases 1 through 4 (all surfaces must exist first).
-- Phase 6 depends on all prior phases.
+- Phase 5.5 depends on Phase 5 (audits the rendered mobile surfaces).
+- Phase 6 depends on Phase 5.5 and all prior phases.
 - Phase 7 is last and blocks release.
 
 ## 5. Definition of done

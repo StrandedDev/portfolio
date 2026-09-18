@@ -93,12 +93,12 @@ function onKeydown(event) {
             v-model="query"
             class="palette__input"
             type="text"
-            placeholder="Type a command..."
+            placeholder="Type a command…"
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
             role="combobox"
-            aria-expanded="true"
+            :aria-expanded="filtered.length > 0"
             aria-controls="palette-list"
             aria-autocomplete="list"
             :aria-activedescendant="activeDescendant"
@@ -143,7 +143,12 @@ function onKeydown(event) {
   align-items: flex-start;
   justify-content: center;
   padding: 12vh var(--space-4) var(--space-4);
+  padding: max(12vh, env(safe-area-inset-top))
+    max(var(--space-4), env(safe-area-inset-right))
+    max(var(--space-4), env(safe-area-inset-bottom))
+    max(var(--space-4), env(safe-area-inset-left));
   background: rgba(0, 0, 0, 0.45);
+  overscroll-behavior: contain;
 }
 
 .palette__panel {
@@ -151,6 +156,7 @@ function onKeydown(event) {
   flex-direction: column;
   width: min(560px, 100%);
   max-height: 60vh;
+  max-height: 60dvh;
   overflow: hidden;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-strong);
@@ -165,6 +171,11 @@ function onKeydown(event) {
   padding: 0 var(--space-4);
   color: var(--color-fg-muted);
   border-bottom: 1px solid var(--color-border);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.palette__search:focus-within {
+  border-bottom-color: var(--color-accent);
 }
 
 .palette__input {
@@ -179,12 +190,18 @@ function onKeydown(event) {
   outline: none;
 }
 
+.palette__input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .palette__input::placeholder {
   color: var(--color-fg-subtle);
 }
 
 .palette__list {
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--space-2);
 }
 
@@ -255,5 +272,26 @@ function onKeydown(event) {
 .palette-enter-from .palette__panel,
 .palette-leave-to .palette__panel {
   transform: translateY(-8px);
+}
+
+@media (max-width: 767px) {
+  .palette {
+    padding-top: max(8vh, env(safe-area-inset-top));
+  }
+
+  .palette__panel {
+    max-height: 72vh;
+    max-height: 72dvh;
+  }
+}
+
+@media (pointer: coarse) {
+  .palette__option {
+    min-height: 46px;
+  }
+
+  .palette__input {
+    min-height: 52px;
+  }
 }
 </style>

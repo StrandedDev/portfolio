@@ -13,7 +13,7 @@ const project = computed(() => getProjectById(props.id))
 </script>
 
 <template>
-  <article v-if="project" class="view">
+  <article v-if="project" class="view view--centered">
     <nav class="detail-nav" aria-label="Breadcrumb">
       <RouterLink to="/projects">
         <AppIcon name="chevron-left" :size="14" />
@@ -64,7 +64,7 @@ const project = computed(() => getProjectById(props.id))
     </div>
   </article>
 
-  <article v-else class="view">
+  <article v-else class="view view--centered">
     <header class="view__header">
       <h1 class="view__title">Project not found</h1>
     </header>
@@ -114,7 +114,7 @@ const project = computed(() => getProjectById(props.id))
 
 .detail-meta {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: var(--space-4);
   margin-top: var(--space-6);
   padding: var(--space-5);

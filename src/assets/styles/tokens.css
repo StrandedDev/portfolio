@@ -111,6 +111,26 @@
   --syntax-punctuation: #333333;
 }
 
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-width: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --titlebar-height: 44px;
+    --tab-height: 40px;
+    --statusbar-height: 28px;
+  }
+}
+
+@media (pointer: coarse) {
+  :root {
+    --statusbar-height: 44px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-fast: 0ms;

@@ -7,7 +7,7 @@ defineEmits(['copy'])
 </script>
 
 <template>
-  <article class="view">
+  <article class="view view--centered">
     <header class="view__header">
       <h1 class="view__title">Contact</h1>
     </header>
@@ -77,7 +77,9 @@ defineEmits(['copy'])
   display: inline-flex;
   gap: var(--space-2);
   align-items: center;
+  min-width: 0;
   font-size: var(--text-md);
+  overflow-wrap: anywhere;
 }
 
 .contact-links {
@@ -110,5 +112,11 @@ defineEmits(['copy'])
   border-color: var(--color-accent);
   color: var(--color-accent);
   text-decoration: none;
+}
+
+@media (pointer: coarse) {
+  .contact-links__list a {
+    min-height: 44px;
+  }
 }
 </style>

@@ -6,6 +6,7 @@ defineProps({
   href: { type: String, default: '' },
   icon: { type: String, default: '' },
   type: { type: String, default: 'button' },
+  target: { type: String, default: '' },
 })
 
 defineEmits(['click'])
@@ -17,6 +18,8 @@ defineEmits(['click'])
     class="app-button"
     :class="`app-button--${variant}`"
     :href="href"
+    :target="target || undefined"
+    :rel="target === '_blank' ? 'noopener noreferrer' : undefined"
     @click="$emit('click', $event)"
   >
     <AppIcon v-if="icon" :name="icon" :size="15" />
@@ -96,5 +99,11 @@ defineEmits(['click'])
 .app-button--ghost:hover {
   background: var(--color-hover);
   color: var(--color-fg);
+}
+
+@media (pointer: coarse) {
+  .app-button {
+    min-height: 44px;
+  }
 }
 </style>

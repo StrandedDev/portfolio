@@ -112,4 +112,10 @@ defineEmits(['open', 'toggle'])
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@media (pointer: coarse) {
+  .tree-item {
+    height: 44px;
+  }
+}
 </style>

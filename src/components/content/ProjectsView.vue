@@ -7,7 +7,7 @@ const projects = getProjects()
 </script>
 
 <template>
-  <article class="view">
+  <article class="view view--centered">
     <header class="view__header">
       <h1 class="view__title">Projects</h1>
       <span class="view__count">{{ projects.length }} case studies</span>
@@ -112,6 +112,7 @@ const projects = getProjects()
 .project-card__name {
   font-size: var(--text-lg);
   font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
 .project-card__name a {
@@ -157,7 +158,7 @@ const projects = getProjects()
 
 .project-card__meta {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: var(--space-3);
 }
 

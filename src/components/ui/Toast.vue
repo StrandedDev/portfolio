@@ -19,7 +19,9 @@ defineProps({
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--statusbar-height) + var(--space-6));
+  bottom: calc(
+    var(--statusbar-height) + var(--space-6) + env(safe-area-inset-bottom)
+  );
   transform: translateX(-50%);
   z-index: 90;
   display: inline-flex;

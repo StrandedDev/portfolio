@@ -1,12 +1,15 @@
 <script setup>
 import AppButton from '@/components/ui/AppButton.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
+import { useMediaQuery } from '@/composables/useMediaQuery'
 
 const props = defineProps({
   resumePath: { type: String, default: '/resume.pdf' },
 })
 
 const emit = defineEmits(['download'])
+
+const isMobile = useMediaQuery('(max-width: 767px)')
 
 function download() {
   const link = document.createElement('a')
@@ -20,7 +23,7 @@ function download() {
 </script>
 
 <template>
-  <article class="view">
+  <article class="view view--centered">
     <header class="view__header">
       <h1 class="view__title">Resume</h1>
       <AppButton variant="primary" icon="cloud-download" @click="download">
@@ -28,7 +31,7 @@ function download() {
       </AppButton>
     </header>
     <p class="view__lede">
-      One page, most recent first. Download a copy or preview it below.
+      One page, most recent first. Download a copy or open it in a new tab.
     </p>
 
     <div class="resume-frame">
@@ -36,7 +39,29 @@ function download() {
         <AppIcon name="file-pdf" :size="14" />
         <span class="mono" translate="no">resume.pdf</span>
       </div>
+
+      <div v-if="isMobile" class="resume-frame__notice">
+        <p class="resume-frame__notice-text">
+          In-browser PDF preview is unreliable on mobile. Open the file or
+          download a copy instead.
+        </p>
+        <div class="resume-frame__actions">
+          <AppButton
+            variant="primary"
+            icon="link-external"
+            :href="resumePath"
+            target="_blank"
+          >
+            Open PDF
+          </AppButton>
+          <AppButton variant="secondary" icon="cloud-download" @click="download">
+            Download
+          </AppButton>
+        </div>
+      </div>
+
       <object
+        v-else
         class="resume-frame__viewer"
         :data="resumePath"
         type="application/pdf"
@@ -76,8 +101,26 @@ function download() {
   display: block;
   width: 100%;
   height: 70vh;
-  min-height: 420px;
+  min-height: min(420px, 70dvh);
   background: var(--color-bg);
+}
+
+.resume-frame__notice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.resume-frame__notice-text {
+  max-width: 48ch;
+  color: var(--color-fg-muted);
+}
+
+.resume-frame__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
 .resume-frame__fallback {

@@ -23,13 +23,16 @@ defineProps({
 
 <style scoped>
 .breadcrumbs {
+  display: flex;
   flex: none;
+  align-items: center;
   height: 26px;
   padding: 0 var(--space-3);
   overflow: hidden;
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   font-size: var(--text-xs);
+  line-height: 1;
 }
 
 .breadcrumbs ol {
@@ -42,14 +45,31 @@ defineProps({
 .breadcrumbs li {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .breadcrumbs__sep {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   margin: 0 var(--space-1);
   color: var(--color-fg-subtle);
 }
 
+.breadcrumbs__sep .codicon {
+  position: relative;
+  top: 1px;
+  display: block;
+  font-size: 14px;
+  line-height: 1;
+}
+
 .breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  line-height: 0.9;
   color: var(--color-fg-muted);
   transition: color var(--duration-fast) var(--ease-out);
 }

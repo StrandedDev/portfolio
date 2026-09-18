@@ -32,7 +32,7 @@ const sections = [
         >
           <span class="activity-bar__rail" aria-hidden="true"></span>
           <AppIcon :name="section.icon" :size="22" />
-          <span class="visually-hidden">{{ section.label }}</span>
+          <span class="activity-bar__label">{{ section.label }}</span>
         </button>
       </li>
     </ul>
@@ -96,5 +96,75 @@ const sections = [
 .activity-bar__item--active .activity-bar__rail {
   opacity: 1;
   transform: scaleY(1);
+}
+
+.activity-bar__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 767px) {
+  .activity-bar {
+    flex-direction: row;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .activity-bar__list {
+    flex-direction: row;
+    flex: 1;
+  }
+
+  .activity-bar__list > li {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-bar__list > li:first-child {
+    display: none;
+  }
+
+  .activity-bar__item {
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    height: 52px;
+  }
+
+  .activity-bar__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    color: inherit;
+    font-size: var(--text-xs);
+    line-height: 1;
+  }
+
+  .activity-bar__rail {
+    top: auto;
+    right: 12px;
+    bottom: 0;
+    left: 12px;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0.3);
+  }
+
+  .activity-bar__item--active .activity-bar__rail {
+    transform: scaleX(1);
+  }
 }
 </style>

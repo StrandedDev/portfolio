@@ -8,7 +8,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <article class="view">
+  <article class="view view--centered">
     <header class="view__header">
       <h1 class="view__title">File not found</h1>
     </header>
@@ -40,5 +40,12 @@ const router = useRouter()
   margin-top: var(--space-5);
   color: var(--color-fg-subtle);
   font-size: var(--text-sm);
+}
+
+@media (max-width: 767px) {
+  .not-found__hint {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 </style>

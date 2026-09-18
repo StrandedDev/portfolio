@@ -4,6 +4,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 defineProps({
   branch: { type: String, default: 'main' },
   resumePath: { type: String, default: '/resume.pdf' },
+  file: { type: String, default: 'portfolio' },
 })
 
 defineEmits(['open-resume', 'toggle-theme'])
@@ -11,14 +12,22 @@ defineEmits(['open-resume', 'toggle-theme'])
 
 <template>
   <footer class="status-bar">
-    <div class="status-bar__group">
+    <span class="status-bar__file mono">
+      <AppIcon name="file" :size="13" />
+      <span translate="no">~/{{ file }}</span>
+    </span>
+    <div class="status-bar__group status-bar__group--meta">
       <span class="status-bar__item status-bar__item--static">
         <AppIcon name="git-branch" :size="14" />
         <span>{{ branch }}</span>
       </span>
     </div>
     <div class="status-bar__group">
-      <button type="button" class="status-bar__item" @click="$emit('open-resume')">
+      <button
+        type="button"
+        class="status-bar__item status-bar__item--resume"
+        @click="$emit('open-resume')"
+      >
         <AppIcon name="cloud-download" :size="14" />
         <span>Resume</span>
       </button>
@@ -71,5 +80,53 @@ defineEmits(['open-resume', 'toggle-theme'])
 .status-bar__item--static:hover {
   background: transparent;
   cursor: default;
+}
+
+.status-bar__file {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .status-bar {
+    height: calc(var(--statusbar-height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    justify-content: space-between;
+  }
+
+  .status-bar__file {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    min-width: 0;
+    padding-left: var(--space-2);
+    letter-spacing: 0.01em;
+    opacity: 0.92;
+  }
+
+  .status-bar__file > span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .status-bar__group--meta,
+  .status-bar__item--resume {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .status-bar {
+    height: auto;
+    min-height: calc(var(--statusbar-height) + env(safe-area-inset-bottom));
+    padding-top: var(--space-1);
+    padding-bottom: calc(var(--space-1) + env(safe-area-inset-bottom));
+  }
+
+  .status-bar__item {
+    height: auto;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+  }
 }
 </style>

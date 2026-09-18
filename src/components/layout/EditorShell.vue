@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import profile from '@/data/profile.json'
 import {
@@ -10,7 +10,13 @@ import {
 } from '@/lib/files'
 import { commands, getCommand } from '@/lib/commands'
 import { useCommandPalette } from '@/composables/useCommandPalette'
-import { closeTab, toggleSidebar, useWorkspace } from '@/stores/workspace'
+import { useMediaQuery } from '@/composables/useMediaQuery'
+import {
+  closeTab,
+  setSidebarOpen,
+  toggleSidebar,
+  useWorkspace,
+} from '@/stores/workspace'
 import TitleBar from './TitleBar.vue'
 import ActivityBar from './ActivityBar.vue'
 import StatusBar from './StatusBar.vue'
@@ -19,12 +25,25 @@ import EditorTabs from '@/components/editor/EditorTabs.vue'
 import Breadcrumbs from '@/components/editor/Breadcrumbs.vue'
 import EditorArea from '@/components/editor/EditorArea.vue'
 import CommandPalette from '@/components/ui/CommandPalette.vue'
+import Drawer from '@/components/ui/Drawer.vue'
 import Toast from '@/components/ui/Toast.vue'
 
 const route = useRoute()
 const router = useRouter()
 const workspace = useWorkspace()
 const { open: openPalette, close: closePalette } = useCommandPalette()
+
+const isMobile = useMediaQuery('(max-width: 767px)')
+
+watch(
+  isMobile,
+  (mobile) => {
+    setSidebarOpen(!mobile)
+  },
+  { immediate: true },
+)
+
+const drawerOpen = computed(() => isMobile.value && workspace.sidebarOpen)
 
 const theme = ref('dark')
 
@@ -70,6 +89,11 @@ function openNode(id) {
   const node = findNodeById(id)
   if (!node?.route) return
   router.push(node.route)
+  if (isMobile.value) setSidebarOpen(false)
+}
+
+function closeSidebar() {
+  setSidebarOpen(false)
 }
 
 function onActivitySelect(id) {
@@ -108,10 +132,13 @@ function runCommand(id) {
 <template>
   <div
     class="editor-shell"
-    :class="{ 'editor-shell--sidebar-collapsed': !workspace.sidebarOpen }"
+    :class="{
+      'editor-shell--mobile': isMobile,
+      'editor-shell--sidebar-collapsed': !isMobile && !workspace.sidebarOpen,
+    }"
   >
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="editor-shell__titlebar">
+    <div v-if="!isMobile" class="editor-shell__titlebar">
       <TitleBar :title="title" @open-palette="openPalette" />
     </div>
     <div class="editor-shell__activity">
@@ -121,27 +148,38 @@ function runCommand(id) {
         @select="onActivitySelect"
       />
     </div>
-    <div class="editor-shell__sidebar">
+    <div v-if="!isMobile" class="editor-shell__sidebar">
       <Sidebar :nodes="fileTree" :active-id="activeId" @open="openNode" />
     </div>
     <div class="editor-shell__editor">
       <EditorTabs
+        v-if="!isMobile"
         :tabs="tabs"
         :active-id="activeId"
         @open="openNode"
         @close="onCloseTab"
       />
-      <Breadcrumbs :path="breadcrumbs" />
+      <Breadcrumbs v-if="!isMobile" :path="breadcrumbs" />
       <EditorArea />
     </div>
     <div class="editor-shell__status">
       <StatusBar
         branch="main"
+        :file="activeNode?.label ?? 'portfolio'"
         :resume-path="profile.resumePath"
         @open-resume="openResume"
         @toggle-theme="toggleTheme"
       />
     </div>
+    <Drawer
+      v-if="isMobile"
+      :open="drawerOpen"
+      side="left"
+      label="Explorer"
+      @close="closeSidebar"
+    >
+      <Sidebar :nodes="fileTree" :active-id="activeId" @open="openNode" />
+    </Drawer>
     <CommandPalette
       :open="workspace.paletteOpen"
       :commands="commands"
@@ -161,7 +199,7 @@ function runCommand(id) {
     'title title title'
     'activity sidebar editor'
     'status status status';
-  grid-template-rows: var(--titlebar-height) minmax(0, 1fr) var(--statusbar-height);
+  grid-template-rows: var(--titlebar-height) minmax(0, 1fr) auto;
   grid-template-columns: var(--activitybar-width) var(--sidebar-width) minmax(0, 1fr);
   overflow: hidden;
   background: var(--color-bg);
@@ -207,8 +245,8 @@ function runCommand(id) {
 
 .skip-link {
   position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
+  top: max(var(--space-2), env(safe-area-inset-top));
+  left: max(var(--space-2), env(safe-area-inset-left));
   z-index: 10;
   padding: var(--space-2) var(--space-3);
   color: var(--color-accent-fg);
@@ -230,13 +268,20 @@ function runCommand(id) {
   min-height: 0;
 }
 
-@media (max-width: 900px) {
-  .editor-shell {
-    grid-template-columns: var(--activitybar-width) 0 minmax(0, 1fr);
-  }
+.editor-shell--mobile {
+  height: 100%;
+  height: 100dvh;
+  padding-right: env(safe-area-inset-right);
+  padding-left: env(safe-area-inset-left);
+  grid-template-areas:
+    'activity'
+    'editor'
+    'status';
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  .editor-shell__sidebar {
-    display: none;
-  }
+.editor-shell--mobile .editor-shell__activity {
+  width: 100%;
 }
 </style>

@@ -240,4 +240,26 @@ watch(
   opacity: 0;
   transform: translateY(6px);
 }
+
+@media (max-width: 767px) {
+  .editor-tab:not(.editor-tab--active) {
+    display: none;
+  }
+
+  .editor-tab--active {
+    flex: 1 1 auto;
+  }
+}
+
+@media (pointer: coarse) {
+  .editor-tabs {
+    height: 44px;
+  }
+
+  .editor-tab__close {
+    width: 44px;
+    height: 44px;
+    margin-right: 0;
+  }
+}
 </style>

@@ -19,6 +19,7 @@ const shortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
       <button
         type="button"
         class="title-bar__command"
+        aria-label="Open command palette"
         @click="$emit('open-palette')"
       >
         <AppIcon name="terminal" :size="12" />
@@ -112,6 +113,17 @@ const shortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
   }
 }
 
+@media (pointer: coarse) {
+  .title-bar__command {
+    height: 44px;
+    padding: 0 var(--space-3);
+  }
+
+  .title-bar__command-key {
+    display: none;
+  }
+}
+
 .title-bar__title {
   overflow: hidden;
   color: var(--color-fg);
@@ -140,5 +152,16 @@ const shortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
 
 .title-bar__control--close:hover {
   background: #ff5f57;
+}
+
+@media (max-width: 767px) {
+  .title-bar {
+    height: calc(var(--titlebar-height) + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .title-bar__controls {
+    display: none;
+  }
 }
 </style>

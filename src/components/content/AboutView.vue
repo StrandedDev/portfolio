@@ -18,7 +18,7 @@ function onToggle(value) {
 </script>
 
 <template>
-  <article class="view about">
+  <article class="view about view--centered">
     <div class="view__header">
       <Toggle
         :model-value="jsonMode"
@@ -45,6 +45,12 @@ function onToggle(value) {
 <style scoped>
 .view__header {
   justify-content: flex-end;
+}
+
+@media (max-width: 767px) {
+  .view__header {
+    display: none;
+  }
 }
 
 .fade-enter-active,

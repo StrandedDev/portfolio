@@ -21,7 +21,9 @@ body {
   font-family: var(--font-ui);
   font-size: var(--text-base);
   line-height: var(--line-base);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   transition:
     background-color var(--duration-base) var(--ease-out),
@@ -91,19 +93,18 @@ pre {
   background: var(--color-selection);
 }
 
-:focus,
-:focus-visible,
-button:focus,
-button:focus-visible,
-a:focus,
-a:focus-visible,
-[role='tab']:focus,
-[role='tab']:focus-visible,
-[role='treeitem']:focus,
-[role='treeitem']:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: transparent !important;
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.status-bar :focus-visible,
+.app-button--primary:focus-visible {
+  outline-color: var(--color-focus-inverse);
 }
 
 .focus-silent:focus,

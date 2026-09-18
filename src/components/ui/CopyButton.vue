@@ -57,4 +57,11 @@ async function onClick() {
   color: var(--syntax-number);
   border-color: var(--syntax-number);
 }
+
+@media (pointer: coarse) {
+  .copy-button {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+  }
+}
 </style>
