@@ -91,17 +91,25 @@ pre {
   background: var(--color-selection);
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+:focus,
+:focus-visible,
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+[role='tab']:focus,
+[role='tab']:focus-visible,
+[role='treeitem']:focus,
+[role='treeitem']:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
 }
 
-/* The default focus color is invisible against saturated accent surfaces. */
-.status-bar :focus-visible,
-.app-button--primary:focus-visible,
-.toggle__option:focus-visible {
-  outline-color: var(--color-focus-inverse);
+.focus-silent:focus,
+.focus-silent:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 button,

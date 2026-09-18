@@ -156,12 +156,12 @@ navigation works; no label overflows or duplicate headings.
 
 ### Phase 4 — Command palette
 
-- [ ] T-4.1 Define the command registry in `src/lib/commands.js` (id, label,
+- [x] T-4.1 Define the command registry in `src/lib/commands.js` (id, label,
   keywords, run).
-- [ ] T-4.2 Build `CommandPalette.vue`: open/close, filter, arrow and Enter
+- [x] T-4.2 Build `CommandPalette.vue`: open/close, filter, arrow and Enter
   handling, `Escape` to dismiss.
-- [ ] T-4.3 Wire `Ctrl+K` / `Cmd+K` globally; restore focus on close.
-- [ ] T-4.4 Register commands: navigate to each section, open resume, copy
+- [x] T-4.3 Wire `Ctrl+K` / `Cmd+K` globally; restore focus on close.
+- [x] T-4.4 Register commands: navigate to each section, open resume, copy
   email, toggle JSON view.
 
 Gate 4: every command works from the palette with keyboard only, and focus

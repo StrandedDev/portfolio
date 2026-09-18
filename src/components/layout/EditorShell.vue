@@ -8,6 +8,8 @@ import {
   findNodeById,
   findNodeByRoute,
 } from '@/lib/files'
+import { commands, getCommand } from '@/lib/commands'
+import { useCommandPalette } from '@/composables/useCommandPalette'
 import { closeTab, toggleSidebar, useWorkspace } from '@/stores/workspace'
 import TitleBar from './TitleBar.vue'
 import ActivityBar from './ActivityBar.vue'
@@ -16,10 +18,13 @@ import Sidebar from '@/components/sidebar/Sidebar.vue'
 import EditorTabs from '@/components/editor/EditorTabs.vue'
 import Breadcrumbs from '@/components/editor/Breadcrumbs.vue'
 import EditorArea from '@/components/editor/EditorArea.vue'
+import CommandPalette from '@/components/ui/CommandPalette.vue'
+import Toast from '@/components/ui/Toast.vue'
 
 const route = useRoute()
 const router = useRouter()
 const workspace = useWorkspace()
+const { open: openPalette, close: closePalette } = useCommandPalette()
 
 const theme = ref('dark')
 
@@ -92,6 +97,12 @@ function openResume() {
 function toggleTheme() {
   theme.value = theme.value === 'dark' ? 'light' : 'dark'
 }
+
+function runCommand(id) {
+  const command = getCommand(id)
+  closePalette()
+  command?.run()
+}
 </script>
 
 <template>
@@ -101,7 +112,7 @@ function toggleTheme() {
   >
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="editor-shell__titlebar">
-      <TitleBar :title="title" />
+      <TitleBar :title="title" @open-palette="openPalette" />
     </div>
     <div class="editor-shell__activity">
       <ActivityBar
@@ -131,6 +142,13 @@ function toggleTheme() {
         @toggle-theme="toggleTheme"
       />
     </div>
+    <CommandPalette
+      :open="workspace.paletteOpen"
+      :commands="commands"
+      @close="closePalette"
+      @run="runCommand"
+    />
+    <Toast :message="workspace.notice" />
   </div>
 </template>
 

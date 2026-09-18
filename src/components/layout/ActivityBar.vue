@@ -24,14 +24,10 @@ const sections = [
         <button
           type="button"
           class="activity-bar__item"
-          :class="{
-            'activity-bar__item--active':
-              active === section.id ||
-              (section.id === 'explorer' && sidebarOpen),
-          }"
+          :class="{ 'activity-bar__item--active': active === section.id }"
           :aria-current="active === section.id ? 'page' : undefined"
           :aria-pressed="section.id === 'explorer' ? sidebarOpen : undefined"
-          :title="section.label"
+          :title="section.id === 'explorer' ? 'Toggle Explorer' : section.label"
           @click="$emit('select', section.id)"
         >
           <span class="activity-bar__rail" aria-hidden="true"></span>

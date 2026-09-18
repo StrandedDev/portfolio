@@ -37,8 +37,9 @@ defineEmits(['open-resume', 'toggle-theme'])
 <style scoped>
 .status-bar {
   display: flex;
+  gap: var(--space-2);
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: var(--statusbar-height);
   padding: 0 var(--space-2);
   background: var(--color-status);

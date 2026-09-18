@@ -7,7 +7,10 @@ const state = reactive({
   heroMode: 'reader',
   sidebarOpen: true,
   paletteOpen: false,
+  notice: '',
 })
+
+let noticeTimer = null
 
 export function useWorkspace() {
   return state
@@ -45,4 +48,19 @@ export function openPalette() {
 
 export function closePalette() {
   state.paletteOpen = false
+}
+
+export function showNotice(text, duration = 2400) {
+  state.notice = text
+  if (noticeTimer) clearTimeout(noticeTimer)
+  noticeTimer = setTimeout(() => {
+    state.notice = ''
+    noticeTimer = null
+  }, duration)
+}
+
+export function clearNotice() {
+  state.notice = ''
+  if (noticeTimer) clearTimeout(noticeTimer)
+  noticeTimer = null
 }
