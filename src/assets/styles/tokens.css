@@ -1,0 +1,86 @@
+:root {
+  --color-bg: #1e1e1e;
+  --color-sidebar: #252526;
+  --color-activity: #333333;
+  --color-titlebar: #3c3c3c;
+  --color-status: #007acc;
+  --color-status-fg: #ffffff;
+  --color-border: #2b2b2b;
+  --color-border-strong: #454545;
+  --color-fg: #cccccc;
+  --color-fg-muted: #858585;
+  --color-accent: #007acc;
+  --color-highlight: #37373d;
+  --color-active: #094771;
+  --color-hover: #2a2d2e;
+
+  --syntax-key: #9cdcfe;
+  --syntax-string: #ce9178;
+  --syntax-number: #b5cea8;
+  --syntax-boolean: #569cd6;
+  --syntax-punctuation: #d4d4d4;
+
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-lg: 16px;
+  --text-xl: 24px;
+  --line-base: 1.5;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+
+  --titlebar-height: 35px;
+  --activitybar-width: 48px;
+  --sidebar-width: 240px;
+  --statusbar-height: 22px;
+  --tab-height: 35px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-sidebar: #f3f3f3;
+  --color-activity: #2c2c2c;
+  --color-titlebar: #dddddd;
+  --color-status: #007acc;
+  --color-status-fg: #ffffff;
+  --color-border: #e5e5e5;
+  --color-border-strong: #cecece;
+  --color-fg: #333333;
+  --color-fg-muted: #717171;
+  --color-accent: #005fb8;
+  --color-highlight: #e4e6f1;
+  --color-active: #cce5ff;
+  --color-hover: #e8e8e8;
+
+  --syntax-key: #0451a5;
+  --syntax-string: #a31515;
+  --syntax-number: #098658;
+  --syntax-boolean: #0000ff;
+  --syntax-punctuation: #333333;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+}

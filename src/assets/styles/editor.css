@@ -1,0 +1,32 @@
+.editor-surface {
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.section-title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--color-fg-muted);
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  color: var(--color-fg);
+}
+
+.icon-button:hover {
+  background: var(--color-hover);
+}
