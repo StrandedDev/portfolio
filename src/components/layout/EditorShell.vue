@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   breadcrumbsForRoute,
@@ -22,8 +22,18 @@ const workspace = useWorkspace()
 
 const theme = ref('dark')
 
+onMounted(() => {
+  const stored = localStorage.getItem('portfolio-theme')
+  if (stored === 'light' || stored === 'dark') {
+    theme.value = stored
+  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    theme.value = 'light'
+  }
+})
+
 watchEffect(() => {
   document.documentElement.setAttribute('data-theme', theme.value)
+  localStorage.setItem('portfolio-theme', theme.value)
 })
 
 const activeNode = computed(() => findNodeByRoute(route.path))
@@ -115,6 +125,7 @@ function toggleTheme() {
   grid-template-rows: var(--titlebar-height) minmax(0, 1fr) var(--statusbar-height);
   grid-template-columns: var(--activitybar-width) var(--sidebar-width) minmax(0, 1fr);
   overflow: hidden;
+  background: var(--color-bg);
 }
 
 .editor-shell__titlebar {
@@ -122,12 +133,16 @@ function toggleTheme() {
 }
 
 .editor-shell__activity {
+  display: flex;
   grid-area: activity;
+  min-width: 0;
   min-height: 0;
 }
 
 .editor-shell__sidebar {
+  display: flex;
   grid-area: sidebar;
+  min-width: 0;
   min-height: 0;
 }
 
@@ -141,5 +156,21 @@ function toggleTheme() {
 
 .editor-shell__status {
   grid-area: status;
+}
+
+.editor-shell__activity > :deep(*),
+.editor-shell__sidebar > :deep(*) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .editor-shell {
+    grid-template-columns: var(--activitybar-width) 0 minmax(0, 1fr);
+  }
+
+  .editor-shell__sidebar {
+    display: none;
+  }
 }
 </style>

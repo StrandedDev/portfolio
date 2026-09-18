@@ -2,13 +2,9 @@
 
 <template>
   <article class="view">
-    <h1>Resume</h1>
-    <p class="muted">Resume view placeholder.</p>
+    <header class="view__header">
+      <h1 class="view__title">Resume</h1>
+    </header>
+    <p class="view__lede">Resume view coming in Phase 3.</p>
   </article>
 </template>
-
-<style scoped>
-.view {
-  padding: var(--space-6);
-}
-</style>

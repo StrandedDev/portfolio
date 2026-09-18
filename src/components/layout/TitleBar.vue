@@ -27,33 +27,42 @@ defineProps({
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   height: var(--titlebar-height);
-  padding: 0 var(--space-2);
+  padding: 0 var(--space-3);
   background: var(--color-titlebar);
   border-bottom: 1px solid var(--color-border);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   user-select: none;
 }
 
 .title-bar__left {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-4);
   align-items: center;
 }
 
 .title-bar__mark {
-  width: 14px;
-  height: 14px;
-  background: var(--color-accent);
+  width: 15px;
+  height: 15px;
+  background: linear-gradient(135deg, var(--color-accent), var(--syntax-boolean));
   border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .title-bar__menu {
   color: var(--color-fg-muted);
+  cursor: default;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.title-bar__menu:hover {
+  color: var(--color-fg);
 }
 
 .title-bar__title {
+  overflow: hidden;
   color: var(--color-fg);
   text-align: center;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -68,5 +77,14 @@ defineProps({
   height: 11px;
   border: 1px solid var(--color-fg-muted);
   border-radius: 50%;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.title-bar__control--close {
+  border-color: #ff5f57;
+}
+
+.title-bar__control--close:hover {
+  background: #ff5f57;
 }
 </style>

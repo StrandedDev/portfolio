@@ -6,13 +6,9 @@ defineProps({
 
 <template>
   <article class="view">
-    <h1>Project: {{ id }}</h1>
-    <p class="muted">Project detail placeholder.</p>
+    <header class="view__header">
+      <h1 class="view__title">Project: {{ id }}</h1>
+    </header>
+    <p class="view__lede">Project detail coming in Phase 3.</p>
   </article>
 </template>
-
-<style scoped>
-.view {
-  padding: var(--space-6);
-}
-</style>

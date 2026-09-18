@@ -43,7 +43,7 @@ defineEmits(['open-resume', 'toggle-theme'])
   padding: 0 var(--space-2);
   background: var(--color-status);
   color: var(--color-status-fg);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }
 
 .status-bar__group {
@@ -58,9 +58,11 @@ defineEmits(['open-resume', 'toggle-theme'])
   height: calc(var(--statusbar-height) - 2px);
   padding: 0 var(--space-2);
   color: inherit;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .status-bar__item:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
 }
 </style>

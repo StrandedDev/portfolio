@@ -19,11 +19,12 @@ defineProps({
 
 <style scoped>
 .breadcrumbs {
-  height: 22px;
+  flex: none;
+  height: 26px;
   padding: 0 var(--space-3);
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }
 
 .breadcrumbs ol {
@@ -39,10 +40,15 @@ defineProps({
 
 .breadcrumbs__sep {
   margin: 0 var(--space-1);
-  color: var(--color-fg-muted);
+  color: var(--color-fg-subtle);
 }
 
 .breadcrumbs__item {
   color: var(--color-fg-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.breadcrumbs li:last-child .breadcrumbs__item {
+  color: var(--color-fg);
 }
 </style>

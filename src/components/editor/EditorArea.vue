@@ -4,12 +4,17 @@ import { RouterView } from 'vue-router'
 
 <template>
   <main class="editor-area" id="main">
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <Transition name="view" mode="out-in">
+        <component :is="Component" :key="route.path" />
+      </Transition>
+    </RouterView>
   </main>
 </template>
 
 <style scoped>
 .editor-area {
+  flex: 1;
   min-height: 0;
   overflow-y: auto;
   background: var(--color-bg);
