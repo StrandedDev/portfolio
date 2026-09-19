@@ -4,7 +4,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 import { useMediaQuery } from '@/composables/useMediaQuery'
 
 const props = defineProps({
-  resumePath: { type: String, default: '/resume.pdf' },
+  resumePath: { type: String, default: 'Md-Mostaqim-Hasib-Resume.pdf' },
 })
 
 const emit = defineEmits(['download'])
@@ -14,7 +14,7 @@ const isMobile = useMediaQuery('(max-width: 767px)')
 function download() {
   const link = document.createElement('a')
   link.href = props.resumePath
-  link.download = props.resumePath.split('/').pop() || 'resume.pdf'
+  link.download = props.resumePath.split('/').pop() || 'Md-Mostaqim-Hasib-Resume.pdf'
   document.body.appendChild(link)
   link.click()
   link.remove()
@@ -37,7 +37,7 @@ function download() {
     <div class="resume-frame">
       <div class="resume-frame__bar">
         <AppIcon name="file-pdf" :size="14" />
-        <span class="mono" translate="no">resume.pdf</span>
+        <span class="mono" translate="no">Md-Mostaqim-Hasib-Resume.pdf</span>
       </div>
 
       <div v-if="isMobile" class="resume-frame__notice">
@@ -70,7 +70,7 @@ function download() {
         <p class="resume-frame__fallback">
           Your browser cannot preview PDFs.
           <a :href="resumePath" target="_blank" rel="noopener noreferrer" translate="no">
-            Open resume.pdf
+            Open Md-Mostaqim-Hasib-Resume.pdf
           </a>
         </p>
       </object>

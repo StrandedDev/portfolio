@@ -34,7 +34,7 @@ function copyText(text, message) {
 function downloadResume() {
   const link = document.createElement('a')
   link.href = profile.resumePath
-  link.download = profile.resumePath.split('/').pop() || 'resume.pdf'
+  link.download = profile.resumePath.split('/').pop() || 'Md-Mostaqim-Hasib-Resume.pdf'
   document.body.appendChild(link)
   link.click()
   link.remove()

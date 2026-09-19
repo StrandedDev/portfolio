@@ -3,7 +3,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 
 defineProps({
   branch: { type: String, default: 'main' },
-  resumePath: { type: String, default: '/resume.pdf' },
+  resumePath: { type: String, default: 'Md-Mostaqim-Hasib-Resume.pdf' },
   file: { type: String, default: 'portfolio' },
   terminalOpen: { type: Boolean, default: false },
 })

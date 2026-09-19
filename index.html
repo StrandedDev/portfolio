@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
@@ -10,12 +10,7 @@
       ;(function () {
         try {
           var stored = localStorage.getItem('portfolio-theme')
-          var theme =
-            stored === 'light' || stored === 'dark'
-              ? stored
-              : window.matchMedia('(prefers-color-scheme: light)').matches
-                ? 'light'
-                : 'dark'
+          var theme = stored === 'light' || stored === 'dark' ? stored : 'dark'
           document.documentElement.setAttribute('data-theme', theme)
         } catch (error) {}
       })()
@@ -103,7 +98,7 @@
           <p>Junior Software Engineer, Frontend Developer</p>
           <p>Software projects &amp; developer tools.</p>
           <p>
-            <a href="/resume.pdf">Download resume</a> ·
+            <a href="Md-Mostaqim-Hasib-Resume.pdf">Download resume</a> ·
             <a href="mailto:mostaqimhasib77@gmail.com" translate="no">mostaqimhasib77@gmail.com</a> ·
             <a href="https://github.com/StrandedDev" rel="noopener noreferrer">GitHub</a>
           </p>

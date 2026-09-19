@@ -41,7 +41,7 @@ export const fileTree = sortFoldersFirst([
   },
   {
     id: 'resume',
-    label: 'resume.pdf',
+    label: 'Md-Mostaqim-Hasib-Resume.pdf',
     kind: 'file',
     icon: 'file-pdf',
     route: '/resume',
@@ -95,7 +95,7 @@ export function breadcrumbsForRoute(route) {
     return ['projects', `${segments[1]}.md`]
   }
   if (segments[0] === 'about') return ['about.json']
-  if (segments[0] === 'resume') return ['resume.pdf']
+  if (segments[0] === 'resume') return ['Md-Mostaqim-Hasib-Resume.pdf']
   if (segments[0] === 'contact') return ['contact.md']
   if (segments[0] === 'education') return ['education.md']
   if (segments[0] === 'projects') return ['projects']

@@ -59,9 +59,7 @@ function readInitialTheme() {
   if (applied === 'light' || applied === 'dark') return applied
   const stored = localStorage.getItem('portfolio-theme')
   if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia('(prefers-color-scheme: light)').matches
-    ? 'light'
-    : 'dark'
+  return 'dark'
 }
 
 const theme = ref(readInitialTheme())
@@ -94,7 +92,7 @@ const activeSection = computed(() => {
 function downloadResume() {
   const link = document.createElement('a')
   link.href = profile.resumePath
-  link.download = profile.resumePath.split('/').pop() || 'resume.pdf'
+  link.download = profile.resumePath.split('/').pop() || 'Md-Mostaqim-Hasib-Resume.pdf'
   document.body.appendChild(link)
   link.click()
   link.remove()
