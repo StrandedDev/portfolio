@@ -380,8 +380,12 @@ Rules:
   and Open Graph plus Twitter card tags.
 - The hero's readable content is present in the initial HTML or prerendered at
   build time so crawlers and link previews see it.
-- A static fallback inside `#app` mirrors the hero for no-JS and crawler
-  scenarios.
+- A static fallback inside a `<noscript>` in `#app` mirrors the hero for no-JS
+  and crawler scenarios, so JS-enabled visitors never see unstyled markup while
+  the app boots.
+- `index.html` inlines the initial `data-theme` decision and minimal critical
+  CSS (page background, text color, base type) so the first paint is already
+  themed; the rest of the stylesheet loads with the app bundle.
 
 ## 13. Testing strategy
 

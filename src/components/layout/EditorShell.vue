@@ -55,6 +55,8 @@ const explorerVisible = computed(() =>
 )
 
 function readInitialTheme() {
+  const applied = document.documentElement.getAttribute('data-theme')
+  if (applied === 'light' || applied === 'dark') return applied
   const stored = localStorage.getItem('portfolio-theme')
   if (stored === 'light' || stored === 'dark') return stored
   return window.matchMedia('(prefers-color-scheme: light)').matches

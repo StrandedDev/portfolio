@@ -223,6 +223,12 @@ button.contact-item__surface {
 
 .contact-item__body {
   min-width: 0;
+  overflow: hidden;
+}
+
+.view__lede {
+  max-width: none;
+  white-space: nowrap;
 }
 
 .contact-item__value {
@@ -230,7 +236,9 @@ button.contact-item__surface {
   margin-top: 2px;
   color: var(--color-fg);
   font-size: var(--text-md);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-item__value--action {
@@ -259,8 +267,11 @@ button.contact-item__surface {
 
 @media (max-width: 767px) {
   .view__lede {
+    max-width: 100%;
     margin-bottom: var(--space-5);
     font-size: var(--text-base);
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .contact-list {
