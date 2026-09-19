@@ -14,6 +14,12 @@ dist-ssr
 coverage
 *.local
 
+# Deployment and local environment files
+.github/workflows/*.bak
+.env
+.env.*
+.parcel-cache
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -37,3 +43,7 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+*.vite
+
+# OS files
+Thumbs.db
