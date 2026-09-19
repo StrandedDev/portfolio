@@ -14,8 +14,8 @@ organized. If code and this document disagree, one of them must be updated.
 1. **Reader first.** The plain, scannable surface is the default. The editor
    costume never blocks the primary task.
 2. **Convert, don't impress.** Every surface serves the recruiter's 30-second
-   task. The command palette is the signature interaction; the hero entrance and
-   the terminal support it without competing for attention.
+   task. The command palette is the signature interaction; the terminal
+   supports it without competing for attention.
 3. **Data over code.** Copy and projects live in data files. Components render
    data; they do not own content.
 4. **One responsibility per component.** If a component renders and fetches and
@@ -204,7 +204,6 @@ A single reactive store in `src/stores/workspace.js`:
 - `activeRoute` — current route path, mirrored from the router.
 - `openTabs` — list of visited file ids, in order.
 - `heroMode` — `"reader"` or `"json"`; default `"reader"`.
-- `heroEntered` — whether the hero entrance has played this session.
 - `sidebarOpen` — boolean, used by the mobile drawer.
 - `sidebarCollapsed` — boolean, desktop collapse state; default `false`.
 - `terminalOpen` — boolean, presentational terminal visibility; default `false`.
@@ -212,7 +211,7 @@ A single reactive store in `src/stores/workspace.js`:
 - `notice` — transient status message string, empty when none.
 
 Actions: `openFile(id)`, `closeTab(id)`, `setHeroMode(mode)`,
-`markHeroEntered()`, `toggleSidebar()`, `toggleSidebarCollapsed()`,
+`toggleSidebar()`, `toggleSidebarCollapsed()`,
 `toggleTerminal()`, `openPalette()`, `closePalette()`, `showNotice(text)`,
 `clearNotice()`.
 
@@ -354,8 +353,6 @@ Rules:
   listbox.
 - The JSON hero is `aria-hidden`; its readable equivalent is always rendered in
   the DOM.
-- The hero entrance is decorative. The readable hero is in the DOM from first
-  paint, and the animation is disabled under `prefers-reduced-motion`.
 - The terminal is a labelled region rendering static text. It is not a live
   region and accepts no input.
 - Focus is always visible; no outline removal without a replacement.

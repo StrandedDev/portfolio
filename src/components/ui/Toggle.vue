@@ -49,9 +49,8 @@ function select(index) {
   bottom: 3px;
   left: 3px;
   width: calc(50% - 3px);
-  background: var(--color-accent-solid);
+  background: var(--color-border-strong);
   border-radius: var(--radius-pill);
-  box-shadow: 0 2px 8px rgba(55, 148, 255, 0.3);
   transition: transform var(--duration-base) var(--ease-spring);
 }
 
@@ -72,7 +71,7 @@ function select(index) {
 }
 
 .toggle__option--active {
-  color: var(--color-accent-fg);
+  color: var(--color-fg);
 }
 
 @media (pointer: coarse) {

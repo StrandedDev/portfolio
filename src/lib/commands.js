@@ -1,6 +1,11 @@
 import router from '@/router'
 import profile from '@/data/profile.json'
-import { setHeroMode, showNotice, useWorkspace } from '@/stores/workspace'
+import {
+  setHeroMode,
+  showNotice,
+  toggleSidebarCollapsed,
+  useWorkspace,
+} from '@/stores/workspace'
 
 const workspace = useWorkspace()
 
@@ -104,6 +109,13 @@ export const commands = [
       setHeroMode(workspace.heroMode === 'json' ? 'reader' : 'json')
       if (router.currentRoute.value.path !== '/about') router.push('/about')
     },
+  },
+  {
+    id: 'view.toggle-sidebar',
+    label: 'Toggle sidebar',
+    keywords: ['sidebar', 'explorer', 'collapse', 'expand', 'panel', 'view'],
+    icon: 'files',
+    run: () => toggleSidebarCollapsed(),
   },
 ]
 

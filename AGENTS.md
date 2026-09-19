@@ -37,7 +37,7 @@ Key modules:
   routes, and paths. Sidebar, tabs, and breadcrumbs derive from it. Never
   hardcode a route in a component.
 - `src/stores/workspace.js` — UI state only (`activeRoute`, `openTabs`,
-  `heroMode`, `heroEntered`, `sidebarOpen`, `sidebarCollapsed`, `terminalOpen`,
+  `heroMode`, `sidebarOpen`, `sidebarCollapsed`, `terminalOpen`,
   `paletteOpen`, `notice`). Content comes from data files; derived values are
   computed in `lib`. The color theme is a root `data-theme` attribute persisted
   to `localStorage`, not store state.

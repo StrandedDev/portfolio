@@ -15,6 +15,7 @@ import {
   closeTab,
   setSidebarOpen,
   toggleSidebar,
+  toggleSidebarCollapsed,
   useWorkspace,
 } from '@/stores/workspace'
 import TitleBar from './TitleBar.vue'
@@ -47,6 +48,9 @@ watch(
 )
 
 const drawerOpen = computed(() => isMobile.value && workspace.sidebarOpen)
+const explorerVisible = computed(() =>
+  isMobile.value ? workspace.sidebarOpen : !workspace.sidebarCollapsed,
+)
 
 function readInitialTheme() {
   const stored = localStorage.getItem('portfolio-theme')
@@ -108,7 +112,11 @@ function closeSidebar() {
 
 function onActivitySelect(id) {
   if (id === 'explorer') {
-    toggleSidebar()
+    if (isMobile.value) {
+      toggleSidebar()
+    } else {
+      toggleSidebarCollapsed()
+    }
     return
   }
   openNode(id)
@@ -144,7 +152,7 @@ function runCommand(id) {
     class="editor-shell"
     :class="{
       'editor-shell--mobile': isMobile,
-      'editor-shell--sidebar-collapsed': !isMobile && !workspace.sidebarOpen,
+      'editor-shell--sidebar-collapsed': !isMobile && workspace.sidebarCollapsed,
     }"
   >
     <a class="skip-link" href="#main">Skip to content</a>
@@ -154,7 +162,7 @@ function runCommand(id) {
     <div class="editor-shell__activity">
       <ActivityBar
         :active="activeSection"
-        :sidebar-open="workspace.sidebarOpen"
+        :sidebar-open="explorerVisible"
         @select="onActivitySelect"
       />
     </div>

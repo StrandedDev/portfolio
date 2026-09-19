@@ -1,11 +1,14 @@
 import { reactive } from 'vue'
 import { findNodeById } from '@/lib/files'
 
+const COLLAPSED_KEY = 'portfolio-sidebar-collapsed'
+
 const state = reactive({
   activeRoute: '/about',
   openTabs: [],
   heroMode: 'reader',
   sidebarOpen: true,
+  sidebarCollapsed: localStorage.getItem(COLLAPSED_KEY) === 'true',
   paletteOpen: false,
   notice: '',
 })
@@ -40,6 +43,11 @@ export function toggleSidebar() {
 
 export function setSidebarOpen(open) {
   state.sidebarOpen = open
+}
+
+export function toggleSidebarCollapsed() {
+  state.sidebarCollapsed = !state.sidebarCollapsed
+  localStorage.setItem(COLLAPSED_KEY, String(state.sidebarCollapsed))
 }
 
 export function openPalette() {

@@ -27,9 +27,8 @@ Lock these before writing feature code.
 - **D-2 Mobile navigation.** The bottom activity bar is the single primary
   navigation; the command palette is a secondary entry point reached from a
   persistent search affordance. Decision: bottom-bar primary.
-- **D-3 Hero entrance.** The profile JSON resolves into the readable hero.
-  Under one second, no layout shift, never blocks text, instant under
-  `prefers-reduced-motion`. Decision: JSON resolve.
+- **D-3 Hero entrance.** Dropped by owner decision. The hero renders the
+  readable view directly on load; no JSON entrance animation ships.
 - **D-4 Terminal.** Presentational only; canned output; never executes
   commands.
 - **D-5 Collapse.** The sidebar collapses and expands; no drag-to-resize.
@@ -43,9 +42,8 @@ New or changed relative to `DESIGN.md` section 7.
 - `TerminalPanel.vue` — presentational terminal rendering canned output.
 - `EducationView.vue` — education and achievements.
 - `ActivityBar.vue` — doubles as the mobile bottom bar.
-- `AboutView.vue` / `AboutJson.vue` — hero entrance.
 - `EditorShell.vue` — collapse-aware layout and terminal region.
-- `workspace.js` — adds `heroEntered`, `sidebarCollapsed`, `terminalOpen`.
+- `workspace.js` — adds `sidebarCollapsed`, `terminalOpen`.
 
 ## 4. Task list (ordered)
 
@@ -88,19 +86,19 @@ the resume downloads.
 Gate 3: mobile keeps the editor identity in an unaided first impression; the
 30-second test passes on mobile; no horizontal scroll at 320px.
 
-### Phase 4 — Hero entrance
+### Phase 4 — Hero entrance (dropped)
 
-- [ ] T-4.1 Implement the profile JSON resolving into the readable hero.
-- [ ] T-4.2 Play once per session via `heroEntered`; disable under
-  `prefers-reduced-motion`; verify no layout shift.
+- [x] T-4.1 ~~Implement the profile JSON resolving into the readable hero.~~
+- [x] T-4.2 ~~Play once per session via `heroEntered`; disable under
+  `prefers-reduced-motion`; verify no layout shift.~~
 
-Gate 4: the entrance completes under one second, never delays or reflows text,
-and is instant under reduced motion.
+Gate 4: dropped by owner decision. The hero loads directly into the readable
+view; no JSON entrance animation ships.
 
 ### Phase 5 — Collapsible panels
 
-- [ ] T-5.1 Add `sidebarCollapsed` state and a collapse/expand control.
-- [ ] T-5.2 Register the `view.toggle-sidebar` palette command.
+- [x] T-5.1 Add `sidebarCollapsed` state and a collapse/expand control.
+- [x] T-5.2 Register the `view.toggle-sidebar` palette command.
 
 Gate 5: the sidebar collapses and expands with no drag-to-resize; state is
 consistent across reload and routes.
@@ -119,13 +117,12 @@ cannot run anything.
 
 - [ ] T-7.1 Audit headings, landmarks, labels, and focus order, including the
   mobile bottom nav landmark.
-- [ ] T-7.2 Verify `prefers-reduced-motion` for the hero entrance.
-- [ ] T-7.3 Verify contrast against WCAG AA.
-- [ ] T-7.4 Verify title, description, canonical, and Open Graph tags and link
+- [ ] T-7.2 Verify contrast against WCAG AA.
+- [ ] T-7.3 Verify title, description, canonical, and Open Graph tags and link
   previews.
-- [ ] T-7.5 Lazy-load non-critical views and the highlighter; measure bundle
+- [ ] T-7.4 Lazy-load non-critical views and the highlighter; measure bundle
   size.
-- [ ] T-7.6 Run a Lighthouse pass on desktop and mobile; record scores.
+- [ ] T-7.5 Run a Lighthouse pass on desktop and mobile; record scores.
 
 Gate 7: accessibility and performance targets met; no serious Lighthouse
 issues.

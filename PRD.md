@@ -34,9 +34,9 @@ directly.
 - **Positioning.** The candidate is a university student and a **front-end
   developer with AI-accelerated workflows**. Front-end depth is the claim;
   agentic AI is a supporting skill line, not a headline.
-- **First impression.** The hero entrance is the primary attention lever: the
-  profile JSON resolves into the readable hero. It must complete in under one
-  second and never delay or reflow content.
+- **First impression.** The readable hero is the primary attention lever: name,
+  role, summary, and the two calls to action are visible immediately on load,
+  with no entrance animation delaying or reflowing them.
 - **Mobile identity.** Mobile keeps the metaphor through a bottom activity bar
   as the primary navigation, with the command palette as a secondary entry
   point and plain reader content inside. Mobile is no longer a degraded copy of
@@ -169,10 +169,7 @@ document and `DESIGN.md` in the same change.
 - A toggle (for example a `{ }` control or an "about.json" tab) switches the
   hero to a literal, syntax-highlighted JSON rendering of the profile.
 - The plain view is the default on first load and on mobile.
-- **Entrance:** on first load, the profile JSON resolves into the readable hero
-  as the attention hook. It completes in under one second, never blocks text,
-  produces no layout shift, and collapses to an instant reveal under
-  `prefers-reduced-motion`.
+- The plain view renders directly on load; no JSON entrance animation ships.
 
 ### FR-4 Projects
 
@@ -265,8 +262,8 @@ document and `DESIGN.md` in the same change.
   (`aria-hidden`); a readable equivalent is always available.
 - All interactive controls are keyboard reachable and have accessible names.
 - Color contrast meets WCAG AA for text.
-- Motion respects `prefers-reduced-motion`; the hero entrance is instant in that
-  mode.
+- Motion respects `prefers-reduced-motion`; non-essential animation is instant
+  in that mode.
 
 ### Performance
 
@@ -274,7 +271,7 @@ document and `DESIGN.md` in the same change.
   bundle size.
 - Target: usable first render on a mid-range phone on a slow connection.
 - Lazy-load non-critical views and any heavy highlighting code.
-- The hero entrance must not regress Cumulative Layout Shift.
+- The hero must not regress Cumulative Layout Shift.
 
 ### SEO and sharing
 
@@ -307,7 +304,6 @@ document and `DESIGN.md` in the same change.
 | --- | --- | --- |
 | Site ships empty while content is pending | Primary metric fails | Honest in-progress states; publish only defensible projects; keep the site's own case study as the flagship |
 | "Vibecoded" projects collapse under interview probing | Credibility | Ship only what the candidate can defend unaided; one write-up per project |
-| Hero entrance delays or reflows the recruiter | Primary metric fails | Under 1s, no layout shift, never blocks text, instant under reduced motion |
 | Mobile hybrid sprawls into three competing nav models | Usability | Bottom activity bar is the single primary nav; palette is secondary only |
 | Collapsible panels and terminal creep toward full editor emulation | Scope and performance | Enforce the scope boundary in section 5; terminal is presentational only |
 | Editor costume reads as style over substance | Credibility | One genuine interaction (command palette); strong project and education content |
@@ -320,11 +316,10 @@ document and `DESIGN.md` in the same change.
    projects.
 3. Mobile redesign: bottom activity bar, palette entry point, hero actions,
    reader content.
-4. Hero JSON entrance.
-5. Collapsible panels.
-6. Terminal view.
-7. Accessibility, SEO, and performance pass.
-8. Usability test and refinement.
+4. Collapsible panels.
+5. Terminal view.
+6. Accessibility, SEO, and performance pass.
+7. Usability test and refinement.
 
 Detailed tasks and ordering live in `PLANNING.md`.
 
