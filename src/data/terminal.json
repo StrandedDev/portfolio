@@ -1,0 +1,14 @@
+{
+  "lines": [
+    "$ whoami",
+    "front-end developer · university student",
+    "$ cat focus.txt",
+    "Vue 3 · Vite · JavaScript · accessibility-first UI",
+    "$ cat workflow.txt",
+    "agentic AI for speed, human review for correctness",
+    "$ ls skills",
+    "javascript/  vue/  css/  html/  git/",
+    "$ cat note.txt",
+    "This terminal is decorative. It renders static text and does not accept input."
+  ]
+}

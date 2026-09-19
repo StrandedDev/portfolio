@@ -105,10 +105,10 @@ consistent across reload and routes.
 
 ### Phase 6 — Terminal view
 
-- [ ] T-6.1 Build `TerminalPanel` rendering canned output.
-- [ ] T-6.2 Add `terminalOpen` state, a trigger, and the
+- [x] T-6.1 Build `TerminalPanel` rendering canned output.
+- [x] T-6.2 Add `terminalOpen` state, a trigger, and the
   `view.toggle-terminal` palette command.
-- [ ] T-6.3 Confirm it accepts no input and never executes commands.
+- [x] T-6.3 Confirm it accepts no input and never executes commands.
 
 Gate 6: the terminal renders canned output, is clearly non-interactive, and
 cannot run anything.

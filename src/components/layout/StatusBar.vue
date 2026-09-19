@@ -5,9 +5,10 @@ defineProps({
   branch: { type: String, default: 'main' },
   resumePath: { type: String, default: '/resume.pdf' },
   file: { type: String, default: 'portfolio' },
+  terminalOpen: { type: Boolean, default: false },
 })
 
-defineEmits(['open-resume', 'toggle-theme'])
+defineEmits(['open-resume', 'toggle-theme', 'toggle-terminal'])
 </script>
 
 <template>
@@ -23,6 +24,15 @@ defineEmits(['open-resume', 'toggle-theme'])
       </span>
     </div>
     <div class="status-bar__group">
+      <button
+        type="button"
+        class="status-bar__item"
+        aria-label="Toggle terminal"
+        :aria-pressed="terminalOpen"
+        @click="$emit('toggle-terminal')"
+      >
+        <AppIcon name="terminal" :size="14" />
+      </button>
       <button
         type="button"
         class="status-bar__item status-bar__item--resume"

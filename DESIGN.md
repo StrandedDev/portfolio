@@ -38,6 +38,7 @@ src/
     projects.json             project content
     projects.dev.json         demo-only placeholders (DEV builds only)
     education.json            education content
+    terminal.json             presentational terminal output
   stores/
     workspace.js              reactive app state
   lib/
@@ -175,6 +176,16 @@ production builds; production always uses `projects.json`.
   ]
 }
 ```
+
+### 4.4 `terminal.json`
+
+```json
+{
+  "lines": ["$ whoami", "front-end developer", "$ cat note.txt", "Static text; no input is accepted."]
+}
+```
+
+Rendered verbatim by `TerminalPanel` as canned output. It is never executed.
 
 ## 5. File tree and routing
 

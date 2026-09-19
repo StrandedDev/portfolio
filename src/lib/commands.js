@@ -4,6 +4,7 @@ import {
   setHeroMode,
   showNotice,
   toggleSidebarCollapsed,
+  toggleTerminal,
   useWorkspace,
 } from '@/stores/workspace'
 
@@ -116,6 +117,13 @@ export const commands = [
     keywords: ['sidebar', 'explorer', 'collapse', 'expand', 'panel', 'view'],
     icon: 'files',
     run: () => toggleSidebarCollapsed(),
+  },
+  {
+    id: 'view.toggle-terminal',
+    label: 'Toggle terminal',
+    keywords: ['terminal', 'console', 'panel', 'shell', 'view'],
+    icon: 'terminal',
+    run: () => toggleTerminal(),
   },
 ]
 

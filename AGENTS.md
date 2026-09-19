@@ -23,7 +23,7 @@ before making structural changes.
 Layers, innermost to outermost. Dependencies point inward only.
 
 1. `src/data` — plain JSON content (`profile.json`, `projects.json`,
-   `education.json`). No imports. `projects.dev.json` holds demo-only
+   `education.json`, `terminal.json`). No imports. `projects.dev.json` holds demo-only
    placeholders loaded under `import.meta.env.DEV` only; production renders
    `projects.json` and its honest in-progress state.
 2. `src/lib` — pure, Vue-free functions (`files.js`, `commands.js`, `highlight.js`).

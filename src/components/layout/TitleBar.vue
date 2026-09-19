@@ -47,6 +47,7 @@ const shortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
   border-bottom: 1px solid var(--color-border);
   font-size: var(--text-xs);
   user-select: none;
+  background: red;
 }
 
 .title-bar__left {

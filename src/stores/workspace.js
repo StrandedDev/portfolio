@@ -9,6 +9,7 @@ const state = reactive({
   heroMode: 'reader',
   sidebarOpen: true,
   sidebarCollapsed: localStorage.getItem(COLLAPSED_KEY) === 'true',
+  terminalOpen: false,
   paletteOpen: false,
   notice: '',
 })
@@ -48,6 +49,14 @@ export function setSidebarOpen(open) {
 export function toggleSidebarCollapsed() {
   state.sidebarCollapsed = !state.sidebarCollapsed
   localStorage.setItem(COLLAPSED_KEY, String(state.sidebarCollapsed))
+}
+
+export function toggleTerminal() {
+  state.terminalOpen = !state.terminalOpen
+}
+
+export function setTerminalOpen(open) {
+  state.terminalOpen = open
 }
 
 export function openPalette() {

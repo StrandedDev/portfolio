@@ -2,6 +2,7 @@
 import { computed, defineAsyncComponent, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import profile from '@/data/profile.json'
+import terminal from '@/data/terminal.json'
 import {
   breadcrumbsForRoute,
   fileTree,
@@ -16,6 +17,7 @@ import {
   setSidebarOpen,
   toggleSidebar,
   toggleSidebarCollapsed,
+  toggleTerminal,
   useWorkspace,
 } from '@/stores/workspace'
 import TitleBar from './TitleBar.vue'
@@ -25,6 +27,7 @@ import Sidebar from '@/components/sidebar/Sidebar.vue'
 import EditorTabs from '@/components/editor/EditorTabs.vue'
 import Breadcrumbs from '@/components/editor/Breadcrumbs.vue'
 import EditorArea from '@/components/editor/EditorArea.vue'
+import TerminalPanel from '@/components/editor/TerminalPanel.vue'
 import Drawer from '@/components/ui/Drawer.vue'
 import Toast from '@/components/ui/Toast.vue'
 
@@ -179,14 +182,21 @@ function runCommand(id) {
       />
       <Breadcrumbs v-if="!isMobile" :path="breadcrumbs" />
       <EditorArea />
+      <TerminalPanel
+        :open="workspace.terminalOpen"
+        :lines="terminal.lines"
+        @close="toggleTerminal"
+      />
     </div>
     <div v-if="!isMobile" class="editor-shell__status">
       <StatusBar
         branch="main"
         :file="activeNode?.label ?? 'portfolio'"
         :resume-path="profile.resumePath"
+        :terminal-open="workspace.terminalOpen"
         @open-resume="openResume"
         @toggle-theme="toggleTheme"
+        @toggle-terminal="toggleTerminal"
       />
     </div>
     <Drawer
