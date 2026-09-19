@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 
 const props = defineProps({
   education: { type: Object, required: true },
@@ -9,40 +10,54 @@ const props = defineProps({
 const hasContent = computed(
   () => Boolean(props.education.institution) || Boolean(props.education.degree),
 )
+
+const container = ref(null)
+useScrollReveal(container)
 </script>
 
 <template>
-  <article class="view view--centered">
-    <header class="view__header">
+  <article ref="container" class="view view--centered">
+    <header class="view__header stagger-enter">
       <h1 class="view__title">Education</h1>
+      <span v-if="education.status" class="edu-status">
+        <span class="edu-status__dot" aria-hidden="true"></span>
+        {{ education.status }}
+      </span>
     </header>
 
     <template v-if="hasContent">
-      <section class="edu-card" aria-labelledby="edu-institution">
-        <h2 id="edu-institution" class="edu-card__institution">
-          {{ education.institution }}
-        </h2>
-        <p class="edu-card__degree">{{ education.degree }}</p>
-        <dl class="edu-card__meta">
-          <div v-if="education.graduation">
-            <dt>Graduation</dt>
-            <dd>{{ education.graduation }}</dd>
-          </div>
-          <div v-if="education.location">
-            <dt>Location</dt>
-            <dd>{{ education.location }}</dd>
-          </div>
-        </dl>
+      <section class="edu-card scroll-reveal" aria-labelledby="edu-institution">
+        <div class="edu-card__accent" aria-hidden="true"></div>
+        <div class="edu-card__content">
+          <h2 id="edu-institution" class="edu-card__institution">
+            {{ education.institution }}
+          </h2>
+          <p class="edu-card__degree">{{ education.degree }}</p>
+          <dl class="edu-card__meta">
+            <div v-if="education.graduation">
+              <dt>Graduation</dt>
+              <dd>{{ education.graduation }}</dd>
+            </div>
+            <div v-if="education.location">
+              <dt>Location</dt>
+              <dd>{{ education.location }}</dd>
+            </div>
+          </dl>
+        </div>
       </section>
 
       <section
         v-if="education.coursework?.length"
-        class="edu-section"
+        class="edu-section scroll-reveal"
         aria-labelledby="edu-coursework"
       >
         <h2 id="edu-coursework" class="edu-section__label">Relevant coursework</h2>
         <ul class="edu-tags">
-          <li v-for="course in education.coursework" :key="course">
+          <li
+            v-for="(course, i) in education.coursework"
+            :key="course"
+            :style="{ animationDelay: `${i * 50}ms` }"
+          >
             {{ course }}
           </li>
         </ul>
@@ -50,7 +65,7 @@ const hasContent = computed(
 
       <section
         v-if="education.achievements?.length"
-        class="edu-section"
+        class="edu-section scroll-reveal"
         aria-labelledby="edu-achievements"
       >
         <h2 id="edu-achievements" class="edu-section__label">Achievements</h2>
@@ -60,8 +75,11 @@ const hasContent = computed(
             :key="item.label"
             class="edu-achievements__item"
           >
-            <span class="edu-achievements__label">{{ item.label }}</span>
-            <span class="edu-achievements__value">{{ item.value }}</span>
+            <AppIcon name="star-full" :size="16" />
+            <span class="edu-achievements__body">
+              <span class="edu-achievements__label">{{ item.label }}</span>
+              <span class="edu-achievements__value">{{ item.value }}</span>
+            </span>
           </li>
         </ul>
       </section>
@@ -80,11 +98,53 @@ const hasContent = computed(
 </template>
 
 <style scoped>
+.edu-status {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-fg-muted);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}
+
+.edu-status__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--syntax-number);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
+
 .edu-card {
-  padding: var(--space-5);
+  display: flex;
+  gap: 0;
+  overflow: hidden;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.edu-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.edu-card__accent {
+  width: 4px;
+  flex: none;
+  background: var(--gradient-accent);
+}
+
+.edu-card__content {
+  flex: 1;
+  padding: var(--space-5);
 }
 
 .edu-card__institution {
@@ -137,12 +197,18 @@ const hasContent = computed(
 }
 
 .edu-tags li {
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   color: var(--syntax-key);
   background: var(--color-highlight);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
+  animation: scale-in var(--duration-entrance) var(--ease-entrance) both;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.edu-tags li:hover {
+  transform: scale(1.08);
 }
 
 .edu-achievements {
@@ -152,14 +218,34 @@ const hasContent = computed(
 
 .edu-achievements__item {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-3);
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.edu-achievements__item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.edu-achievements__item :deep(.app-icon) {
+  color: var(--color-accent);
+  flex: none;
+}
+
+.edu-achievements__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: baseline;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .edu-achievements__label {

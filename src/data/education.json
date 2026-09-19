@@ -3,7 +3,15 @@
   "degree": "Computer Science and Engineering",
   "graduation": "Expected 2029",
   "location": "Rangpur, Bangladesh",
-  "coursework": [],
+  "status": "In progress",
+  "coursework": [
+    "Data Structures",
+    "Object Oriented Programming",
+    "Database Systems",
+    "Algorithms",
+    "Discrete Mathematics",
+    "Web Development"
+  ],
   "achievements": [
     {
       "label": "ICPC Asia Dhaka 2025",

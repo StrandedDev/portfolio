@@ -15,8 +15,8 @@ const sections = [
   { id: 'contact', icon: 'mail', label: 'Contact' },
   { id: 'projects', icon: 'folder', label: 'Projects' },
   { id: 'education', icon: 'mortar-board', label: 'Education' },
-  { id: 'palette', icon: 'search', label: 'Command palette', desktopOnly: true },
   { id: 'resume', icon: 'file-pdf', label: 'Resume', desktopOnly: true },
+  { id: 'palette', icon: 'search', label: 'Command palette', desktopOnly: true },
 ]
 
 const paletteShortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)

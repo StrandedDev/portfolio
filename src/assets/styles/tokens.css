@@ -70,12 +70,22 @@
   --radius-pill: 999px;
   --shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(55, 148, 255, 0.15);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(55, 148, 255, 0.2);
+
+  --gradient-accent: linear-gradient(135deg, #3794ff 0%, #a855f7 50%, #3794ff 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(55, 148, 255, 0.08) 0%, rgba(168, 85, 247, 0.06) 100%);
+  --gradient-text: linear-gradient(135deg, #60a5fa 0%, #a78bfa 40%, #f472b6 80%, #60a5fa 100%);
+  --highlight-white: #ffffff;
 
   --duration-fast: 120ms;
   --duration-base: 200ms;
   --duration-slow: 320ms;
+  --duration-entrance: 500ms;
+  --stagger-delay: 60ms;
   --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme='light'] {
@@ -111,6 +121,13 @@
   --syntax-boolean: #0000ff;
   --syntax-null: #af00db;
   --syntax-punctuation: #333333;
+
+  --shadow-glow: 0 0 20px rgba(0, 95, 184, 0.1);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 95, 184, 0.15);
+  --gradient-accent: linear-gradient(135deg, #005fb8 0%, #7c3aed 50%, #005fb8 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(0, 95, 184, 0.06) 0%, rgba(124, 58, 237, 0.04) 100%);
+  --gradient-text: linear-gradient(135deg, #2563eb 0%, #7c3aed 40%, #db2777 80%, #2563eb 100%);
+  --highlight-white: #1e1e1e;
 }
 
 @media (max-width: 1023px) {

@@ -1,24 +1,34 @@
 <script setup>
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import { getProjects } from '@/lib/files'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 
 const projects = getProjects()
+const container = ref(null)
+
+useScrollReveal(container)
 </script>
 
 <template>
-  <article class="view view--centered">
-    <header class="view__header">
+  <article ref="container" class="view view--centered">
+    <header class="view__header stagger-enter">
       <h1 class="view__title">Projects</h1>
       <span class="view__count">{{ projects.length }} case studies</span>
     </header>
-    <p class="view__lede">
+    <p class="view__lede stagger-enter">
       Selected work. Each case study covers the problem, the approach, and the
       result.
     </p>
 
     <ul v-if="projects.length" class="project-list">
-      <li v-for="project in projects" :key="project.id" class="project-card">
+      <li
+        v-for="(project, index) in projects"
+        :key="project.id"
+        class="project-card scroll-reveal"
+        :style="{ transitionDelay: `${index * 80}ms` }"
+      >
         <div class="project-card__top">
           <h2 class="project-card__name">
             <RouterLink :to="`/projects/${project.id}`">
@@ -118,6 +128,7 @@ const projects = getProjects()
 }
 
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -127,12 +138,14 @@ const projects = getProjects()
   border-radius: var(--radius-lg);
   transition:
     border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out);
 }
 
 .project-card:hover {
-  border-color: var(--color-border-strong);
-  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
 }
 
 .project-card__top {
@@ -167,6 +180,14 @@ const projects = getProjects()
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
 }
 
 .project-card__summary {
@@ -187,6 +208,11 @@ const projects = getProjects()
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.project-card__stack li:hover {
+  transform: scale(1.08);
 }
 
 .project-card__meta {
@@ -236,5 +262,13 @@ const projects = getProjects()
   align-items: center;
   font-size: var(--text-sm);
   font-weight: 500;
+}
+
+.project-card__more :deep(.app-icon) {
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.project-card__more:hover :deep(.app-icon) {
+  transform: translateX(3px);
 }
 </style>

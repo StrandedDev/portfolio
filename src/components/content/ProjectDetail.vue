@@ -13,9 +13,9 @@ const project = computed(() => getProjectById(props.id))
 </script>
 
 <template>
-  <article v-if="project" class="view view--centered">
+  <article v-if="project" class="view view--centered stagger-enter">
     <nav class="detail-nav" aria-label="Breadcrumb">
-      <RouterLink to="/projects">
+      <RouterLink to="/projects" class="detail-nav__link">
         <AppIcon name="chevron-left" :size="14" />
         Projects
       </RouterLink>
@@ -64,7 +64,7 @@ const project = computed(() => getProjectById(props.id))
     </div>
   </article>
 
-  <article v-else class="view view--centered">
+  <article v-else class="view view--centered stagger-enter">
     <header class="view__header">
       <h1 class="view__title">Project not found</h1>
     </header>
@@ -83,10 +83,18 @@ const project = computed(() => getProjectById(props.id))
   font-size: var(--text-sm);
 }
 
-.detail-nav a {
+.detail-nav__link {
   display: inline-flex;
   gap: var(--space-1);
   align-items: center;
+}
+
+.detail-nav__link :deep(.app-icon) {
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.detail-nav__link:hover :deep(.app-icon) {
+  transform: translateX(-3px);
 }
 
 .detail-eyebrow {
@@ -120,6 +128,7 @@ const project = computed(() => getProjectById(props.id))
   padding: var(--space-5);
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
   border-radius: var(--radius-lg);
 }
 

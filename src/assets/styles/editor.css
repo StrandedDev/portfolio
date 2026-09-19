@@ -86,17 +86,20 @@
 /* Route transition */
 .view-enter-active {
   transition:
-    opacity var(--duration-base) var(--ease-out),
-    transform var(--duration-base) var(--ease-out);
+    opacity var(--duration-entrance) var(--ease-entrance),
+    transform var(--duration-entrance) var(--ease-entrance),
+    filter var(--duration-entrance) var(--ease-entrance);
 }
 
 .view-leave-active {
-  transition: opacity var(--duration-fast) var(--ease-out);
+  transition:
+    opacity var(--duration-fast) var(--ease-out);
 }
 
 .view-enter-from {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(12px);
+  filter: blur(2px);
 }
 
 .view-leave-to {

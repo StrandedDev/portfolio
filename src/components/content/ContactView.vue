@@ -12,6 +12,13 @@ const whatsappRevealed = ref(false)
 
 const pingHref = computed(() => hireMailto(profile))
 
+const iconColors = {
+  email: 'var(--color-accent)',
+  whatsapp: '#25d366',
+  github: '#a78bfa',
+  location: 'var(--color-fg-subtle)',
+}
+
 const methods = [
   {
     id: 'email',
@@ -70,6 +77,7 @@ const rows = computed(() =>
     displayNote: isHidden(method)
       ? profile.contact.whatsappRevealNote
       : method.note,
+    iconColor: iconColors[method.id] || 'var(--color-fg)',
   })),
 )
 
@@ -84,7 +92,7 @@ async function onCopyEmail() {
 </script>
 
 <template>
-  <article class="view view--centered">
+  <article class="view view--centered stagger-enter">
     <header class="view__header">
       <h1 class="view__title">Contact</h1>
     </header>
@@ -92,10 +100,11 @@ async function onCopyEmail() {
 
     <ul class="contact-list">
       <li
-        v-for="row in rows"
+        v-for="(row, index) in rows"
         :key="row.id"
         class="contact-item"
         :class="`contact-item--${row.id}`"
+        :style="{ animationDelay: `${index * 60}ms` }"
       >
         <component
           :is="row.surface.tag"
@@ -103,7 +112,11 @@ async function onCopyEmail() {
           v-bind="row.surface.attrs"
           @click="onSurfaceClick(row)"
         >
-          <span class="contact-item__icon" aria-hidden="true">
+          <span
+            class="contact-item__icon"
+            :style="{ color: row.iconColor }"
+            aria-hidden="true"
+          >
             <AppIcon :name="row.icon" :size="22" />
           </span>
 
@@ -161,6 +174,7 @@ async function onCopyEmail() {
 .contact-item {
   position: relative;
   border-bottom: 1px solid var(--color-border);
+  animation: fade-up var(--duration-entrance) var(--ease-entrance) both;
 }
 
 .contact-item:last-child {
@@ -173,9 +187,9 @@ async function onCopyEmail() {
   inset: 0 auto 0 0;
   z-index: 1;
   width: 3px;
-  background: var(--color-fg);
+  background: var(--color-accent);
   transform: scaleY(0);
-  transition: transform var(--duration-base) var(--ease-out);
+  transition: transform var(--duration-base) var(--ease-spring);
 }
 
 .contact-item:hover {
@@ -215,10 +229,14 @@ button.contact-item__surface {
   justify-content: center;
   width: 44px;
   height: 44px;
-  color: var(--color-fg);
   background: var(--color-highlight);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.contact-item:hover .contact-item__icon {
+  transform: scale(1.05);
 }
 
 .contact-item__body {
@@ -265,6 +283,10 @@ button.contact-item__surface {
   color: var(--color-fg);
 }
 
+.contact-item__ping :deep(.app-button) {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
 @media (max-width: 767px) {
   .view__lede {
     max-width: 100%;
@@ -285,10 +307,10 @@ button.contact-item__surface {
   }
 
   .contact-item__surface {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     gap: var(--space-3);
-    align-items: start;
-    padding: var(--space-5) 0;
+    align-items: center;
+    padding: var(--space-4) 0;
   }
 
   .contact-item__icon {
@@ -316,7 +338,9 @@ button.contact-item__surface {
   }
 
   .contact-item__trailing {
-    display: none;
+    display: inline-flex;
+    align-self: center;
+    color: var(--color-fg-muted);
   }
 
   .contact-item__ping {

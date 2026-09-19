@@ -1,14 +1,14 @@
 {
   "lines": [
     "$ whoami",
-    "front-end developer · university student",
+    "Md. Mostaqim Hasib · Software Engineer & CS Student",
     "$ cat focus.txt",
-    "Vue 3 · Vite · JavaScript · accessibility-first UI",
+    "Scalable software solutions: Vue 3 · Nuxt · Flutter · FastAPI",
     "$ cat workflow.txt",
-    "agentic AI for speed, human review for correctness",
-    "$ ls skills",
-    "javascript/  vue/  css/  html/  git/",
-    "$ cat note.txt",
-    "This terminal is decorative. It renders static text and does not accept input."
+    "Agentic AI workflows (Claude, OpenCode, Antigravity) on Linux (Debian, Ubuntu)",
+    "$ ls stack/",
+    "vue/  nuxt/  flutter/  dart/  python/  fastapi/  mysql/  docker/  linux/  git/",
+    "$ git status",
+    "On branch main. Everything up to date. Ready to ship."
   ]
 }

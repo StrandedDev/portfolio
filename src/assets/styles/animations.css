@@ -1,0 +1,101 @@
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: var(--shadow-soft); }
+  50% { box-shadow: var(--shadow-glow); }
+}
+
+.stagger-enter > * {
+  opacity: 0;
+  animation: fade-up var(--duration-entrance) var(--ease-entrance) both;
+}
+
+.stagger-enter > *:nth-child(1) { animation-delay: calc(var(--stagger-delay) * 0); }
+.stagger-enter > *:nth-child(2) { animation-delay: calc(var(--stagger-delay) * 1); }
+.stagger-enter > *:nth-child(3) { animation-delay: calc(var(--stagger-delay) * 2); }
+.stagger-enter > *:nth-child(4) { animation-delay: calc(var(--stagger-delay) * 3); }
+.stagger-enter > *:nth-child(5) { animation-delay: calc(var(--stagger-delay) * 4); }
+.stagger-enter > *:nth-child(6) { animation-delay: calc(var(--stagger-delay) * 5); }
+.stagger-enter > *:nth-child(7) { animation-delay: calc(var(--stagger-delay) * 6); }
+.stagger-enter > *:nth-child(8) { animation-delay: calc(var(--stagger-delay) * 7); }
+.stagger-enter > *:nth-child(9) { animation-delay: calc(var(--stagger-delay) * 8); }
+.stagger-enter > *:nth-child(10) { animation-delay: calc(var(--stagger-delay) * 9); }
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-entrance) var(--ease-entrance),
+    transform var(--duration-entrance) var(--ease-entrance);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gradient-text {
+  background: var(--gradient-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-enter > *,
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,12 +1,99 @@
 {
   "name": "Md. Mostaqim Hasib",
+  "greeting": "Hi, I'm",
   "role": "Software Engineer",
-  "summary": "Software projects & developer tools.",
+  "tagline": "Building scalable, high-performance software solutions across web & mobile.",
+  "status": "Available for opportunities",
+  "summary": "I build scalable, high-performance software solutions across web and mobile. Specializing in Vue 3, Nuxt, Flutter, and FastAPI, I architect end-to-end applications with clean code, robust data layers, and AI-accelerated development pipelines that solve real-world problems.",
+  "bio": [
+    "I build scalable, high-performance software solutions across web and mobile. Specializing in Vue 3, Nuxt, Flutter, and FastAPI, I architect end-to-end applications with clean code, robust data layers, and AI-accelerated development pipelines that solve real-world problems."
+  ],
   "location": "Rangpur, Bangladesh",
-  "facts": [
-    { "label": "Focus", "value": "Frontend" },
-    { "label": "Experience", "value": "1 year" },
-    { "label": "Stack", "value": "Vue, Nuxt, Python, SQLite3" }
+  "specs": [
+    { "label": "Status", "value": "Available for roles" },
+    { "label": "Location", "value": "Rangpur, Bangladesh (UTC+6)" },
+    { "label": "Experience", "value": "1+ Year Production" },
+    { "label": "Education", "value": "B.Sc in Computer Science and Engineering" },
+    { "label": "Primary Stack", "value": "Vue 3, Nuxt, Python, Sqlite3" },
+    { "label": "Environments", "value": "Debian, Ubuntu, Docker" }
+  ],
+  "workflow": {
+    "title": "Engineering Philosophy & Workflow",
+    "subtitle": "How I ideate, develop, and ship modern software in an AI-first era.",
+    "cards": [
+      {
+        "id": "agentic",
+        "title": "Agentic AI & Vibe Coding",
+        "badge": "Modern Superpower",
+        "desc": "Pair-programming with Claude and OpenCode agent to draft architectures, explore edge cases, and eliminate boilerplate while maintaining total code quality."
+      },
+      {
+        "id": "linux",
+        "title": "Linux & Containerized Runtimes",
+        "badge": "Workstation",
+        "desc": "Comfortable across Debian and Ubuntu Linux environments, leveraging Docker containers and strict Git hygiene for deterministic builds and zero-drift deployments."
+      },
+      {
+        "id": "frontend",
+        "title": "Component-Driven Architecture",
+        "badge": "Craft & UI",
+        "desc": "Engineering accessible, high-performance interfaces in Vue 3 and Nuxt with vanilla tokens, responsive layouts, and smooth micro-interactions."
+      }
+    ]
+  },
+  "skills": [
+    {
+      "category": "Frontend & Mobile",
+      "count": 9,
+      "description": "Interactive, responsive, and cross-platform UI engineering",
+      "items": [
+        { "name": "Vue.js", "icon": "vue" },
+        { "name": "Nuxt.js", "icon": "nuxt" },
+        { "name": "JavaScript", "icon": "javascript" },
+        { "name": "HTML5", "icon": "html5" },
+        { "name": "CSS3", "icon": "css3" },
+        { "name": "Tailwind CSS", "icon": "tailwind" },
+        { "name": "Bootstrap", "icon": "bootstrap" },
+        { "name": "Flutter", "icon": "flutter" },
+        { "name": "Dart", "icon": "dart" }
+      ]
+    },
+    {
+      "category": "Backend & Databases",
+      "count": 5,
+      "description": "REST APIs, asynchronous microservices & data modeling",
+      "items": [
+        { "name": "Python", "icon": "python" },
+        { "name": "FastAPI", "icon": "fastapi" },
+        { "name": "MySQL", "icon": "mysql" },
+        { "name": "PostgreSQL", "icon": "postgresql" },
+        { "name": "SQLite", "icon": "sqlite" }
+      ]
+    },
+    {
+      "category": "DevOps & Environments",
+      "count": 6,
+      "description": "Linux operating systems, containerization & version control",
+      "items": [
+        { "name": "Docker", "icon": "docker" },
+        { "name": "Linux", "icon": "linux-tux" },
+        { "name": "Debian", "icon": "debian" },
+        { "name": "Ubuntu", "icon": "ubuntu" },
+        { "name": "Git", "icon": "git" },
+        { "name": "GitHub", "icon": "github" }
+      ]
+    },
+    {
+      "category": "AI & Engineering Tools",
+      "count": 4,
+      "description": "AI copilots, agentic orchestrators & modern code editors",
+      "items": [
+        { "name": "VS Code", "icon": "visual-studio-code" },
+        { "name": "Claude", "icon": "claude" },
+        { "name": "Antigravity", "icon": "antigravity", "custom": true },
+        { "name": "OpenCode", "icon": "opencode", "custom": true }
+      ]
+    }
   ],
   "email": "mostaqimhasib77@gmail.com",
   "phone": "+8801755326364",
@@ -37,14 +124,6 @@
       "icon": "github",
       "handle": "StrandedDev",
       "note": "Source code, side projects, and experiments."
-    },
-    {
-      "id": "codeforces",
-      "label": "Codeforces",
-      "url": "https://codeforces.com/profile/stranded_dev",
-      "icon": "codeforces",
-      "handle": "stranded_dev",
-      "note": "Competitive programming profile and contest history."
     }
   ]
 }
