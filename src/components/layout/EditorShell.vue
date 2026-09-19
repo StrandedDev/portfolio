@@ -20,7 +20,6 @@ import {
   toggleTerminal,
   useWorkspace,
 } from '@/stores/workspace'
-import TitleBar from './TitleBar.vue'
 import ActivityBar from './ActivityBar.vue'
 import StatusBar from './StatusBar.vue'
 import Sidebar from '@/components/sidebar/Sidebar.vue'
@@ -84,9 +83,6 @@ const tabs = computed(() =>
   workspace.openTabs.map((id) => findNodeById(id)).filter(Boolean),
 )
 const breadcrumbs = computed(() => breadcrumbsForRoute(route.path))
-const title = computed(() =>
-  activeNode.value ? `${activeNode.value.label} — portfolio` : 'portfolio',
-)
 
 const activeSection = computed(() => {
   if (route.path.startsWith('/projects')) return 'projects'
@@ -114,6 +110,14 @@ function closeSidebar() {
 }
 
 function onActivitySelect(id) {
+  if (id === 'palette') {
+    openPalette()
+    return
+  }
+  if (id === 'terminal') {
+    toggleTerminal()
+    return
+  }
   if (id === 'explorer') {
     if (isMobile.value) {
       toggleSidebar()
@@ -159,13 +163,11 @@ function runCommand(id) {
     }"
   >
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="editor-shell__titlebar">
-      <TitleBar :title="title" @open-palette="openPalette" />
-    </div>
     <div class="editor-shell__activity">
       <ActivityBar
         :active="activeSection"
         :sidebar-open="explorerVisible"
+        :terminal-open="workspace.terminalOpen"
         @select="onActivitySelect"
       />
     </div>
@@ -225,17 +227,12 @@ function runCommand(id) {
   display: grid;
   height: 100%;
   grid-template-areas:
-    'title title title'
     'activity sidebar editor'
     'status status status';
-  grid-template-rows: var(--titlebar-height) minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   grid-template-columns: var(--activitybar-width) var(--sidebar-width) minmax(0, 1fr);
   overflow: hidden;
   background: var(--color-bg);
-}
-
-.editor-shell__titlebar {
-  grid-area: title;
 }
 
 .editor-shell__activity {
@@ -300,13 +297,13 @@ function runCommand(id) {
 .editor-shell--mobile {
   height: 100%;
   height: 100dvh;
+  padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
   padding-left: env(safe-area-inset-left);
   grid-template-areas:
-    'title'
     'editor'
     'activity';
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   grid-template-columns: minmax(0, 1fr);
 }
 

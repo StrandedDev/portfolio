@@ -3,12 +3,14 @@ import { findNodeById } from '@/lib/files'
 
 const COLLAPSED_KEY = 'portfolio-sidebar-collapsed'
 
+const storedCollapsed = localStorage.getItem(COLLAPSED_KEY)
+
 const state = reactive({
   activeRoute: '/about',
   openTabs: [],
   heroMode: 'reader',
   sidebarOpen: true,
-  sidebarCollapsed: localStorage.getItem(COLLAPSED_KEY) === 'true',
+  sidebarCollapsed: storedCollapsed === null ? true : storedCollapsed === 'true',
   terminalOpen: false,
   paletteOpen: false,
   notice: '',

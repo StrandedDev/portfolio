@@ -4,18 +4,30 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 defineProps({
   active: { type: String, default: '' },
   sidebarOpen: { type: Boolean, default: true },
+  terminalOpen: { type: Boolean, default: false },
 })
 
 defineEmits(['select'])
 
 const sections = [
   { id: 'explorer', icon: 'files', label: 'Explorer' },
+  { id: 'palette', icon: 'search', label: 'Command palette' },
   { id: 'about', icon: 'account', label: 'About' },
   { id: 'projects', icon: 'folder', label: 'Projects' },
-  { id: 'education', icon: 'markdown', label: 'Education' },
+  { id: 'education', icon: 'mortar-board', label: 'Education', desktopOnly: true },
   { id: 'resume', icon: 'file-pdf', label: 'Resume', desktopOnly: true },
   { id: 'contact', icon: 'mail', label: 'Contact', desktopOnly: true },
 ]
+
+const paletteShortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
+  ? '\u2318K'
+  : 'Ctrl+K'
+
+function itemTitle(section) {
+  if (section.id === 'explorer') return 'Toggle Explorer'
+  if (section.id === 'palette') return `Command palette (${paletteShortcut})`
+  return section.label
+}
 </script>
 
 <template>
@@ -32,12 +44,26 @@ const sections = [
           :class="{ 'activity-bar__item--active': active === section.id }"
           :aria-current="active === section.id ? 'page' : undefined"
           :aria-pressed="section.id === 'explorer' ? sidebarOpen : undefined"
-          :title="section.id === 'explorer' ? 'Toggle Explorer' : section.label"
+          :title="itemTitle(section)"
           @click="$emit('select', section.id)"
         >
           <span class="activity-bar__rail" aria-hidden="true"></span>
           <AppIcon :name="section.icon" :size="22" />
           <span class="activity-bar__label">{{ section.label }}</span>
+        </button>
+      </li>
+      <li class="activity-bar__terminal activity-bar__desktop-only">
+        <button
+          type="button"
+          class="activity-bar__item"
+          :class="{ 'activity-bar__item--active': terminalOpen }"
+          :aria-pressed="terminalOpen"
+          title="Toggle Terminal"
+          @click="$emit('select', 'terminal')"
+        >
+          <span class="activity-bar__rail" aria-hidden="true"></span>
+          <AppIcon name="terminal" :size="22" />
+          <span class="activity-bar__label">Terminal</span>
         </button>
       </li>
     </ul>
@@ -56,8 +82,13 @@ const sections = [
 
 .activity-bar__list {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   align-items: stretch;
+}
+
+.activity-bar__terminal {
+  margin-top: auto;
 }
 
 .activity-bar__item {
@@ -136,6 +167,10 @@ const sections = [
     min-width: 0;
   }
 
+  .activity-bar__terminal {
+    margin-top: 0;
+  }
+
   .activity-bar__list > li.activity-bar__desktop-only {
     display: none;
   }
@@ -143,9 +178,9 @@ const sections = [
   .activity-bar__item {
     flex: 1;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
     min-width: 0;
-    height: 52px;
+    height: 64px;
   }
 
   .activity-bar__label {

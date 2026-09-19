@@ -13,6 +13,9 @@ const query = ref('')
 const activeIndex = ref(0)
 const inputEl = ref(null)
 
+const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)
+const shortcutKeys = isMac ? ['\u2318', 'K'] : ['Ctrl', 'K']
+
 const filtered = computed(() => {
   const needle = query.value.trim().toLowerCase()
   if (!needle) return props.commands
@@ -129,6 +132,9 @@ function onKeydown(event) {
           <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
           <span><kbd>Enter</kbd> run</span>
           <span><kbd>Esc</kbd> close</span>
+          <span class="palette__footer-shortcut">
+            Command Palette <kbd>{{ shortcutKeys[0] }}</kbd><kbd>{{ shortcutKeys[1] }}</kbd>
+          </span>
         </div>
       </div>
     </div>
@@ -231,11 +237,16 @@ function onKeydown(event) {
 .palette__footer {
   display: flex;
   flex: none;
+  flex-wrap: wrap;
   gap: var(--space-4);
   padding: var(--space-2) var(--space-4);
   color: var(--color-fg-subtle);
   border-top: 1px solid var(--color-border);
   font-size: var(--text-xs);
+}
+
+.palette__footer-shortcut {
+  margin-left: auto;
 }
 
 .palette__footer span {

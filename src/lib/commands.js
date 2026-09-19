@@ -59,7 +59,7 @@ export const commands = [
     id: 'go.education',
     label: 'Go to Education',
     keywords: ['education', 'university', 'degree', 'school'],
-    icon: 'markdown',
+    icon: 'mortar-board',
     run: () => router.push('/education'),
   },
   {

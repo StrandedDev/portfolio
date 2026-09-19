@@ -57,7 +57,7 @@ export const fileTree = sortFoldersFirst([
     id: 'education',
     label: 'education.md',
     kind: 'file',
-    icon: 'markdown',
+    icon: 'mortar-board',
     route: '/education',
   },
 ])

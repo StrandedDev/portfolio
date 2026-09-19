@@ -53,7 +53,6 @@ src/
   components/
     layout/
       EditorShell.vue
-      TitleBar.vue
       ActivityBar.vue
       StatusBar.vue
     sidebar/
@@ -236,11 +235,13 @@ to `localStorage`; it is not store state.
 ### Layout
 
 - `EditorShell` — no props. Composes the regions and provides layout context.
-- `TitleBar` — props: `title: string`. Emits: none.
-- `ActivityBar` — props: `active: string`, `sidebarOpen: boolean`. Emits:
-  `select(sectionId)`. Renders as the vertical strip on desktop and as the
-  bottom bar on mobile. On mobile it shows Explorer, About, Projects, and
-  Education; Resume and the contact action live in the hero.
+- `ActivityBar` — props: `active: string`, `sidebarOpen: boolean`,
+  `terminalOpen: boolean`. Emits: `select(sectionId)`. Renders as the vertical
+  strip on desktop and as the bottom bar on mobile. It carries the command
+  palette trigger and the Explorer toggle; the terminal toggle sits at the
+  bottom of the strip. On mobile it shows only the palette, Explorer, About,
+  and Projects; Education, Resume, the contact action, and the terminal live
+  elsewhere.
 - `StatusBar` — props: `branch: string`, `file: string`,
   `resumePath: string`. Emits: `open-resume`, `toggle-theme`.
 
@@ -307,8 +308,8 @@ Defined in `src/assets/styles/tokens.css` as CSS custom properties.
 - **Typography:** one UI sans stack and one monospace stack. Base size and
   line height tuned for editor density.
 - **Spacing:** a 4px-based scale (`--space-1` through `--space-8`).
-- **Editor metrics:** title bar height, activity bar width, sidebar width,
-  status bar height, tab height, mobile bottom bar height, terminal height.
+- **Editor metrics:** activity bar width, sidebar width, status bar height,
+  tab height, mobile bottom bar height, terminal height.
 - **Radii and shadows:** minimal; the editor aesthetic favors flat surfaces.
 - **Motion:** short durations with an ease-out curve; disabled under
   `prefers-reduced-motion`.
@@ -328,6 +329,8 @@ component hardcodes a color.
 - Keyboard: `ArrowUp`/`ArrowDown` to move, `Enter` to run, `Escape` to close.
 - Opening the palette traps focus; closing restores focus to the trigger.
 - The palette is the signature interaction and the mobile secondary entry point.
+  The activity bar trigger and the palette footer both surface the toggle
+  shortcut (`Ctrl+K` / `Cmd+K`).
 
 ## 10. Responsive strategy
 
@@ -336,8 +339,8 @@ component hardcodes a color.
 - Tablet (768px–1023px): sidebar narrower; tabs and breadcrumbs may collapse.
 - Mobile (< 768px): the activity bar becomes a **bottom bar** and is the single
   primary navigation. The file tree moves behind that bar as a `Drawer`. The
-  title bar stays visible as a compact search affordance that opens the command
-  palette. The editor area scrolls normally with reader content; the hero keeps
+  activity bar carries the search affordance that opens the command palette.
+  The editor area scrolls normally with reader content; the hero keeps
   Resume and a contact call to action one tap away. The status bar is
   desktop-only. The command palette is reachable from the persistent search
   affordance and is the only secondary entry point.

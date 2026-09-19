@@ -68,9 +68,11 @@ const tokens = computed(() => tokenizeJson(props.data))
 .about-json__code {
   margin: 0;
   padding: var(--space-5);
-  overflow-x: auto;
   font-size: var(--text-base);
   line-height: var(--line-base);
   tab-size: 2;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 </style>

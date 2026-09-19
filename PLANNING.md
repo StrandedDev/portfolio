@@ -103,6 +103,18 @@ view; no JSON entrance animation ships.
 Gate 5: the sidebar collapses and expands with no drag-to-resize; state is
 consistent across reload and routes.
 
+### Phase 5.5 — Shell refinements
+
+- [x] T-5.5.1 Remove the title bar; move the command palette trigger into the
+  activity bar as a persistent search affordance.
+- [x] T-5.5.2 Default the sidebar to collapsed so the hero gets more width.
+- [x] T-5.5.3 Word-wrap the `about.json` rendering; no horizontal scroll.
+- [x] T-5.5.4 Use a graduation cap icon for education and distinct icons for
+  the command palette (search) and the terminal.
+
+Gate 5.5: no title bar remains, the palette opens from the activity bar, the
+sidebar starts collapsed, and `about.json` wraps without horizontal scroll.
+
 ### Phase 6 — Terminal view
 
 - [x] T-6.1 Build `TerminalPanel` rendering canned output.

@@ -5,7 +5,6 @@
   --color-bg-elevated: #252526;
   --color-sidebar: #252526;
   --color-activity: #2c2c2c;
-  --color-titlebar: #323233;
   --color-status: #007acc;
   --color-status-fg: #ffffff;
   --color-border: #3a3a3c;
@@ -59,7 +58,6 @@
   --space-7: 32px;
   --space-8: 48px;
 
-  --titlebar-height: 36px;
   --activitybar-width: 48px;
   --sidebar-width: 260px;
   --statusbar-height: 24px;
@@ -87,7 +85,6 @@
   --color-bg-elevated: #f7f7f7;
   --color-sidebar: #f3f3f3;
   --color-activity: #f3f3f3;
-  --color-titlebar: #e7e7e7;
   --color-status: #005fb8;
   --color-status-fg: #ffffff;
   --color-border: #dcdcdc;
@@ -124,7 +121,6 @@
 
 @media (max-width: 767px) {
   :root {
-    --titlebar-height: 44px;
     --tab-height: 40px;
     --statusbar-height: 28px;
   }

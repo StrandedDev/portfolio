@@ -149,8 +149,9 @@ document and `DESIGN.md` in the same change.
 
 ### FR-1 Editor shell
 
-- The site renders a VS Code–style layout: title bar, activity bar, sidebar
-  file tree, editor area, status bar.
+- The site renders a VS Code–style layout: activity bar, sidebar file tree,
+  editor area, status bar. There is no title bar; the command palette trigger
+  lives in the activity bar as a persistent search affordance.
 - The shell is presentational ("look-alike").
 - The sidebar and supporting panels are collapsible and expandable (see FR-10).
   No drag-to-resize.
