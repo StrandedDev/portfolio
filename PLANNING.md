@@ -25,8 +25,9 @@ Lock these before writing feature code.
   presentational terminal are in. Drag-to-resize splits, editable files, extra
   themes, a blog, auth, and any backend are out.
 - **D-2 Mobile navigation.** The bottom activity bar is the single primary
-  navigation; the command palette is a secondary entry point reached from a
-  persistent search affordance. Decision: bottom-bar primary.
+  navigation and carries Explore, About, Contact, Projects, and Education. The
+  command palette is a desktop entry point reached from the activity bar search
+  affordance; it is not part of the mobile bar. Decision: bottom-bar primary.
 - **D-3 Hero entrance.** Dropped by owner decision. The hero renders the
   readable view directly on load; no JSON entrance animation ships.
 - **D-4 Terminal.** Presentational only; canned output; never executes
@@ -75,8 +76,10 @@ the resume downloads.
 
 ### Phase 3 — Mobile redesign
 
-- [x] T-3.1 Make the bottom activity bar the single primary navigation.
-- [x] T-3.2 Add a persistent search affordance that opens the command palette.
+- [x] T-3.1 Make the bottom activity bar the single primary navigation with
+  Explore, About, Contact, Projects, and Education.
+- [x] T-3.2 Add a desktop activity-bar search affordance that opens the command
+  palette; keep the palette out of the mobile bar.
 - [x] T-3.3 Keep Resume and the contact action in the hero; no separate mobile
   action bar.
 - [x] T-3.4 Render reader content in the editor area; keep the bottom activity
@@ -127,28 +130,67 @@ cannot run anything.
 
 ### Phase 7 — Accessibility, SEO, performance
 
-- [ ] T-7.1 Audit headings, landmarks, labels, and focus order, including the
+- [x] T-7.1 Audit headings, landmarks, labels, and focus order, including the
   mobile bottom nav landmark.
-- [ ] T-7.2 Verify contrast against WCAG AA.
-- [ ] T-7.3 Verify title, description, canonical, and Open Graph tags and link
+- [x] T-7.2 Verify contrast against WCAG AA.
+- [x] T-7.3 Verify title, description, canonical, and Open Graph tags and link
   previews.
-- [ ] T-7.4 Lazy-load non-critical views and the highlighter; measure bundle
+- [x] T-7.4 Lazy-load non-critical views and the highlighter; measure bundle
   size.
-- [ ] T-7.5 Run a Lighthouse pass on desktop and mobile; record scores.
+- [x] T-7.5 Run a Lighthouse pass on desktop and mobile; record scores.
+
+Phase 7 results (production build, `vite preview`, Lighthouse 12.8.2,
+headless Chrome):
+
+| Category | Desktop | Mobile |
+| --- | --- | --- |
+| Performance | 100 | 99 |
+| Accessibility | 100 | 100 |
+| Best practices | 100 | 100 |
+| SEO | 100 | 100 |
+
+- FCP 0.3s / LCP 0.5s / TBT 0ms / CLS 0 desktop; FCP 1.2s / LCP 2.0s /
+  TBT 10ms / CLS 0 mobile.
+- Only failing audit is `bf-cache` (reason "Internal error", not actionable).
+- Main bundle 52.44 kB gzip; each route is a separate 0.5–1.6 kB gzip chunk;
+  the JSON highlighter ships only in the lazy `AboutJson` chunk.
+- Fixes applied: real name/role/description/Open Graph tags and no-JS fallback
+  in `index.html` (was placeholder "Alex Rivera"); dark status-bar background
+  darkened to meet WCAG AA contrast; invalid `aria-label` on the terminal `<pre>`
+  given `role="group"`; editor tabs changed from `role="tablist"` (intermediate
+  wrapper and close buttons broke required children) to a labelled `role="toolbar"`.
+- Reports: `lighthouse_localhost_4173-desktop-20260919.json`,
+  `lighthouse_localhost_4173-mobile-20260919.json`.
 
 Gate 7: accessibility and performance targets met; no serious Lighthouse
-issues.
+issues. **Passed.**
 
 ### Phase 8 — Usability test and refinement
 
 - [ ] T-8.1 Run the 30-second test with a non-technical person, unaided, on
-  desktop and mobile.
-- [ ] T-8.2 Confirm mobile preserves the editor identity unaided.
-- [ ] T-8.3 Record friction points and fix the highest-impact one.
-- [ ] T-8.4 Re-run the test to confirm the fix.
-- [ ] T-8.5 Freeze content and ship.
+  desktop and mobile. **Blocked: requires a human participant.**
+- [ ] T-8.2 Confirm mobile preserves the editor identity unaided. **Blocked:
+  requires a human participant.**
+- [ ] T-8.3 Record friction points and fix the highest-impact one. Heuristic
+  review done; human-observed friction pending T-8.1.
+- [ ] T-8.4 Re-run the test to confirm the fix. **Blocked: depends on T-8.1.**
+- [ ] T-8.5 Freeze content and ship. **Blocked: `public/resume.pdf` is still the
+  placeholder ("Alex Rivera") and `projects.json` is empty. T-2.3 and T-2.4 must
+  close first.**
 
-Gate 8: the primary success criterion passes on desktop and mobile.
+Heuristic review (no participant yet):
+
+- Desktop and mobile first render show name, role, summary, Resume, and the
+  Hire-me `mailto:` action immediately; both calls to action are visible without
+  scrolling, so the 30-second path looks intact.
+- Mobile keeps the bottom activity bar as the single primary navigation and
+  renders reader content in the editor area; the editor identity survives.
+- Highest-impact controllable friction is content, not layout: a downloaded
+  resume names the wrong person, and Projects shows the honest empty state. Both
+  are Phase 2 blockers, not Phase 8 fixes.
+
+Gate 8: the primary success criterion passes on desktop and mobile. **Not yet
+passed — pending the human test in T-8.1 and the content freeze in T-8.5.**
 
 ## 5. Dependencies
 

@@ -237,11 +237,11 @@ to `localStorage`; it is not store state.
 - `EditorShell` — no props. Composes the regions and provides layout context.
 - `ActivityBar` — props: `active: string`, `sidebarOpen: boolean`,
   `terminalOpen: boolean`. Emits: `select(sectionId)`. Renders as the vertical
-  strip on desktop and as the bottom bar on mobile. It carries the command
-  palette trigger and the Explorer toggle; the terminal toggle sits at the
-  bottom of the strip. On mobile it shows only the palette, Explorer, About,
-  and Projects; Education, Resume, the contact action, and the terminal live
-  elsewhere.
+  strip on desktop and as the bottom bar on mobile. On desktop it carries the
+  command palette trigger and the Explorer toggle, with the terminal toggle at
+  the bottom of the strip. On mobile the bottom bar is the single primary
+  navigation and shows only Explore, About, Contact, Projects, and Education;
+  the palette trigger, Resume, and the terminal are desktop-only.
 - `StatusBar` — props: `branch: string`, `file: string`,
   `resumePath: string`. Emits: `open-resume`, `toggle-theme`.
 
@@ -277,7 +277,10 @@ to `localStorage`; it is not store state.
 - `ProjectsView` — props: `projects: Project[]`. Emits: `open(id)`.
 - `ProjectDetail` — props: `project: Project`. Emits: `open-link(url)`.
 - `ResumeView` — props: `resumePath: string`. Emits: `download`.
-- `ContactView` — props: `profile: Profile`. Emits: `copy(text)`.
+- `ContactView` — no props; reads profile data. Emits: none. Email copies to the
+  clipboard with a toast; a Ping button opens a prefilled `mailto:`; the
+  WhatsApp number stays masked until the row is activated; the WhatsApp, GitHub,
+  and Codeforces rows are whole-row links.
 - `EducationView` — props: `education: Education`. Emits: none.
 - `NotFoundView` — props: `path: string`. Emits: `go-home`.
 
@@ -328,9 +331,9 @@ component hardcodes a color.
 - The palette filters by label and keywords, case-insensitively.
 - Keyboard: `ArrowUp`/`ArrowDown` to move, `Enter` to run, `Escape` to close.
 - Opening the palette traps focus; closing restores focus to the trigger.
-- The palette is the signature interaction and the mobile secondary entry point.
-  The activity bar trigger and the palette footer both surface the toggle
-  shortcut (`Ctrl+K` / `Cmd+K`).
+- The palette is the signature interaction and a desktop entry point. The
+  activity bar trigger and the palette footer both surface the toggle shortcut
+  (`Ctrl+K` / `Cmd+K`). It is not part of the mobile bottom bar.
 
 ## 10. Responsive strategy
 
@@ -338,12 +341,11 @@ component hardcodes a color.
   The sidebar collapses and expands; there is no drag-to-resize.
 - Tablet (768px–1023px): sidebar narrower; tabs and breadcrumbs may collapse.
 - Mobile (< 768px): the activity bar becomes a **bottom bar** and is the single
-  primary navigation. The file tree moves behind that bar as a `Drawer`. The
-  activity bar carries the search affordance that opens the command palette.
-  The editor area scrolls normally with reader content; the hero keeps
-  Resume and a contact call to action one tap away. The status bar is
-  desktop-only. The command palette is reachable from the persistent search
-  affordance and is the only secondary entry point.
+  primary navigation, carrying Explore, About, Contact, Projects, and Education.
+  The file tree moves behind that bar as a `Drawer`. The editor area scrolls
+  normally with reader content; the hero keeps Resume and a contact call to
+  action one tap away. The status bar, the command palette trigger, Resume, and
+  the terminal are desktop-only.
 
 Rules:
 
@@ -360,7 +362,7 @@ Rules:
 - Landmarks: `header`, `nav` for the file tree, `main` for the editor area,
   `contentinfo` for the status bar.
 - The mobile bottom bar is a labelled `nav` landmark. The palette trigger is a
-  button, not a nav item.
+  button on desktop, not a nav item, and does not appear in the mobile bar.
 - The file tree uses `role="tree"` with `treeitem` children and roving
   tabindex.
 - The command palette uses `role="dialog"` with `aria-modal` and a labelled

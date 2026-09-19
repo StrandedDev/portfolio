@@ -188,8 +188,11 @@ document and `DESIGN.md` in the same change.
 
 ### FR-6 Contact
 
-- `contact.md` shows email and relevant links (GitHub, LinkedIn, etc.).
-- Email is copyable and presented as a `mailto:` link.
+- `contact.md` shows email, WhatsApp, GitHub, Codeforces, and location.
+- Clicking the email address copies it and shows a toast; a Ping button opens a
+  prefilled `mailto:` with the same message as the hero Hire-me action.
+- The WhatsApp number stays masked until the row is activated; the WhatsApp,
+  GitHub, and Codeforces rows are whole-row links.
 
 ### FR-7 Command palette
 
@@ -199,7 +202,8 @@ document and `DESIGN.md` in the same change.
   color theme, toggle the JSON view, collapse/expand the sidebar, and open the
   terminal view.
 - The palette is keyboard navigable and dismissible with `Escape`.
-- On mobile, the palette is reachable from a persistent search affordance.
+- The palette trigger lives in the desktop activity bar; it is not part of the
+  mobile bottom bar.
 
 ### FR-8 Deep linking
 
@@ -210,9 +214,10 @@ document and `DESIGN.md` in the same change.
 
 - **Desktop:** full three-pane editor layout.
 - **Mobile:** the activity bar becomes a persistent bottom bar and is the
-  primary navigation. The command palette is available as a secondary entry
-  point. The editor area is a normal scroll region with reader content. The hero
-  keeps Resume and a contact call to action one tap away.
+  primary navigation, carrying Explore, About, Contact, Projects, and Education.
+  The command palette trigger is desktop-only. The editor area is a normal
+  scroll region with reader content. The hero keeps Resume and a contact call to
+  action one tap away.
 - No horizontal scrolling at any width.
 
 ### FR-10 Collapsible panels

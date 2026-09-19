@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import AppButton from '@/components/ui/AppButton.vue'
+import { hireMailto } from '@/lib/mailto'
 
 const props = defineProps({
   profile: { type: Object, required: true },
@@ -9,11 +10,7 @@ const props = defineProps({
 
 defineEmits(['open-resume'])
 
-const mailto = computed(() => {
-  const subject = `Hiring enquiry — ${props.profile.name}`
-  const body = `Hi ${props.profile.name},\n\nI came across your portfolio and would like to talk about a role.\n\n`
-  return `mailto:${props.profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-})
+const mailto = computed(() => hireMailto(props.profile))
 </script>
 
 <template>

@@ -9,9 +9,42 @@
     { "label": "Stack", "value": "Vue, Nuxt, Python, SQLite3" }
   ],
   "email": "mostaqimhasib77@gmail.com",
+  "phone": "+8801755326364",
+  "whatsapp": "https://wa.me/8801755326364",
   "resumePath": "/resume.pdf",
+  "contact": {
+    "lede": "The fastest way to reach me is email or WhatsApp. I usually reply within a day.",
+    "emailNote": "Best for roles, opportunities, and detailed messages.",
+    "locationNote": "Open to remote work and collaboration across time zones.",
+    "pingLabel": "Ping Me",
+    "copyNotice": "Email copied to clipboard",
+    "whatsappRevealNote": "Click to reveal the number."
+  },
   "links": [
-    { "label": "GitHub", "url": "https://github.com/StrandedDev" },
-    { "label": "Codeforces", "url": "https://codeforces.com/profile/stranded_dev" }
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "url": "https://wa.me/8801755326364",
+      "icon": "whatsapp",
+      "handle": "+880 1755-326364",
+      "masked": "+880 **** *****",
+      "note": "Quick questions and casual chats."
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "url": "https://github.com/StrandedDev",
+      "icon": "github",
+      "handle": "StrandedDev",
+      "note": "Source code, side projects, and experiments."
+    },
+    {
+      "id": "codeforces",
+      "label": "Codeforces",
+      "url": "https://codeforces.com/profile/stranded_dev",
+      "icon": "codeforces",
+      "handle": "stranded_dev",
+      "note": "Competitive programming profile and contest history."
+    }
   ]
 }

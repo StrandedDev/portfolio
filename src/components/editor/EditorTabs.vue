@@ -90,7 +90,7 @@ watch(
 </script>
 
 <template>
-  <div class="editor-tabs" role="tablist" aria-label="Open files" @keydown="onKeydown">
+  <div class="editor-tabs" role="toolbar" aria-label="Open files" @keydown="onKeydown">
     <TransitionGroup name="tab" tag="div" class="editor-tabs__track">
       <div
         v-for="tab in tabs"
@@ -102,9 +102,8 @@ watch(
           type="button"
           :ref="(el) => setButtonRef(tab.id, el)"
           class="editor-tab__label"
-          role="tab"
           :tabindex="tab.id === rovingId ? 0 : -1"
-          :aria-selected="tab.id === activeId"
+          :aria-current="tab.id === activeId ? 'page' : undefined"
           @click="$emit('open', tab.id)"
           @focus="onTabFocus(tab.id)"
         >

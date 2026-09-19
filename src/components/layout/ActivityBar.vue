@@ -10,13 +10,13 @@ defineProps({
 defineEmits(['select'])
 
 const sections = [
-  { id: 'explorer', icon: 'files', label: 'Explorer' },
-  { id: 'palette', icon: 'search', label: 'Command palette' },
+  { id: 'explorer', icon: 'files', label: 'Explore' },
   { id: 'about', icon: 'account', label: 'About' },
+  { id: 'contact', icon: 'mail', label: 'Contact' },
   { id: 'projects', icon: 'folder', label: 'Projects' },
-  { id: 'education', icon: 'mortar-board', label: 'Education', desktopOnly: true },
+  { id: 'education', icon: 'mortar-board', label: 'Education' },
+  { id: 'palette', icon: 'search', label: 'Command palette', desktopOnly: true },
   { id: 'resume', icon: 'file-pdf', label: 'Resume', desktopOnly: true },
-  { id: 'contact', icon: 'mail', label: 'Contact', desktopOnly: true },
 ]
 
 const paletteShortcut = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent)

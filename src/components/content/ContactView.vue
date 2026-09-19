@@ -1,9 +1,86 @@
 <script setup>
+import { computed, ref } from 'vue'
+import AppButton from '@/components/ui/AppButton.vue'
 import AppIcon from '@/components/ui/AppIcon.vue'
-import CopyButton from '@/components/ui/CopyButton.vue'
+import { useClipboard } from '@/composables/useClipboard'
 import profile from '@/data/profile.json'
+import { hireMailto } from '@/lib/mailto'
+import { showNotice } from '@/stores/workspace'
 
-defineEmits(['copy'])
+const { copy } = useClipboard()
+const whatsappRevealed = ref(false)
+
+const pingHref = computed(() => hireMailto(profile))
+
+const methods = [
+  {
+    id: 'email',
+    label: 'Email',
+    value: profile.email,
+    note: profile.contact.emailNote,
+    icon: 'mail',
+    copy: true,
+    ping: true,
+  },
+  ...profile.links.map((link) => ({
+    id: link.id,
+    label: link.label,
+    value: link.handle,
+    masked: link.masked,
+    href: link.url,
+    note: link.note,
+    icon: link.icon,
+    external: true,
+    reveal: link.id === 'whatsapp',
+  })),
+  {
+    id: 'location',
+    label: 'Location',
+    value: profile.location,
+    note: profile.contact.locationNote,
+    icon: 'location',
+  },
+]
+
+function isHidden(method) {
+  return method.reveal && !whatsappRevealed.value
+}
+
+function surfaceFor(method) {
+  if (isHidden(method)) return { tag: 'button', attrs: { type: 'button' } }
+  if (method.href) {
+    return {
+      tag: 'a',
+      attrs: {
+        href: method.href,
+        target: method.external ? '_blank' : undefined,
+        rel: method.external ? 'noopener noreferrer' : undefined,
+      },
+    }
+  }
+  return { tag: 'div', attrs: {} }
+}
+
+const rows = computed(() =>
+  methods.map((method) => ({
+    ...method,
+    hidden: isHidden(method),
+    surface: surfaceFor(method),
+    displayValue: isHidden(method) ? method.masked : method.value,
+    displayNote: isHidden(method)
+      ? profile.contact.whatsappRevealNote
+      : method.note,
+  })),
+)
+
+function onSurfaceClick(method) {
+  if (isHidden(method)) whatsappRevealed.value = true
+}
+
+async function onCopyEmail() {
+  const ok = await copy(profile.email)
+  if (ok) showNotice(profile.contact.copyNotice)
+}
 </script>
 
 <template>
@@ -11,112 +88,230 @@ defineEmits(['copy'])
     <header class="view__header">
       <h1 class="view__title">Contact</h1>
     </header>
-    <p class="view__lede">
-      The fastest way to reach me is email. I usually reply within a day.
-    </p>
+    <p class="view__lede">{{ profile.contact.lede }}</p>
 
-    <section class="contact-card" aria-labelledby="contact-email">
-      <h2 id="contact-email" class="contact-card__label">Email</h2>
-      <div class="contact-card__row">
-        <a
-          class="contact-card__email mono"
-          :href="`mailto:${profile.email}`"
-          translate="no"
+    <ul class="contact-list">
+      <li
+        v-for="row in rows"
+        :key="row.id"
+        class="contact-item"
+        :class="`contact-item--${row.id}`"
+      >
+        <component
+          :is="row.surface.tag"
+          class="contact-item__surface"
+          v-bind="row.surface.attrs"
+          @click="onSurfaceClick(row)"
         >
-          <AppIcon name="mail" :size="16" />
-          {{ profile.email }}
-        </a>
-        <CopyButton
-          :text="profile.email"
-          label="Copy email"
-          @copied="$emit('copy', $event)"
-        />
-      </div>
-    </section>
+          <span class="contact-item__icon" aria-hidden="true">
+            <AppIcon :name="row.icon" :size="22" />
+          </span>
 
-    <section class="contact-links" aria-labelledby="contact-links">
-      <h2 id="contact-links" class="contact-card__label">Elsewhere</h2>
-      <ul class="contact-links__list">
-        <li v-for="link in profile.links" :key="link.label">
-          <a :href="link.url" target="_blank" rel="noopener noreferrer">
-            <AppIcon name="link-external" :size="14" />
-            <span>{{ link.label }}</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+          <span class="contact-item__body">
+            <button
+              v-if="row.copy"
+              type="button"
+              class="contact-item__value contact-item__value--action mono"
+              translate="no"
+              @click.stop="onCopyEmail"
+            >
+              {{ row.value }}
+            </button>
+            <span v-else class="contact-item__value mono" translate="no">
+              {{ row.displayValue }}
+            </span>
+            <span class="contact-item__note">{{ row.displayNote }}</span>
+          </span>
+
+          <AppButton
+            v-if="row.ping"
+            class="contact-item__ping"
+            variant="primary"
+            icon="mail"
+            :href="pingHref"
+          >
+            {{ profile.contact.pingLabel }}
+          </AppButton>
+          <AppIcon
+            v-else-if="row.hidden"
+            class="contact-item__trailing"
+            name="eye-off"
+            :size="18"
+          />
+          <AppIcon
+            v-else-if="row.href"
+            class="contact-item__trailing"
+            name="link-external"
+            :size="16"
+          />
+        </component>
+      </li>
+    </ul>
   </article>
 </template>
 
 <style scoped>
-.contact-card {
-  padding: var(--space-5);
+.contact-list {
+  overflow: hidden;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
 }
 
-.contact-card__label {
-  margin-bottom: var(--space-3);
-  color: var(--color-fg-subtle);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.contact-item {
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.contact-card__row {
-  display: flex;
-  flex-wrap: wrap;
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-item::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 1;
+  width: 3px;
+  background: var(--color-fg);
+  transform: scaleY(0);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.contact-item:hover {
+  background: var(--color-hover);
+}
+
+.contact-item:hover::before {
+  transform: scaleY(1);
+}
+
+.contact-item__surface {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   gap: var(--space-4);
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-5);
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
 }
 
-.contact-card__email {
+a.contact-item__surface,
+button.contact-item__surface {
+  cursor: pointer;
+}
+
+.contact-item__surface:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: -2px;
+}
+
+.contact-item__icon {
   display: inline-flex;
-  gap: var(--space-2);
   align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-fg);
+  background: var(--color-highlight);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.contact-item__body {
   min-width: 0;
+}
+
+.contact-item__value {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-fg);
   font-size: var(--text-md);
   overflow-wrap: anywhere;
 }
 
-.contact-links {
-  margin-top: var(--space-6);
+.contact-item__value--action {
+  padding: 0;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
-.contact-links__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-.contact-links__list a {
-  display: inline-flex;
-  gap: var(--space-2);
-  align-items: center;
-  min-height: 38px;
-  padding: 0 var(--space-4);
-  color: var(--color-fg);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+.contact-item__note {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--color-fg-subtle);
   font-size: var(--text-sm);
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
 }
 
-.contact-links__list a:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  text-decoration: none;
+.contact-item__trailing {
+  color: var(--color-fg-subtle);
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
-@media (pointer: coarse) {
-  .contact-links__list a {
-    min-height: 44px;
+.contact-item:hover .contact-item__trailing {
+  color: var(--color-fg);
+}
+
+@media (max-width: 767px) {
+  .view__lede {
+    margin-bottom: var(--space-5);
+    font-size: var(--text-base);
+  }
+
+  .contact-list {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .contact-item::before {
+    display: none;
+  }
+
+  .contact-item__surface {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-5) 0;
+  }
+
+  .contact-item__icon {
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 0;
+  }
+
+  .contact-item__icon .app-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .contact-item__label {
+    font-size: 11px;
+  }
+
+  .contact-item__value {
+    font-size: var(--text-base);
+  }
+
+  .contact-item__note {
+    font-size: var(--text-xs);
+  }
+
+  .contact-item__trailing {
+    display: none;
+  }
+
+  .contact-item__ping {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: var(--space-2);
   }
 }
 </style>

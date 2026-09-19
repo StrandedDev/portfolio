@@ -29,6 +29,7 @@ defineEmits(['close'])
       </header>
       <pre
         class="terminal-panel__output mono"
+        role="group"
         tabindex="0"
         aria-label="Terminal output, read-only"
       ><code translate="no"><span
